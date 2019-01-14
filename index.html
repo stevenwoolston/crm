@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />	
+    <title>Woolston Web Design CRM</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+	<link href="./css/vendor/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/vendor/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="./css/vendor/toastr.css" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<Toolbar></Toolbar>
+		<div class="container-fluid">
+			<div class="row">
+				<router-view />
+			</div>
+		</div>
+		<div v-show="this.loading" class="active page-overlay"><div class="k-loading-mask"><div class="k-loading-color"></div></div></div>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<script src="./js/vendor/jquery-3.3.1.min.js"></script>
+	<script src="./js/vendor/bootstrap.min.js"></script>
+	<script src="./js/vendor/moment-with-locales.min.js"></script>
+	<script src="./js/vendor/bootstrap-datetimepicker.min.js"></script>
+	<script src="./js/vendor/toastr.min.js"></script>
+    <script src="./js/site.js"></script>
+
+	<!-- Vue Pages and Components here -->
+	<script src='./pages/customers.vue.js'></script>
+    <script src='./pages/customer.vue.js'></script>
+    <script src='./pages/invoice.vue.js'></script>
+	<script src='./pages/components/toolbar.vue.js'></script>
+	<script src='./pages/components/datepicker.vue.js'></script>
+
+    <script>
+		
+        Vue.use(VueRouter);
+
+        const routes = [
+            {
+				path: '/',
+				name: "Customers",
+				component: spaCustomers,
+				props: true
+            },
+            {
+                path: '/customer/:id',
+                name: 'Customer',
+				component: spaCustomer,
+				props: true
+            },
+            {
+                path: '/invoice/:id',
+                name: 'Invoice',
+				component: spaInvoice,
+				props: true
+            }
+        ]
+
+        const router = new VueRouter({
+            routes // short for `routes: routes`
+        })
+
+        new Vue({
+			el: '#app',
+			components: { spaToolbar, spaDatePicker },
+            data: {
+				title: 'Woolston Web Design CRM',
+				loading: false,
+				dateFormat: "DD-MMM-YYYY"
+			},
+			router
+		});
+    </script>
+
+</body>
+
+</html>

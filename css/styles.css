@@ -1,0 +1,159 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Open Sans";
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Roboto";
+}
+
+.table thead th {
+    background-color: #eee;
+}
+
+.table tbody td.text-center .glyphicon {
+	font-size: 1.3em;
+	margin: 0 5px;
+}
+
+.table tbody td.text-center .glyphicon-trash:hover, 
+.table tbody td.text-center .glyphicon-signal:hover,
+.table tbody td.text-center .glyphicon-user:hover {
+	color: #ff0000;
+}
+
+#main.bordered {
+    border: 1px solid #eee;
+    padding: 20px;
+}
+
+.nav-tabs > li.active > a {
+	background-color: #eee !important;
+}
+
+.form-container {
+	border-right: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	padding: 10px 0 0;
+	background-color: #eee;
+}
+
+.form-control, .btn {
+    border-radius: 0;
+}
+
+.form-commands {
+    padding: 10px;
+    background-color: #ccc;
+}
+
+.form-commands a, .form-commands button {
+    margin-right: 10px;
+}
+
+.table-controls {
+    padding: 10px;
+    background-color: #ccc;
+}
+
+.table-controls a, .table-controls button {
+    margin-right: 10px;
+}
+
+label.checkbox input[type="checkbox"]  {
+    display: none;
+}
+
+label.required:after {
+    content: "*";
+    font-weight: 700;
+    margin-left: 10px;
+    color: #ff0000;
+}
+
+label.checkbox span:before  {
+    font-size: 1.3em;
+    content: "\e014";
+    color: #a94442;
+}
+
+label.checkbox :checked + span:before {
+    content: '\e013';
+    color: #3c763d;
+}
+
+/*  Loader */
+@-webkit-keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-backwards {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.page-overlay.active {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2010;
+}
+
+    .page-overlay.active:before {
+        content: "";
+        background-color: white;
+        opacity: 0.8 !important;
+        filter: alpha(opacity=80) !important; /* For IE8 and earlier */
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 2011;
+    }
+
+    .page-overlay.active .k-loading-mask {
+        width: 100px;
+        height: 100px;
+        margin: 35vh auto;
+        position: relative;
+    }
+
+        .page-overlay.active .k-loading-mask .k-loading-color {
+            opacity: 1;
+            background: transparent;
+        }
+
+            .page-overlay.active .k-loading-mask .k-loading-color:before {
+                content: '';
+                box-sizing: border-box;
+                position: absolute;
+                opacity: 1 !important;
+                filter: alpha(opacity=100) !important; /* For IE8 and earlier */
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                border-radius: 50%;
+                border: 15px solid #3c763d;
+                border-top-color: rgba(255,255,255,0);
+                animation: spin 1.7s linear infinite;
+                z-index: 2012;
+            }
+
+
