@@ -1,5 +1,5 @@
 var spaCustomer = Vue.component("Customer", {
-	template: `
+    template: `
 	<div class="col-xs-12" id="customer">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
@@ -157,7 +157,8 @@ var spaCustomer = Vue.component("Customer", {
 							<th style="width: 50%">Email Subject</th>
 							<th>Date Sent</th>
 							<th>Date Due</th>
-							<th>Total Cost</th>
+                            <th>Total Cost</th>
+                            <th>Total Payments</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
@@ -169,7 +170,8 @@ var spaCustomer = Vue.component("Customer", {
 							</td>
 							<td>{{ invoice.DateSent | moment }}</td>
 							<td>{{ invoice.InvoiceDueDate | moment }}</td>
-							<td>{{ invoice.TotalCost | money }}</td>
+                            <td>{{ invoice.TotalCost | money }}</td>
+                            <td>{{ invoice.TotalPayments | money }}</td>
 							<td class="text-center">
 								<span class="glyphicon" title="Is this invoice canceled?" v-bind:class="[invoice.IsCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
 								<span style="cursor: pointer" v-on:click="deleteInvoice(invoice.Id)" class="glyphicon glyphicon-trash"></span>
@@ -178,7 +180,7 @@ var spaCustomer = Vue.component("Customer", {
 					</tbody>
 					<tbody v-else>
 						<tr>
-							<td colspan="6" class="text-center">No matching records</td>
+							<td colspan="7" class="text-center">No matching records</td>
 						</tr>
 					</tbody>
 				</table>
@@ -268,220 +270,211 @@ var spaCustomer = Vue.component("Customer", {
 		</div>
 	</div>
 `,
-	props: ["title", "loading"],
+    props: ["title", "loading"],
     data: function () {
-		return { 
-			customerId: this.$route.params.id,
-			mode: {
-				type: null
-			},
-			customer: [],
-			contacts: [], contact: {},
-			invoices: [], invoice: {}
-		}
-	},
+        return {
+            customerId: this.$route.params.id,
+            mode: {
+                type: null
+            },
+            customer: [],
+            contacts: [], contact: {},
+            invoices: [], invoice: {}
+        }
+    },
     created() {
-		this.loading = true;
-		this.invoice = { CustomerId: this.customerId };
-		this.getCustomer(this.$route.params.id);
-	},
-	filters: {
-		moment: function(date) {
-			if (moment(date).isValid()) {
-				return moment(date).format("YYYY-MM-DD");
-			}
-			return null;
-		},
-		money: function(value) {
-			var moneyValue = parseInt(value);
-			if (typeof moneyValue !== "number") {
-				return value;
-			}
-			var formatter = new Intl.NumberFormat('en-US', {
-				style: 'currency',
-				currency: 'USD',
-				minimumFractionDigits: 0
-			});
-			return formatter.format(value);			
-		},
-		datePicker: function() {
-			this.datetimepicker();
-		}
-	},
-	methods: {
-		cancelEdit() {
-			this.customerId = null;
-			this.contact = null;
-		},
-		prepareInvoice() {
-			this.invoice = {
-				InvoiceDate: moment().format("YYYY-MM-DD"),
-				InvoiceDueDate: moment().endOf("month").format("YYYY-MM-DD"),
-				DatePaid: null,
-				DateSent: null,
-				EmailSubject: null,
-				CustomerId: this.customerId,
-				IsCanceled: false
-			}
-		},
-		prepareContact() {
-			this.contact = { 
-				CustomerId: customerId,
-				FirstName: null,
-				Surname: null,
-				EmailAddress: null,
-				IsVisible: true
-			}
-		},
-		getCustomer(id) {
-			fetch(`https://api.woolston.com.au/crm/v2/customer/read.php?id=${id}`)
-			.then(response => response.json())
-			.then((response) => {
-				this.customer = response.data[0];
-				this.getInvoices(id);
-			})
-			.catch((error) => console.log(error))
-			.finally(() => {
-				this.loading = false
-			})
-		},
-		getInvoices() {
-			fetch(`https://api.woolston.com.au/crm/v2/invoice/read.php`, {
-				method: "POST",
-				body: JSON.stringify({ CustomerId: this.customerId })
-			})
-			.then(response => response.json())
-			.then((response) => {
-				this.invoices = response.data;
-				this.getContacts(this.customerId);
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.loading = false
-			})
-		},
-		getContacts() {
-			fetch(`https://api.woolston.com.au/crm/v2/customercontact/read.php`, {
-				method: "POST",
-				body: JSON.stringify({ CustomerId: this.customerId })
-			})
-			.then(response => response.json())
-			.then((response) => {
-				this.contacts = response.data;
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.loading = false
-			})
-		},
-		getSingleContact(id) {
-			this.contact = this.contacts.filter((contact) => { return contact.Id == id})[0];
-			this.mode.type = "editContact";
-		},
-		getSingleInvoice(id) {
-			this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id})[0];
-			this.mode.type = "editInvoice";
-		},
-		saveCustomer() {
-			this.loading = true;
-			fetch(`https://api.woolston.com.au/crm/v2/customer/update.php`, {
-				method: "POST",
-				//contentType: "application/json; charset=utf-8",
-				body: JSON.stringify(this.customer)
-			})
-			.then((data) => {
-				toastr.success("Save was successful.");
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.loading = false
-			})
-		},
-		saveContact() {
-			this.loading = true;
-			let url = `https://api.woolston.com.au/crm/v2/customercontact/update.php`;
+        this.loading = true;
+        this.invoice = { CustomerId: this.customerId };
+        this.getCustomer(this.$route.params.id);
+    },
+    filters: {
+        moment: function (date) {
+            if (moment(date).isValid()) {
+                return moment(date).format("YYYY-MM-DD");
+            }
+            return null;
+        },
+        money: function (value) {
+            var moneyValue = parseInt(value);
+            if (typeof moneyValue !== "number") {
+                return value;
+            }
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            });
+            return formatter.format(value);
+        },
+        datePicker: function () {
+            this.datetimepicker();
+        }
+    },
+    methods: {
+        cancelEdit() {
+            this.customerId = null;
+            this.contact = null;
+        },
+        prepareInvoice() {
+            this.invoice = {
+                InvoiceDate: moment().format("YYYY-MM-DD"),
+                InvoiceDueDate: moment().endOf("month").format("YYYY-MM-DD"),
+                DatePaid: null,
+                DateSent: null,
+                EmailSubject: null,
+                CustomerId: this.customerId,
+                IsCanceled: false
+            }
+        },
+        prepareContact() {
+            this.contact = {
+                CustomerId: customerId,
+                FirstName: null,
+                Surname: null,
+                EmailAddress: null,
+                IsVisible: true
+            }
+        },
+        getCustomer(id) {
+            fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
+                .then(response => response.json())
+                .then((response) => {
+                    this.customer = response.data[0];
+                    this.getInvoices(id);
+                })
+                .catch((error) => console.log(error))
+                .finally(() => {
+                    this.loading = false
+                })
+        },
+        getInvoices() {
+            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`, {
+                method: "GET"
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    this.invoices = response.data;
+                    this.getContacts(this.customerId);
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.loading = false
+                })
+        },
+        getContacts() {
+            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/contacts`, {
+                method: "GET"
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    this.contacts = response.data;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.loading = false
+                })
+        },
+        getSingleContact(id) {
+            this.contact = this.contacts.filter((contact) => { return contact.Id == id })[0];
+            this.mode.type = "editContact";
+        },
+        getSingleInvoice(id) {
+            this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id })[0];
+            this.mode.type = "editInvoice";
+        },
+        saveCustomer() {
+            this.loading = true;
+            fetch(`https://api.woolston.com.au/crm/v3/customer/${this.customerId}`, {
+                method: "POST",
+                body: JSON.stringify(this.customer)
+            })
+                .then((data) => {
+                    toastr.success("Save was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.loading = false
+                })
+        },
+        saveContact() {
+            this.loading = true;
+            let url = `https://api.woolston.com.au/crm/v3/contact/${this.contact.Id}`;
 
-			if (this.contact.Id == null) {
-				url = `https://api.woolston.com.au/crm/v2/customercontact/create.php`;
-			}
+            if (this.contact.Id == null) {
+                url = `https://api.woolston.com.au/crm/v3/contact`;
+            }
 
-			fetch(url, {
-				method: "POST",
-				//contentType: "application/json; charset=utf-8",
-				body: JSON.stringify(this.contact)
-			})
-			.then((data) => {
-				toastr.success("Save was successful.");
-				this.contact = { CustomerId: this.customerId};
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.getContacts(this.customer.Id);
-				this.mode.type = null;
-				this.loading = false;
-			})
-		},
-		saveInvoice() {
-			this.loading = true;
-			let url = `https://api.woolston.com.au/crm/v2/invoice/update.php`;
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify(this.contact)
+            })
+                .then((data) => {
+                    toastr.success("Save was successful.");
+                    this.contact = { CustomerId: this.customerId };
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.getContacts(this.customer.Id);
+                    this.mode.type = null;
+                    this.loading = false;
+                })
+        },
+        saveInvoice() {
+            this.loading = true;
+            let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`;
 
-			if (this.contact.Id == null) {
-				url = `https://api.woolston.com.au/crm/v2/invoice/create.php`;
-			}
+            if (this.contact.Id == null) {
+                url = `https://api.woolston.com.au/crm/v3/invoice`;
+            }
 
-			fetch(url, {
-				method: "POST",
-				//contentType: "application/json; charset=utf-8",
-				body: JSON.stringify(this.invoice)
-			})
-			.then(response => response.text())
-			.then((data) => {
-				toastr.success("Save was successful.");
-				var result = JSON.parse(data);
-				var id = parseInt(result.Id);
-				location.href = `#/invoice/${id}`;
-			})
-			.catch((error) => {
-				console.log(error);
-			})
-			.finally(() => {
-				this.getInvoices(this.customer.Id);
-				this.mode.type = null;
-				this.loading = false;
-			})
-		},
-		deleteContact(id) {
-			this.loading = true;
-			fetch(`https://api.woolston.com.au/crm/v2/customercontact/delete.php`, {
-				method: "DELETE",
-				//contentType: "application/json; charset=utf-8",
-				body: JSON.stringify({ Id: id})
-			})
-			.then((data) => {
-				toastr.success("Delete was successful.");
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.getContacts(this.customer.Id);
-				this.loading = false
-			})
-		},
-		deleteInvoice(id) {
-			this.loading = true;
-			fetch(`https://api.woolston.com.au/crm/v2/invoice/delete.php`, {
-				method: "DELETE",
-				//contentType: "application/json; charset=utf-8",
-				body: JSON.stringify({ Id: id})
-			})
-			.then((data) => {
-				toastr.success("Delete was successful.");
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.getInvoices(this.customer.Id);
-				this.loading = false
-			})
-		}
-	},
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify(this.invoice)
+            })
+                .then(response => response.text())
+                .then((data) => {
+                    toastr.success("Save was successful.");
+                    var result = JSON.parse(data);
+                    var id = parseInt(result.Id);
+                    location.href = `#/invoice/${id}`;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.getInvoices(this.customer.Id);
+                    this.mode.type = null;
+                    this.loading = false;
+                })
+        },
+        deleteContact(id) {
+            this.loading = true;
+            fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
+                method: "DELETE"
+            })
+                .then((data) => {
+                    toastr.success("Delete was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.getContacts(this.customer.Id);
+                    this.loading = false
+                })
+        },
+        deleteInvoice(id) {
+            this.loading = true;
+            fetch(`https://api.woolston.com.au/crm/v2/invoice/${id}`, {
+                method: "DELETE"
+            })
+                .then((data) => {
+                    toastr.success("Delete was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.getInvoices(this.customer.Id);
+                    this.loading = false
+                })
+        }
+    },
     props: ["title"]
 });

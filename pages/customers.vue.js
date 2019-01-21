@@ -25,28 +25,28 @@ var spaCustomers = Vue.component("Customers", {
 	</div>
     `,
     data: function () {
-		return { 
-			loading: this.loading,
-			customers: []
-		}
-	},
-	props: ["loading"],
+        return {
+            loading: this.loading,
+            customers: []
+        }
+    },
+    props: ["loading"],
     created() {
         this.getCustomers()
     },
     methods: {
-		getCustomers() {
-			this.loading = true;
-			fetch(`https://api.woolston.com.au/crm/v2/customer/read.php`)
-			.then(response => response.json())
-			.then((response) => {
-				this.customers = response.data;
-			})
-			.catch(error => console.log(error))
-			.finally(() => {
-				this.loading = false;
-			})
-		}
+        getCustomers() {
+            this.loading = true;
+            fetch(`https://api.woolston.com.au/crm/v3/customers`)
+                .then(response => response.json())
+                .then((response) => {
+                    this.customers = response.data;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.loading = false;
+                })
+        }
     },
     props: ["title"]
 });
