@@ -23,7 +23,13 @@
 				<router-view />
 			</div>
 		</div>
-		<div v-show="this.loading" class="active page-overlay"><div class="k-loading-mask"><div class="k-loading-color"></div></div></div>
+
+		<div v-show="this.loading" class="loader">
+			<svg viewBox="0 0 32 32" width="96" height="96">
+				<circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+			</svg>
+		</div>
+	
 	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
