@@ -24,7 +24,7 @@ var spaCustomers = Vue.component("Customers", {
 		
 	</div>
     `,
-    data: function () {
+    data () {
         return {
             loading: this.loading,
             customers: []
