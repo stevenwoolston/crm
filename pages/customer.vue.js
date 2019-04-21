@@ -18,8 +18,9 @@ var spaCustomer = Vue.component("Customer", {
 		</ul>
 
 		<div class="tab-content">
-			<CustomerInfo></CustomerInfo>
-			<CustomerInvoices></CustomerInvoices>
+			<CustomerInfo :customerId="customerId"></CustomerInfo>
+			<CustomerInvoices :customerId="customerId"></CustomerInvoices>
+			<CustomerContacts :customerId="customerId"></CustomerContacts>
 		</div>
 	</div>
 `,

@@ -54,9 +54,9 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
         </table>
     </div>
 `,
+props: ["title", "loading", "customerId"],
     data () {
         return {
-            customerId: this.$route.params.id,
             invoices: [], invoice: {}
         }
     },
@@ -150,7 +150,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
                 })
         },
         deleteInvoice(id) {
-            fetch(`https://api.woolston.com.au/crm/v2/invoice/${id}`, {
+            fetch(`https://api.woolston.com.au/crm/v3/invoice/${id}`, {
                 method: "DELETE"
             })
                 .then((data) => {

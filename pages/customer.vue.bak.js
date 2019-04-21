@@ -475,6 +475,5 @@ var spaCustomer = Vue.component("Customer", {
                     this.loading = false
                 })
         }
-    },
-    props: ["title"]
+    }
 });
