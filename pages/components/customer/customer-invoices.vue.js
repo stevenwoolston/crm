@@ -4,11 +4,9 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
 
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
-                <button class="btn btn-primary pull-right" v-on:click="prepareInvoice(); invoice.CustomerId = customerId">Create Invoice</button>
+                <router-link class="btn btn-primary pull-right" :to="{name: 'Invoice', params: { customerId: this.customerId }}">Create Invoice</router-link>
             </div>
         </div>
-
-        <InvoiceInfo :Id="invoice.id"></InvoiceInfo>
 
         <table class="table table-bordered">
             <colgroup>
@@ -60,9 +58,14 @@ props: ["title", "loading", "customerId"],
             invoices: [], invoice: {}
         }
     },
-    created() {
-        this.invoice = { CustomerId: this.customerId };
-        this.getCustomer(this.$route.params.id);
+    computed: {
+        invoiceId() {
+            return this.invoice ? this.invoice.Id : 0
+        }
+    },
+    mounted() {
+        this.getInvoices();
+        this.resetInvoice();
     },
     filters: {
         moment: function (date) {
@@ -88,66 +91,32 @@ props: ["title", "loading", "customerId"],
         }
     },
     methods: {
-        cancelEdit() {
-            this.customerId = null;
-        },
-        prepareInvoice() {
+        resetInvoice() {
             this.invoice = {
+                CustomerId: this.customerId,
                 InvoiceDate: moment().format("YYYY-MM-DD"),
                 InvoiceDueDate: moment().endOf("month").format("YYYY-MM-DD"),
                 DatePaid: null,
                 DateSent: null,
                 EmailSubject: null,
-                CustomerId: this.customerId,
                 IsCanceled: false
             }
         },
-        getCustomer(id) {
-            fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
-                .then(response => response.json())
-                .then((response) => {
-                    this.customer = response.data[0];
-                    this.getInvoices(id);
-                })
-                .catch((error) => console.log(error))
-                .finally(() => {
-                    // this.loading = false
-                })
-        },
         getInvoices() {
-            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`)
-                .then(response => response.json())
-                .then((response) => {
-                    this.invoices = response.data;
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    // this.loading = false
-                })
+            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`, {
+                method: "GET"
+            })
+            .then(response => response.json())
+            .then((response) => {
+                this.invoices = response.data;
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                // this.loading = false
+            })
         },
         getSingleInvoice(id) {
             this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id })[0];
-        },
-        saveInvoice() {
-            let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`;
-
-            fetch(url, {
-                method: "POST",
-                body: JSON.stringify(this.invoice)
-            })
-                .then(response => response.text())
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                    var result = JSON.parse(data);
-                    var id = parseInt(result.Id);
-                    location.href = `#/invoice/${id}`;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    this.getInvoices(this.customer.Id);
-                })
         },
         deleteInvoice(id) {
             fetch(`https://api.woolston.com.au/crm/v3/invoice/${id}`, {

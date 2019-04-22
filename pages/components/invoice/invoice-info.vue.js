@@ -1,7 +1,7 @@
 var spaInvoiceInfo = Vue.component("InvoiceInfo", {
     template: `
     <div class="col-xs-12 form-container">
-        <form class="form-horizontal" style="margin-bottom: 10px;">
+        <form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveInvoice()">
             <div class="form-group">
                 <label for="InvoiceDate" class="col-sm-2 control-label">Invoice Date</label>
                 <div class="col-sm-4 col-md-3 col-lg-2">
@@ -51,7 +51,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
-                <button type="button" v-on:click="saveInvoice()" class="btn btn-success btnSave pull-right">Save</button>
+                <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
                 <button type="button" class="btn btn-default pull-right">Cancel</button>
                 <input type="hidden" id="Id" name="Id" v-model="invoice.Id" />
                 <input type="hidden" id="CustomerId" name="CustomerId" v-model="invoice.CustomerId" value="{this.customerId}" />
@@ -59,17 +59,14 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         </form>
     </div>
 `,
-    props: ["title", "loading", "Id"],
+    props: ["title", "loading", "customerId", "invoice"],
     data() {
         return {
-            customerId: this.$route.params.id,
-            customer: [],
-            invoices: [], invoice: {}
+            customer: {}
         }
     },
     created() {
-        this.invoice = { CustomerId: this.customerId };
-        this.getCustomer(this.$route.params.id);
+        this.getCustomer(this.customerId)
     },
     filters: {
         moment: function (date) {
@@ -95,19 +92,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         }
     },
     methods: {
-        cancelEdit() {
-            this.customerId = null;
-        },
-        prepareInvoice() {
-            this.invoice = {
-                InvoiceDate: moment().format("YYYY-MM-DD"),
-                InvoiceDueDate: moment().endOf("month").format("YYYY-MM-DD"),
-                DatePaid: null,
-                DateSent: null,
-                EmailSubject: null,
-                CustomerId: this.customerId,
-                IsCanceled: false
-            }
+        cancel: function() {
+            this.$emit('cancel');
         },
         getCustomer(id) {
             fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
@@ -120,42 +106,42 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     // this.loading = false
                 })
         },
+        getInvoices() {
+            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`, {
+                method: "GET"
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    this.contacts = response.data;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    // this.loading = false
+                })
+        },
         getSingleInvoice(id) {
             this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id })[0];
         },
         saveInvoice() {
             let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`;
 
+            if (this.invoice.Id == null) {
+                url = `https://api.woolston.com.au/crm/v3/invoice`;
+            }
+
             fetch(url, {
                 method: "POST",
                 body: JSON.stringify(this.invoice)
             })
-                .then(response => response.text())
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                    var result = JSON.parse(data);
-                    var id = parseInt(result.Id);
-                    location.href = `#/invoice/${id}`;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    // this.getInvoices(this.customer.Id);
-                })
-        },
-        deleteInvoice(id) {
-            fetch(`https://api.woolston.com.au/crm/v2/invoice/${id}`, {
-                method: "DELETE"
+            .then(response => response.json())
+            .then((response) => {
+                this.invoice.Id = response.data.Id;
+                toastr.success("Save was successful.");
             })
-                .then((data) => {
-                    toastr.success("Delete was successful.");
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    this.getInvoices(this.customer.Id);
-                    // this.loading = false
-                })
+            .catch(error => console.log(error))
+            .finally(() => {
+                this.$emit("invoice-saved", this.invoice);
+            })
         }
     }
 });
