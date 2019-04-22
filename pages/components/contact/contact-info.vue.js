@@ -116,7 +116,9 @@ var spaContactInfo = Vue.component("ContactInfo", {
             })
             .then(response => response.json())
             .then((response) => {
-                this.contact.Id = response.data.Id;
+                if (this.contact.Id == null) {
+                    this.contact.Id = response.data.Id;
+                }
                 toastr.success("Save was successful.");
             })
             .catch(error => console.log(error))

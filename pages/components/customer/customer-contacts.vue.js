@@ -8,7 +8,7 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
             </div>
         </div>
 
-        <ContactInfo :customerId="customerId" :contact="contact" @contact-saved="getContacts" @cancel="resetContact"></ContactInfo>
+        <ContactInfo :customerId="customerId" :contact="selectedContact" @contact-saved="getContacts" @cancel="resetContact"></ContactInfo>
 
         <table class="table table-bordered">
             <colgroup>
@@ -26,7 +26,7 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
             <tbody v-if="contacts.length > 0">
                 <tr v-for="contact in contacts" 
                     :key="contact.Id" 
-                    :class="{ 'highlighted': contact.Id == this.contactId }">
+                    :class="{ highlighted: contact.Id == (this.selectedContact ? this.selectedContact.Id : 0) }">
                     <td v-on:click="getSingleContact(contact.Id)"><a href="#">{{ contact.FirstName }} {{ contact.Surname }}</a></td>
                     <td>{{ contact.EmailAddress }}</td>
                     <td class="text-center">
@@ -46,12 +46,12 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
 props: ["title", "loading", "customerId"],
 data () {
     return {
-        contacts: [], contact: {}
+        contacts: [], selectedContact: {},
     }
 },
 computed: {
     contactId() {
-        return this.contact ? this.contact.Id : 0
+        return this.selectedContactId ? this.selectedContactId.Id : 0
     }
 },
 mounted() {
@@ -83,7 +83,7 @@ filters: {
 },
 methods: {
     resetContact() {
-        this.contact = {
+        this.selectedContact = {
             CustomerId: this.customerId,
             FirstName: null,
             Surname: null,
@@ -105,7 +105,7 @@ methods: {
             })
     },
     getSingleContact(id) {
-        this.contact = this.contacts.filter((contact) => { return contact.Id == id })[0];
+        this.selectedContact = this.contacts.filter((contact) => { return contact.Id == id })[0];
     },
     deleteContact(id) {
         fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
