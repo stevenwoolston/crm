@@ -4,17 +4,17 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
 
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
-                <button type="button" class="btn btn-primary pull-right" v-on:click="prepareContact()">Create Contact</button>
+                <button type="button" class="btn btn-primary pull-right" v-on:click="resetContact">Create Contact</button>
             </div>
         </div>
-        
-        <ContactInfo :customerId="customerId"></ContactInfo>
+
+        <ContactInfo :customerId="customerId" :contact="contact" @contact-saved="getContacts" @cancel="resetContact"></ContactInfo>
 
         <table class="table table-bordered">
             <colgroup>
                 <col style="text-align: left"/>
                 <col style="text-align: left; />
-                <col style="text-align: center; max-width: 10%;" />
+                <col style="text-align: center; width: 100px;" />
             </colgroup>
             <thead>
                 <tr>
@@ -24,7 +24,9 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
                 </tr>
             </thead>
             <tbody v-if="contacts.length > 0">
-                <tr v-for="contact in contacts" :key="contact.Id">
+                <tr v-for="contact in contacts" 
+                    :key="contact.Id" 
+                    :class="{ 'highlighted': contact.Id == this.contactId }">
                     <td v-on:click="getSingleContact(contact.Id)"><a href="#">{{ contact.FirstName }} {{ contact.Surname }}</a></td>
                     <td>{{ contact.EmailAddress }}</td>
                     <td class="text-center">
@@ -44,13 +46,17 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
 props: ["title", "loading", "customerId"],
 data () {
     return {
-        contactId: 0,
-        contacts: [], contact: {},
+        contacts: [], contact: {}
     }
 },
-created() {
-    this.contact = { CustomerId: this.customerId };
-    this.getContacts()
+computed: {
+    contactId() {
+        return this.contact ? this.contact.Id : 0
+    }
+},
+mounted() {
+    this.getContacts();
+    this.resetContact();
 },
 filters: {
     moment: function (date) {
@@ -76,9 +82,9 @@ filters: {
     }
 },
 methods: {
-    prepareContact() {
+    resetContact() {
         this.contact = {
-            CustomerId: customerId,
+            CustomerId: this.customerId,
             FirstName: null,
             Surname: null,
             EmailAddress: null,
@@ -101,22 +107,6 @@ methods: {
     getSingleContact(id) {
         this.contact = this.contacts.filter((contact) => { return contact.Id == id })[0];
     },
-    saveContact() {
-        let url = `https://api.woolston.com.au/crm/v3/contact/${this.contact.Id}`;
-
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(this.contact)
-        })
-            .then((data) => {
-                toastr.success("Save was successful.");
-                this.contact = { CustomerId: this.customerId };
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-                this.getContacts(this.customer.Id);
-            })
-    },
     deleteContact(id) {
         fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
             method: "DELETE"
@@ -126,7 +116,7 @@ methods: {
             })
             .catch(error => console.log(error))
             .finally(() => {
-                this.getContacts(this.customer.Id);
+                this.getContacts(this.customerId);
             })
     }
 }

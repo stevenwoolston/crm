@@ -1,23 +1,23 @@
 var spaContactInfo = Vue.component("ContactInfo", {
     template: `
     <div class="col-xs-12 form-container">
-        <form class="form-horizontal" style="margin-bottom: 10px;">
+        <form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveContact()">
             <div class="form-group">
                 <label for="FirstName" class="col-sm-2 control-label">First Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="FirstName" id="FirstName" v-model="contact.FirstName">
+                    <input type="text" required class="form-control" name="FirstName" id="FirstName" v-model="contact.FirstName">
                 </div>
             </div>
             <div class="form-group">
                 <label for="Surname" class="col-sm-2 control-label">Last Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="Surname" id="Surname" v-model="contact.Surname">
+                    <input type="text" required class="form-control" name="Surname" id="Surname" v-model="contact.Surname">
                 </div>
             </div>
             <div class="form-group">
                 <label for="EmailAddress" class="col-sm-2 control-label">Email Address</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="EmailAddress" id="EmailAddress" v-model="contact.EmailAddress">
+                    <input type="text" required class="form-control" name="EmailAddress" id="EmailAddress" v-model="contact.EmailAddress">
                 </div>
             </div>
             <div class="form-group">
@@ -29,24 +29,25 @@ var spaContactInfo = Vue.component("ContactInfo", {
                     </label>
                 </div>
             </div>
-            <div class="col-xs-12 table-controls">
-                <button type="button" v-on:click="saveContact()" class="btn btn-success btnSave pull-right">Save</button>
-                <button type="button" v-on:click="contact = { CustomerId: customerId };mode.type = null;" class="btn btn-default pull-right">Cancel</button>
-                <input type="hidden" id="Id" name="Id" v-model="contact.Id" />
-                <input type="hidden" id="CustomerId" name="CustomerId" v-model="contact.CustomerId" />
+            <div style="margin: 10px 0">
+                <div class="col-xs-12 table-controls">
+                    <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
+                    <button type="button" v-on:click="cancel" class="btn btn-default pull-right">Cancel</button>
+                    <input type="hidden" id="Id" name="Id" v-model="contact.Id" />
+                    <input type="hidden" id="CustomerId" name="CustomerId" v-model="contact.CustomerId" />
+                </div>
             </div>
         </form>
     </div>
 `,
-    props: ["title", "loading", "customerId"],
+    props: ["title", "loading", "customerId", "contact"],
     data() {
         return {
-            customer: {}, contact: {}
+            customer: {}
         }
     },
     created() {
-        this.prepareContact();
-        this.getCustomer(this.customerId);
+        this.getCustomer(this.customerId)
     },
     filters: {
         moment: function (date) {
@@ -72,14 +73,8 @@ var spaContactInfo = Vue.component("ContactInfo", {
         }
     },
     methods: {
-        prepareContact() {
-            this.contact = {
-                CustomerId: this.customerId,
-                FirstName: null,
-                Surname: null,
-                EmailAddress: null,
-                IsVisible: true
-            }
+        cancel: function() {
+            this.$emit('cancel');
         },
         getCustomer(id) {
             fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
@@ -102,15 +97,13 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    this.loading = false
+                    // this.loading = false
                 })
         },
         getSingleContact(id) {
             this.contact = this.contacts.filter((contact) => { return contact.Id == id })[0];
-            this.mode.type = "editContact";
         },
         saveContact() {
-            this.loading = true;
             let url = `https://api.woolston.com.au/crm/v3/contact/${this.contact.Id}`;
 
             if (this.contact.Id == null) {
@@ -121,31 +114,15 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 method: "POST",
                 body: JSON.stringify(this.contact)
             })
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                    this.contact = { CustomerId: this.customerId };
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    this.getContacts(this.customer.Id);
-                    this.mode.type = null;
-                    this.loading = false;
-                })
-        },
-        deleteContact(id) {
-            this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
-                method: "DELETE"
+            .then(response => response.json())
+            .then((response) => {
+                this.contact.Id = response.data.Id;
+                toastr.success("Save was successful.");
             })
-                .then((data) => {
-                    toastr.success("Delete was successful.");
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    this.getContacts(this.customer.Id);
-                    this.loading = false
-                })
+            .catch(error => console.log(error))
+            .finally(() => {
+                this.$emit("contact-saved", this.contact);
+            })
         }
-
     }
 });
