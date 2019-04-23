@@ -26,7 +26,7 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
             <tbody v-if="contacts.length > 0">
                 <tr v-for="contact in contacts" 
                     :key="contact.Id" 
-                    :class="{ highlighted: contact.Id == (this.selectedContact ? this.selectedContact.Id : 0) }">
+                    :class="{ highlighted: isSelectedContact(contact) }">
                     <td v-on:click="getSingleContact(contact.Id)"><a href="#">{{ contact.FirstName }} {{ contact.Surname }}</a></td>
                     <td>{{ contact.EmailAddress }}</td>
                     <td class="text-center">
@@ -82,6 +82,9 @@ filters: {
     }
 },
 methods: {
+    isSelectedContact(contact) {
+        return contact == this.selectedContact;
+    },
     resetContact() {
         this.selectedContact = {
             CustomerId: this.customerId,
