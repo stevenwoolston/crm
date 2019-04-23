@@ -50,12 +50,6 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     </label>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Total Cost</label>
-                <div class="col-sm-4">
-                    <p class="form-control-static"><strong>{{ invoice.TotalCost | money }}</strong></p>
-                </div>
-            </div>
             <div class="col-xs-12 table-controls">
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
                 <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId }}">Cancel</router-link>
