@@ -32,7 +32,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
                 <tr v-for="invoice in invoices" :key="invoice.Id">
                     <td>{{ invoice.InvoiceDate | moment }}</td>
                     <td>
-                        <router-link :to="{name: 'Invoice', params: {id: invoice.Id}}">{{ invoice.EmailSubject }}</router-link>
+                        <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: customerId}}">{{ invoice.EmailSubject }}</router-link>
                     </td>
                     <td>{{ invoice.DateSent | moment }}</td>
                     <td>{{ invoice.InvoiceDueDate | moment }}</td>

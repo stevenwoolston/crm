@@ -50,23 +50,34 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     </label>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Total Cost</label>
+                <div class="col-sm-4">
+                    <p class="form-control-static"><strong>{{ invoice.TotalCost | money }}</strong></p>
+                </div>
+            </div>
             <div class="col-xs-12 table-controls">
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
-                <button type="button" class="btn btn-default pull-right">Cancel</button>
+                <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId }}">Cancel</router-link>
                 <input type="hidden" id="Id" name="Id" v-model="invoice.Id" />
                 <input type="hidden" id="CustomerId" name="CustomerId" v-model="invoice.CustomerId" value="{this.customerId}" />
             </div>
         </form>
     </div>
 `,
-    props: ["title", "loading", "customerId", "invoice"],
+    props: ["title", "loading", "invoice", "customerId"],
     data() {
         return {
-            customer: {}
+            
         }
     },
     created() {
-        this.getCustomer(this.customerId)
+        
+    },
+    computed: {
+        invoiceId() {
+            return this.invoice.Id;
+        }
     },
     filters: {
         moment: function (date) {
@@ -92,38 +103,11 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         }
     },
     methods: {
-        cancel: function() {
-            this.$emit('cancel');
-        },
-        getCustomer(id) {
-            fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
-                .then(response => response.json())
-                .then((response) => {
-                    this.customer = response.data[0];
-                })
-                .catch((error) => console.log(error))
-                .finally(() => {
-                    // this.loading = false
-                })
-        },
-        getInvoices() {
-            fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`, {
-                method: "GET"
-            })
-                .then(response => response.json())
-                .then((response) => {
-                    this.contacts = response.data;
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    // this.loading = false
-                })
-        },
-        getSingleInvoice(id) {
-            this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id })[0];
+        refreshInvoice: function() {
+            this.$emit('refresh-invoice');
         },
         saveInvoice() {
-            let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`;
+            let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoiceId}`;
 
             if (this.invoice.Id == null) {
                 url = `https://api.woolston.com.au/crm/v3/invoice`;
@@ -135,7 +119,9 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             })
             .then(response => response.json())
             .then((response) => {
-                this.invoice.Id = response.data.Id;
+                if (this.invoice.Id == null) {
+                    this.invoice.Id = response.data.Id;
+                }
                 toastr.success("Save was successful.");
             })
             .catch(error => console.log(error))
