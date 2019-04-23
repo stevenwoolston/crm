@@ -17,10 +17,10 @@
 
 <body>
 	<div id="app" v-cloak>
-		<Toolbar></Toolbar>
+		<Toolbar :title="title"></Toolbar>
 		<div class="container-fluid">
 			<div class="row">
-				<router-view />
+				<router-view :title="title" :loading="loading" />
 			</div>
 		</div>
 

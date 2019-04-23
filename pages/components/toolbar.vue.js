@@ -9,7 +9,7 @@ var spaToolbar = Vue.component('Toolbar', {
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<router-link class="navbar-brand" :to="{name: 'Customers'}">Woolston Web Design CRM</router-link>
+				<router-link class="navbar-brand" :to="{name: 'Customers'}">{{ this.title }}</router-link>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
