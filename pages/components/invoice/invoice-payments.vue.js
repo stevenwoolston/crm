@@ -86,7 +86,11 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
         }
     },
     created() {
-        this.getInvoicePayments();
+        if (this.invoiceId > 0) {
+            this.getInvoicePayments();
+        } else {
+            this.resetInvoicePayment();    
+        }
     },
     filters: {
         moment: function (date) {

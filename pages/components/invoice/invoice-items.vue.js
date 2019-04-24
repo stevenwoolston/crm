@@ -90,7 +90,11 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         }
     },
     created() {
-        this.getInvoiceItems();
+        if (this.invoiceId > 0) {
+            this.getInvoiceItems();
+        } else {
+            this.resetInvoiceItem();    
+        }
     },
     filters: {
         moment: function (date) {

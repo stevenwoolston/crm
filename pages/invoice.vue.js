@@ -2,19 +2,18 @@ var spaInvoice = Vue.component("Invoice", {
 template: `
 	<div class="col-xs-12" id="invoice">
 		
-		<div style="margin: 10px 0">
+		<div v-show="this.invoice.Id > 0">
 			<div class="col-xs-12 table-controls">
-				<div class="pull-left">
-					<h4 class="text-success">Total Cost: {{ invoice.TotalCost | money }}</h4>
-					<h4 class="text-danger">Total Payments: {{ invoice.TotalPayments | money }}</h4>
+				<div>
+					<h4 style="margin-left: 20px;" class="text-success pull-right">Total Cost: {{ invoice.TotalCost | money }}</h4>
+					<h4 class="text-danger pull-right">Total Payments: {{ invoice.TotalPayments | money }}</h4>
 				</div>
-				<button type="button" class="btn btn-primary pull-right" v-on:click="resetInvoice">Create Invoice</button>
 			</div>
 		</div>
 
 		<InvoiceInfo :invoice="invoice" :customerId="customerId" @refresh-invoice="getInvoice"></InvoiceInfo>
 
-		<div class="col-xs-12" style="padding: 20px 0;">
+		<div v-show="this.invoice.Id > 0" class="col-xs-12" style="padding: 20px 0;">
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs clearfix" role="tablist">
 				<li role="presentation" class="active">
@@ -41,14 +40,15 @@ template: `
 `,
     data() {
         return {
-			invoiceId: this.$route.params.id,
-			customerId: this.$route.params.customerId,
+			invoiceId: parseInt(this.$route.params.id),
+			customerId: parseInt(this.$route.params.customerId),
 			invoice: {}
         }
     },
     created() {
         if (this.invoiceId > 0) {
-            this.getInvoice(this.invoiceId);
+			this.invoice.Id = this.invoiceId;
+            this.getInvoice();
 		} else {
 			this.resetInvoice();
 		}
@@ -76,9 +76,10 @@ template: `
     methods: {
 		resetInvoice() {
 			this.invoice = {
+				Id: null,
 				CustomerId: this.customerId,
 				InvoiceDate: moment().format("YYYY-MM-DD"),
-				InvoiceDueDate: null,
+				InvoiceDueDate: moment().add(14, "days").format("YYYY-MM-DD"),
 				EmailSubject: null,
 				DateSent: null,
 				DatePaid: null,
@@ -86,10 +87,11 @@ template: `
 			}
 		},
         getInvoice() {
-            fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoiceId}`)
+            fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
-                    this.invoice = response.data[0];
+					this.invoice = response.data[0];
+					this.invoiceId = this.invoice.Id;
                 })
                 .catch(error => console.log(error))
                 .finally(() => {

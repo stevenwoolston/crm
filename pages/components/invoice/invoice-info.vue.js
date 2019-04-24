@@ -98,7 +98,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
     },
     methods: {
         refreshInvoice: function() {
-            this.$emit('refresh-invoice');
+            this.$emit('refresh-invoice', this.invoice);
         },
         saveInvoice() {
             let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoiceId}`;
@@ -120,7 +120,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             })
             .catch(error => console.log(error))
             .finally(() => {
-                this.$emit("invoice-saved", this.invoice);
+                this.refreshInvoice();
             })
         }
     }

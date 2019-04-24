@@ -4,7 +4,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
 
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
-                <router-link class="btn btn-primary pull-right" :to="{name: 'Invoice', params: { customerId: this.customerId }}">Create Invoice</router-link>
+                <router-link class="btn btn-primary pull-right" :to="{name: 'Invoice', params: { customerId: this.customerId, id: 0 }}">Create Invoice</router-link>
             </div>
         </div>
 
@@ -127,7 +127,7 @@ props: ["title", "loading", "customerId"],
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    this.getInvoices(this.customer.Id);
+                    this.getInvoices(this.customerId);
                 })
         }
     }
