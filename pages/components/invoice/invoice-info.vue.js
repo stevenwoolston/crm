@@ -2,55 +2,50 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
     template: `
     <div class="col-xs-12 form-container">
         <form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveInvoice()">
-            <div class="form-group">
-                <label for="InvoiceDate" class="col-sm-2 control-label">Invoice Date</label>
-                <div class="col-sm-4 col-md-3 col-lg-2">
-                    <div class="input-group date">
-                        <DatePicker v-model="invoice.InvoiceDate"></DatePicker>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="InvoiceDate" class="col-sm-2 control-label">Invoice Date</label>
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <div class="input-group date">
+                            <DatePicker v-model="invoice.InvoiceDate"></DatePicker>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="InvoiceDueDate" class="col-sm-2 control-label">Due Date</label>
-                <div class="col-sm-4 col-md-3 col-lg-2">
-                    <div class="input-group date">
-                        <DatePicker v-model="invoice.InvoiceDueDate"></DatePicker>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                <div class="form-group">
+                    <label for="InvoiceDueDate" class="col-sm-2 control-label">Due Date</label>
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <div class="input-group date">
+                            <DatePicker v-model="invoice.InvoiceDueDate"></DatePicker>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="EmailSubject" class="col-sm-2 control-label">Email Subject</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" name="EmailSubject" id="EmailSubject" v-model="invoice.EmailSubject">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="DatePaid" class="col-sm-2 control-label">Date Paid</label>
-                <div class="col-sm-4 col-md-3 col-lg-2">
-                    <div class="input-group date">
-                        <DatePicker v-model="invoice.DatePaid"></DatePicker>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                <div class="form-group">
+                    <label for="EmailSubject" class="col-sm-2 control-label">Email Subject</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="EmailSubject" id="EmailSubject" v-model="invoice.EmailSubject">
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="IsCanceled" class="col-sm-2 control-label">Canceled?</label>
-                <div class="col-sm-4">
-                    <label class="checkbox">
-                        <input type="checkbox" name="IsCanceled" id="IsCanceled" v-model="invoice.IsCanceled">
-                        <span class="glyphicon"></span>
-                    </label>
+                <div class="form-group">
+                    <label for="DatePaid" class="col-sm-2 control-label">Date Paid</label>
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <div class="input-group date">
+                            <DatePicker v-model="invoice.DatePaid"></DatePicker>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
+                <button type="button" :class="invoice.IsCanceled ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
+                    v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
                 <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId }}">Cancel</router-link>
                 <input type="hidden" id="Id" name="Id" v-model="invoice.Id" />
@@ -97,8 +92,12 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         }
     },
     methods: {
-        refreshInvoice: function() {
+        refreshInvoice () {
             this.$emit('refresh-invoice', this.invoice);
+        },
+        cancelInvoice(willBeCanceled) {
+            this.invoice.IsCanceled = willBeCanceled;
+            this.saveInvoice();
         },
         saveInvoice() {
             let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoiceId}`;

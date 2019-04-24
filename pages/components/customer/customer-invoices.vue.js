@@ -39,7 +39,8 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
                     <td>{{ invoice.TotalCost | money }}</td>
                     <td>{{ invoice.TotalPayments | money }}</td>
                     <td class="text-center">
-                        <span class="glyphicon" title="Is this invoice canceled?" v-bind:class="[invoice.IsCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
+                        <span class="glyphicon" title="Is this invoice active?" 
+                            v-bind:class="[!invoice.IsCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
                         <span style="cursor: pointer" v-on:click="deleteInvoice(invoice.Id)" class="glyphicon glyphicon-trash"></span>
                     </td>
                 </tr>

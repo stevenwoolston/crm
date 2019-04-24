@@ -28,7 +28,6 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                     <td class="text-center">
                         <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoiceItem" 
                             v-on:click="getSingleInvoiceItem(invoiceItem.Id);"></span>
-                        <span class="glyphicon" title="Is this invoice canceled?" v-bind:class="[!invoiceItem.isCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
                         <span style="cursor: pointer" v-on:click="deleteInvoiceItem(invoiceItem.Id)" class="glyphicon glyphicon-trash"></span>
                     </td>
                 </tr>
