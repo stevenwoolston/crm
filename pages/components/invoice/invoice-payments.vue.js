@@ -79,10 +79,11 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
 
     </div>
 `,
-    props: ["title", "loading", "invoiceId"],
+    props: ["invoiceId"],
     data() {
         return {
-            invoicePayments: [], invoicePayment: {}
+            invoicePayments: [], invoicePayment: {},
+            loading: false
         }
     },
     created() {
@@ -125,6 +126,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
             }
         },
         getInvoicePayments() {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoiceId}/payments`)
                 .then(response => response.json())
                 .then((response) => {
@@ -132,13 +134,14 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-
+                    this.loading = false;
                 })
         },
         getSingleInvoicePayment(id) {
             this.invoicePayment = this.invoicePayments.filter((invoicePayment) => { return invoicePayment.Id == id })[0];
         },
         saveInvoicePayment() {
+            this.loading = true;
             let url = `https://api.woolston.com.au/crm/v3/payment/${this.invoicePayment.Id}`;
 
             if (this.invoicePayment.Id == null) {
@@ -149,18 +152,20 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                 method: "POST",
                 body: JSON.stringify(this.invoicePayment)
             })
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                    this.getInvoicePayments();
-                    this.resetInvoicePayment();
-                    this.$emit('refresh-invoice');
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    $("#manageInvoicePayment").modal("hide");
-                })
+            .then((data) => {
+                toastr.success("Save was successful.");
+                this.getInvoicePayments();
+                this.resetInvoicePayment();
+                this.$emit('refresh-invoice');
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                $("#manageInvoicePayment").modal("hide");
+                this.loading = false;
+            })
         },
         deleteInvoicePayment(id) {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/payment/${id}`, {
                 method: "DELETE"
             })
@@ -171,6 +176,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                 .finally(() => {
                     this.getInvoicePayments();
                     this.$emit('refresh-invoice');
+                    this.loading = false;
                 })
         }
     }

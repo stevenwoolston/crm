@@ -47,17 +47,17 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 <button type="button" :class="invoice.IsCanceled ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
                     v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
-                <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId }}">Cancel</router-link>
+                <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId, tabName: 'invoices' }}">Cancel</router-link>
                 <input type="hidden" id="Id" name="Id" v-model="invoice.Id" />
                 <input type="hidden" id="CustomerId" name="CustomerId" v-model="invoice.CustomerId" value="{this.customerId}" />
             </div>
         </form>
     </div>
 `,
-    props: ["title", "loading", "invoice", "customerId"],
+    props: ["invoice", "customerId"],
     data() {
         return {
-            
+            loading: false
         }
     },
     created() {
@@ -100,6 +100,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             this.saveInvoice();
         },
         saveInvoice() {
+            this.loading = true;
             let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoiceId}`;
 
             if (this.invoice.Id == null) {

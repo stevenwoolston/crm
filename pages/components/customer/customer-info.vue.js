@@ -1,84 +1,97 @@
 var spaCustomerInfo = Vue.component("CustomerInfo", {
 	template: `
-	<div role="tabpanel" class="tab-pane active" id="customer">
+	<div role="tabpanel" class="tab-pane" id="customer-details">
+
 		<div class="col-xs-12 form-container">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="Name" class="col-sm-2 control-label">Name</label>
-					<div class="col-sm-10">
-						<input type="text" required class="form-control" name="Name" id="Name" placeholder="Customer Name" v-model="customer.Name">
+			<form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveCustomer()">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="Name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" required class="form-control" name="Name" id="Name" placeholder="Customer Name" v-model="customer.Name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Address" class="col-sm-2 control-label">Address</label>
+						<div class="col-sm-10">
+							<input type="text" required class="form-control" name="Address" id="Address" placeholder="Customer Address" v-model="customer.Address">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Suburb" class="col-sm-2 control-label">Suburb</label>
+						<div class="col-sm-10">
+							<input type="text" required class="form-control" name="Suburb" id="Suburb" placeholder="Customer Suburb" v-model="customer.Suburb">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Province" class="col-sm-2 control-label">State</label>
+						<div class="col-sm-10">
+							<input type="text" required class="form-control" name="State" id="State" placeholder="Customer State" v-model="customer.State">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Postcode" class="col-sm-2 control-label">Postcode</label>
+						<div class="col-sm-4">
+							<input type="text" required class="form-control" name="Postcode" id="Postcode" placeholder="Customer Postcode" v-model="customer.Postcode">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="InvoicingTermsText" class="col-sm-2 control-label">Invoicing Terms Text</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="InvoicingText" id="InvoicingText" placeholder="Customer Invoicing Terms" v-model="customer.InvoicingText">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="IsVisible" class="col-sm-2 control-label">Active?</label>
+						<div class="col-sm-4">
+							<label class="checkbox">
+								<input type="checkbox" name="IsVisible" id="IsActive" v-model="customer.IsVisible">
+								<span class="glyphicon"></span>
+							</label>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="Address" class="col-sm-2 control-label">Address</label>
-					<div class="col-sm-10">
-						<input type="text" required class="form-control" name="Address" id="Address" placeholder="Customer Address" v-model="customer.Address">
+				<div style="margin: 10px 0">
+					<div class="col-xs-12 table-controls">
+						<button type="button" :class="!customer.IsVisible ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
+							v-on:click="cancelCustomer(!customer.IsVisible)">{{ customer.IsVisible ? 'Cancel' : 'Activate' }} This Customer</button>
+						<button type="submit" class="btn btn-success btnSave pull-right">Save</button>
+						<router-link class="btn btn-default pull-right" :to="{name: 'Customers'}">Cancel</router-link>
+						<input type="hidden" id="Id" name="Id" v-model="customer.Id" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="Suburb" class="col-sm-2 control-label">Suburb</label>
-					<div class="col-sm-10">
-						<input type="text" required class="form-control" name="Suburb" id="Suburb" placeholder="Customer Suburb" v-model="customer.Suburb">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Province" class="col-sm-2 control-label">State</label>
-					<div class="col-sm-10">
-						<input type="text" required class="form-control" name="State" id="State" placeholder="Customer State" v-model="customer.State">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Postcode" class="col-sm-2 control-label">Postcode</label>
-					<div class="col-sm-4">
-						<input type="text" required class="form-control" name="Postcode" id="Postcode" placeholder="Customer Postcode" v-model="customer.Postcode">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="InvoicingTermsText" class="col-sm-2 control-label">Invoicing Terms Text</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="InvoicingText" id="InvoicingText" placeholder="Customer Invoicing Terms" v-model="customer.InvoicingText">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="IsVisible" class="col-sm-2 control-label">Active?</label>
-					<div class="col-sm-4">
-						<label class="checkbox">
-							<input type="checkbox" name="IsVisible" id="IsActive" v-model="customer.IsVisible">
-							<span class="glyphicon"></span>
-						</label>
-					</div>
-				</div>
-				<div class="form-commands col-xs-12">
-					<button type="button" v-on:click="saveCustomer()" class="btn btn-success btnSave pull-right">Save</button>
-					<router-link class="btn btn-default pull-right" :to="{name: 'Customers'}">Cancel</router-link>
-					<input type="hidden" id="Id" name="Id" v-model="customer.Id" />
 				</div>
 			</form>
 		</div>
 	</div>
 `,
-    props: {
-		customerId: {
-			type: Number
-		}
-	},
     data() {
         return {
-            customerId: this.$route.params.id,
-            customer: []
+			customerId: this.$route.params.id,
+			customer: {},
+			loading: true
         }
     },
     created() {
-        this.loading = true;
-        this.getCustomer(this.$route.params.id);
+        if (this.customerId > 0) {
+            this.getCustomer(this.customerId);
+        } else {
+            this.resetCustomer();
+        }
     },
     methods: {
-        cancelEdit() {
-            this.customerId = null;
-            this.contact = null;
-        },
+        resetCustomer() {
+            this.customer = {
+                IsVisible: true,
+                InvoicingText: "Invoicing is on 14 day terms."
+            }
+		},
+		cancelCustomer(willBeCanceled) {
+			this.customer.IsVisible = willBeCanceled;
+			this.saveCustomer();
+		},
         getCustomer(id) {
-            fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
+			this.loading = true;
+            fetch(`https://api.woolston.com.au/crm/v3/customer/${id}`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customer = response.data[0];
@@ -89,19 +102,29 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
                 })
         },
         saveCustomer() {
-            this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/customer/${this.customerId}`, {
+			this.loading = true;
+            let url = `https://api.woolston.com.au/crm/v3/customer/${this.customer.Id}`;
+
+            if (this.customer.Id == null) {
+                url = `https://api.woolston.com.au/crm/v3/customer/`;
+            }
+
+            fetch(url, {
                 method: "POST",
                 body: JSON.stringify(this.customer)
             })
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    this.loading = false
-                })
+            .then(response => response.json())
+            .then((response) => {
+                if (this.customer.Id == null) {
+                    this.customer.Id = response.data.Id;
+                }
+                toastr.success("Save was successful.");
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+				this.loading = false;
+                this.$emit("customer-saved", this.customer.Id);
+            })
         }
-    },
-    props: ["title"]
+    }
 });

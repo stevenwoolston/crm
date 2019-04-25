@@ -36,13 +36,15 @@ template: `
 			</div>
 		</div>
 
+        <Loading :loading="this.loading"></Loading>
 	</div>
 `,
     data() {
         return {
 			invoiceId: parseInt(this.$route.params.id),
 			customerId: parseInt(this.$route.params.customerId),
-			invoice: {}
+			invoice: {},
+			loading: false
         }
     },
     created() {
@@ -87,6 +89,7 @@ template: `
 			}
 		},
         getInvoice() {
+			this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
@@ -95,7 +98,7 @@ template: `
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-
+					this.loading = false;
 				})
         }
     }

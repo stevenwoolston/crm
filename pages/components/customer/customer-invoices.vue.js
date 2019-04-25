@@ -53,10 +53,11 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
         </table>
     </div>
 `,
-props: ["title", "loading", "customerId"],
+props: ["customerId"],
     data () {
         return {
-            invoices: [], invoice: {}
+            invoices: [], invoice: {},
+            loading: true
         }
     },
     computed: {
@@ -65,8 +66,10 @@ props: ["title", "loading", "customerId"],
         }
     },
     mounted() {
-        this.getInvoices();
-        this.resetInvoice();
+        if (this.customerId > 0) {
+            this.getInvoices();
+            this.resetInvoice();
+        }
     },
     filters: {
         moment: function (date) {
@@ -104,6 +107,7 @@ props: ["title", "loading", "customerId"],
             }
         },
         getInvoices() {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/invoices`, {
                 method: "GET"
             })
@@ -113,13 +117,14 @@ props: ["title", "loading", "customerId"],
             })
             .catch(error => console.log(error))
             .finally(() => {
-                // this.loading = false
+                this.loading = false
             })
         },
         getSingleInvoice(id) {
             this.invoice = this.invoices.filter((invoice) => { return invoice.Id == id })[0];
         },
         deleteInvoice(id) {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/invoice/${id}`, {
                 method: "DELETE"
             })

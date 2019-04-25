@@ -20,16 +20,9 @@
 		<Toolbar :title="title"></Toolbar>
 		<div class="container-fluid">
 			<div class="row">
-				<router-view :title="title" :loading="loading" />
+				<router-view />
 			</div>
 		</div>
-
-		<div v-show="this.loading" class="loader">
-			<svg viewBox="0 0 32 32" width="96" height="96">
-				<circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-			</svg>
-		</div>
-	
 	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
@@ -55,6 +48,7 @@
     <script src='./pages/components/contact/contact-info.vue.js'></script>
 	<script src='./pages/components/toolbar.vue.js'></script>
 	<script src='./pages/components/datepicker.vue.js'></script>
+	<script src='./pages/components/loading.vue.js'></script>
 
     <script>
 		
@@ -90,7 +84,6 @@
 			components: { spaToolbar, spaDatePicker },
             data: {
 				title: 'Woolston Web Design CRM',
-				loading: false,
 				dateFormat: "DD-MMM-YYYY"
 			},
 			router

@@ -82,10 +82,11 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
 
     </div>
 `,
-    props: ["title", "loading", "invoiceId"],
+    props: ["invoiceId"],
     data() {
         return {
-            invoiceItems: [], invoiceItem: {}
+            invoiceItems: [], invoiceItem: {},
+            loading: false
         }
     },
     created() {
@@ -129,6 +130,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
             }
         },
         getInvoiceItems() {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoiceId}/invoiceitems`)
                 .then(response => response.json())
                 .then((response) => {
@@ -136,12 +138,14 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    this.loading = false;
                 })
         },
         getSingleInvoiceItem(id) {
             this.invoiceItem = this.invoiceItems.filter((invoiceItem) => { return invoiceItem.Id == id })[0];
         },
         saveInvoiceItem() {
+            this.loading = true;
             let url = `https://api.woolston.com.au/crm/v3/invoiceitem/${this.invoiceItem.Id}`;
 
             if (this.invoiceItem.Id == null) {
@@ -152,18 +156,20 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 method: "POST",
                 body: JSON.stringify(this.invoiceItem)
             })
-                .then((data) => {
-                    toastr.success("Save was successful.");
-                    this.getInvoiceItems();
-                    this.resetInvoiceItem();
-                    this.$emit('refresh-invoice');
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    $("#manageInvoiceItem").modal("hide");
-                })
+            .then((data) => {
+                toastr.success("Save was successful.");
+                this.getInvoiceItems();
+                this.resetInvoiceItem();
+                this.$emit('refresh-invoice');
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                $("#manageInvoiceItem").modal("hide");
+                this.loading = false;
+            })
         },
         deleteInvoiceItem(id) {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/invoiceitem/${id}`, {
                 method: "DELETE"
             })
@@ -174,6 +180,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 .finally(() => {
                     this.getInvoiceItems();
                     this.$emit('refresh-invoice');
+                    this.loading = false;
                 })
         }
     }

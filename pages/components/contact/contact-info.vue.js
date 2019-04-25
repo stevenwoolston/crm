@@ -2,31 +2,33 @@ var spaContactInfo = Vue.component("ContactInfo", {
     template: `
     <div class="col-xs-12 form-container">
         <form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveContact()">
-            <div class="form-group">
-                <label for="FirstName" class="col-sm-2 control-label">First Name</label>
-                <div class="col-sm-4">
-                    <input type="text" required class="form-control" name="FirstName" id="FirstName" v-model="contact.FirstName">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="FirstName" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" required class="form-control" name="FirstName" id="FirstName" v-model="contact.FirstName">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="Surname" class="col-sm-2 control-label">Last Name</label>
-                <div class="col-sm-4">
-                    <input type="text" required class="form-control" name="Surname" id="Surname" v-model="contact.Surname">
+                <div class="form-group">
+                    <label for="Surname" class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" required class="form-control" name="Surname" id="Surname" v-model="contact.Surname">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="EmailAddress" class="col-sm-2 control-label">Email Address</label>
-                <div class="col-sm-4">
-                    <input type="text" required class="form-control" name="EmailAddress" id="EmailAddress" v-model="contact.EmailAddress">
+                <div class="form-group">
+                    <label for="EmailAddress" class="col-sm-2 control-label">Email Address</label>
+                    <div class="col-sm-4">
+                        <input type="text" required class="form-control" name="EmailAddress" id="EmailAddress" v-model="contact.EmailAddress">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="IsVisible" class="col-sm-2 control-label">Active?</label>
-                <div class="col-sm-4">
-                    <label class="checkbox">
-                        <input type="checkbox" name="IsVisible" id="IsActive" v-model="contact.IsVisible">
-                        <span class="glyphicon"></span>
-                    </label>
+                <div class="form-group">
+                    <label for="IsVisible" class="col-sm-2 control-label">Active?</label>
+                    <div class="col-sm-4">
+                        <label class="checkbox">
+                            <input type="checkbox" name="IsVisible" id="IsActive" v-model="contact.IsVisible">
+                            <span class="glyphicon"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div style="margin: 10px 0">
@@ -40,10 +42,11 @@ var spaContactInfo = Vue.component("ContactInfo", {
         </form>
     </div>
 `,
-    props: ["title", "loading", "customerId", "contact"],
+    props: ["customerId", "contact"],
     data() {
         return {
-            customer: {}
+            customer: {},
+            loading: true
         }
     },
     created() {
@@ -77,6 +80,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
             this.$emit('cancel');
         },
         getCustomer(id) {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/customers/${id}`)
                 .then(response => response.json())
                 .then((response) => {
@@ -84,10 +88,11 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 })
                 .catch((error) => console.log(error))
                 .finally(() => {
-                    // this.loading = false
+                    this.loading = false
                 })
         },
         getContacts() {
+            this.loading = true;
             fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/contacts`, {
                 method: "GET"
             })
@@ -97,13 +102,14 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    // this.loading = false
+                    this.loading = false
                 })
         },
         getSingleContact(id) {
             this.contact = this.contacts.filter((contact) => { return contact.Id == id })[0];
         },
         saveContact() {
+            this.loading = true;
             let url = `https://api.woolston.com.au/crm/v3/contact/${this.contact.Id}`;
 
             if (this.contact.Id == null) {
@@ -124,6 +130,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
             .catch(error => console.log(error))
             .finally(() => {
                 this.$emit("contact-saved", this.contact);
+                this.loading = false;
             })
         }
     }

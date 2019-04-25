@@ -99,7 +99,7 @@ label.checkbox :checked + span:before {
             transform: translate(-50%, -50%); }
     .loader #spinner {
       box-sizing: border-box;
-      stroke: #ff7fdd;
+      stroke: #337ab7;
       stroke-width: 3px;
       -webkit-transform-origin: 50%;
               transform-origin: 50%;

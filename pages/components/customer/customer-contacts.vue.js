@@ -14,7 +14,7 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
             <colgroup>
                 <col style="text-align: left"/>
                 <col style="text-align: left; />
-                <col style="text-align: center; width: 100px;" />
+                <col style="text-align: center; width: 10%;" />
             </colgroup>
             <thead>
                 <tr>
@@ -43,20 +43,23 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
         </table>
     </div>
 `,
-props: ["title", "loading", "customerId"],
+props: ["customerId"],
 data () {
     return {
         contacts: [], selectedContact: {},
+        loading: true
+    }
+},
+created() {
+    if (this.customerId > 0) {
+        this.getContacts();
+        this.resetContact();
     }
 },
 computed: {
     contactId() {
         return this.selectedContactId ? this.selectedContactId.Id : 0
     }
-},
-mounted() {
-    this.getContacts();
-    this.resetContact();
 },
 filters: {
     moment: function (date) {
@@ -95,6 +98,7 @@ methods: {
         }
     },
     getContacts() {
+        this.loading = true;
         fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/contacts`, {
             method: "GET"
         })
@@ -104,13 +108,14 @@ methods: {
             })
             .catch(error => console.log(error))
             .finally(() => {
-                // this.loading = false
+                this.loading = false;
             })
     },
     getSingleContact(id) {
         this.selectedContact = this.contacts.filter((contact) => { return contact.Id == id })[0];
     },
     deleteContact(id) {
+        this.loading = true;
         fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
             method: "DELETE"
         })
