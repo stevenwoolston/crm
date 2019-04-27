@@ -125,6 +125,7 @@ methods: {
             .catch(error => console.log(error))
             .finally(() => {
                 this.getContacts(this.customerId);
+                this.resetContact();
             })
     }
 }

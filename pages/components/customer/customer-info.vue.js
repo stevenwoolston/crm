@@ -53,7 +53,7 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 				</div>
 				<div style="margin: 10px 0">
 					<div class="col-xs-12 table-controls">
-						<button type="button" :class="!customer.IsVisible ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
+						<button type="button" v-show="this.customerId > 0" :class="!customer.IsVisible ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
 							v-on:click="cancelCustomer(!customer.IsVisible)">{{ customer.IsVisible ? 'Cancel' : 'Activate' }} This Customer</button>
 						<button type="submit" class="btn btn-success btnSave pull-right">Save</button>
 						<router-link class="btn btn-default pull-right" :to="{name: 'Customers'}">Cancel</router-link>
@@ -64,6 +64,7 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 		</div>
 	</div>
 `,
+	props: ["tabName"],
     data() {
         return {
 			customerId: this.$route.params.id,
@@ -83,7 +84,8 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
             this.customer = {
                 IsVisible: true,
                 InvoicingText: "Invoicing is on 14 day terms."
-            }
+			}
+			this.loading = false;
 		},
 		cancelCustomer(willBeCanceled) {
 			this.customer.IsVisible = willBeCanceled;
@@ -116,7 +118,8 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
             .then(response => response.json())
             .then((response) => {
                 if (this.customer.Id == null) {
-                    this.customer.Id = response.data.Id;
+					this.customer.Id = response.data.Id;
+					this.customerId = response.data.Id;
                 }
                 toastr.success("Save was successful.");
             })

@@ -4,7 +4,7 @@ var spaCustomers = Vue.component("Customers", {
     
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
-                <router-link class="btn btn-primary pull-right" :to="{name: 'Customer', params: { id: 0 }}">Create Customer</router-link>
+                <router-link class="btn btn-primary pull-right" :to="{name: 'Customer', params: { id: 0, tabName: 'details' }}">Create Customer</router-link>
             </div>
         </div>
 
@@ -14,7 +14,7 @@ var spaCustomers = Vue.component("Customers", {
 				<col style="text-align: center; width: 10%;" />
 			</colgroup>
 			<thead><tr><th>Customer Name</th><th class="text-center">Active?</th></tr></thead>
-			<tbody>
+			<tbody v-if="customers.length > 0">
 				<tr v-for="customer in customers" :key="customer.Id">
                     <td>
 						<router-link :to="{name: 'Customer', params: {id: customer.Id, tabName: 'details'}}">{{customer.Name}}</router-link>
@@ -23,7 +23,12 @@ var spaCustomers = Vue.component("Customers", {
 						<span class="glyphicon" v-bind:class="[customer.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
 					</td>
 				</tr>
-			</tbody>
+            </tbody>
+            <tbody v-else>
+                <tr>
+                    <td colspan="2" class="text-center">No matching records</td>
+                </tr>
+            </tbody>
 		</table>
         
         <Loading :loading="this.loading"></Loading>

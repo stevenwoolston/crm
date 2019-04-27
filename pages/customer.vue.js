@@ -15,7 +15,7 @@ var spaCustomer = Vue.component("Customer", {
 		</ul>
 
 		<div class="tab-content">
-            <CustomerInfo :customerId="this.customerId" :class="this.tabName == 'details' ? 'active' : ''" @customer-saved="getCustomer"></CustomerInfo>
+            <CustomerInfo :customerId="this.customerId" :class="this.tabName == 'details' ? 'active' : ''" @customer-saved="refreshCustomer"></CustomerInfo>
             <CustomerInvoices v-show="this.customerId > 0" :class="this.tabName == 'invoices' ? 'active' : ''" :customerId="customerId"></CustomerInvoices>
 			<CustomerContacts v-show="this.customerId > 0" :class="this.tabName == 'contacts' ? 'active' : ''" :customerId="customerId"></CustomerContacts>
         </div>
@@ -69,6 +69,12 @@ var spaCustomer = Vue.component("Customer", {
                 IsVisible: true,
                 InvoicingText: "Invoicing is on 14 day terms."
             }
+            this.loading = false;
+        },
+        refreshCustomer(customerId) {
+            this.customer.Id = customerId;
+            this.customerId = customerId;
+            this.getCustomer();
         },
         getCustomer() {
             this.loading = true;

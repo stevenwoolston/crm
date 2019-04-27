@@ -44,6 +44,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
+                <button type="button" class="btn pull-left btn-primary">Send This Invoice</button>
                 <button type="button" :class="invoice.IsCanceled ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
                     v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
