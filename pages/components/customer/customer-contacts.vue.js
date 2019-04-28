@@ -1,6 +1,6 @@
 var spaCustomerContacts = Vue.component("CustomerContacts", {
     template: `
-    <div role="tabpanel" class="tab-pane" id="contacts">
+    <div role="tabpanel" :class="tabName == 'contacts' ? 'active' : ''" class="tab-pane" id="contacts">
 
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
@@ -43,7 +43,7 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
         </table>
     </div>
 `,
-props: ["customerId"],
+props: ["customerId", "tabName"],
 data () {
     return {
         contacts: [], selectedContact: {},

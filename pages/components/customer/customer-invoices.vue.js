@@ -1,6 +1,6 @@
 var spaCustomerInvoices = Vue.component("CustomerInvoices", {
     template: `
-    <div role="tabpanel" class="tab-pane" id="invoices">
+    <div role="tabpanel" :class="tabName == 'invoices' ? 'active' : ''" class="tab-pane" id="invoices">
 
         <div style="margin: 10px 0">
             <div class="col-xs-12 table-controls">
@@ -53,7 +53,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
         </table>
     </div>
 `,
-props: ["customerId"],
+props: ["customerId", "tabName"],
     data () {
         return {
             invoices: [], invoice: {},

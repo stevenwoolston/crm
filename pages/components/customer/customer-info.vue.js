@@ -1,6 +1,6 @@
 var spaCustomerInfo = Vue.component("CustomerInfo", {
 	template: `
-	<div role="tabpanel" class="tab-pane" id="customer-details">
+	<div role="tabpanel" :class="tabName == 'details' ? 'active' : ''" class="tab-pane" id="customer-details">
 
 		<div class="col-xs-12 form-container">
 			<form class="form-horizontal" style="margin-bottom: 10px;" @submit.prevent="saveCustomer()">

@@ -5,7 +5,7 @@ var spaCustomer = Vue.component("Customer", {
         <div class="col-xs-12" title="customer-information">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" :class="this.tabName == 'details' ? 'active' : ''">
+                <li role="presentation" :class="(this.tabName == 'details' || !this.tabName) ? 'active' : ''">
                     <a href="#customer-details" aria-controls="customer" role="tab" data-toggle="tab">Customer Information</a>
                 </li>
                 <li role="presentation" v-show="this.customerId > 0" :class="this.tabName == 'invoices' ? 'active' : ''">
@@ -17,9 +17,9 @@ var spaCustomer = Vue.component("Customer", {
             </ul>
 
             <div class="tab-content">
-                <CustomerInfo :customerId="this.customerId" :class="this.tabName == 'details' ? 'active' : ''" @customer-saved="refreshCustomer"></CustomerInfo>
-                <CustomerInvoices v-show="this.customerId > 0" :class="this.tabName == 'invoices' ? 'active' : ''" :customerId="customerId"></CustomerInvoices>
-                <CustomerContacts v-show="this.customerId > 0" :class="this.tabName == 'contacts' ? 'active' : ''" :customerId="customerId"></CustomerContacts>
+                <CustomerInfo :customerId="this.customerId" :tabName="tabName" @customer-saved="refreshCustomer"></CustomerInfo>
+                <CustomerInvoices v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerInvoices>
+                <CustomerContacts v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerContacts>
             </div>
 
             <Loading :loading="this.loading"></Loading>

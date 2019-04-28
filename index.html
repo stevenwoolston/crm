@@ -36,20 +36,22 @@
     <script src="./js/site.js"></script>
 
 	<!-- Vue Pages and Components here -->
-	<script src='./pages/customers.vue.js'></script>
-    <script src='./pages/customer.vue.js'></script>
-    <script src='./pages/components/customer/customer-info.vue.js'></script>
-	<script src='./pages/components/customer/customer-invoices.vue.js'></script>
-	<script src='./pages/components/customer/customer-contacts.vue.js'></script>
-    <script src='./pages/invoice.vue.js'></script>
-    <script src='./pages/components/invoice/invoice-info.vue.js'></script>
-	<script src='./pages/components/invoice/invoice-items.vue.js'></script>
-	<script src='./pages/components/invoice/invoice-payments.vue.js'></script>
-    <script src='./pages/components/contact/contact-info.vue.js'></script>
 	<script src='./pages/components/toolbar.vue.js'></script>
 	<script src='./pages/components/breadcrumbs.vue.js'></script>
 	<script src='./pages/components/datepicker.vue.js'></script>
 	<script src='./pages/components/loading.vue.js'></script>
+
+	<script src='./pages/customers.vue.js'></script>
+    <script src='./pages/customer.vue.js'></script>
+	<script src='./pages/components/customer/customer-info.vue.js'></script>
+	<script src='./pages/components/customer/customer-invoices.vue.js'></script>
+	<script src='./pages/components/customer/customer-contacts.vue.js'></script>
+
+	<script src='./pages/invoice.vue.js'></script>
+    <script src='./pages/components/invoice/invoice-info.vue.js'></script>
+	<script src='./pages/components/invoice/invoice-items.vue.js'></script>
+	<script src='./pages/components/invoice/invoice-payments.vue.js'></script>
+    <script src='./pages/components/contact/contact-info.vue.js'></script>
 
     <script>
 		
@@ -77,12 +79,11 @@
         ]
 
         const router = new VueRouter({
-            routes // short for `routes: routes`
+            routes
         })
 
         new Vue({
 			el: '#app',
-			components: { spaToolbar, spaDatePicker },
             data: {
 				title: 'Woolston Web Design CRM',
 				dateFormat: "DD-MMM-YYYY"
