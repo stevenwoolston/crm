@@ -10,8 +10,23 @@ h1, h2, h3, h4, h5 {
     font-family: "Roboto";
 }
 
-.navbar {
+.navbar, .navbar-default {
   margin-bottom: 0;
+  background-color: #337ab7;
+  border-radius: 0;
+  color: #fff;
+}
+
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:active,
+.navbar-default .navbar-brand:visited,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav > li > a .glyphicon,
+.navbar-default .navbar-nav > li > a:focus
+.navbar-default .navbar-nav > li > a:active
+.navbar-default .navbar-nav > li > a:visited
+.navbar-default .navbar-nav > li > a:hover {
+  color: #fff;
 }
 
 .table thead th {
