@@ -1,5 +1,8 @@
 var spaInvoice = Vue.component("Invoice", {
 template: `
+<div>
+
+	<Breadcrumb :breadcrumb="this.breadcrumb"></Breadcrumb>
 	<div class="col-xs-12" id="invoice">
 		
 		<div v-show="this.invoice.Id > 0">
@@ -38,6 +41,7 @@ template: `
 
         <Loading :loading="this.loading"></Loading>
 	</div>
+</div>
 `,
     data() {
         return {
@@ -50,7 +54,7 @@ template: `
     created() {
         if (this.invoiceId > 0) {
 			this.invoice.Id = this.invoiceId;
-            this.getInvoice();
+			this.getInvoice();
 		} else {
 			this.resetInvoice();
 		}
@@ -74,7 +78,30 @@ template: `
             });
             return formatter.format(value);
         }
-    },
+	},
+	computed: {
+		breadcrumb: function() {
+			return [
+                {
+                    routeName: "Customers",
+                    LinkText: "View All Customers"
+                },
+				{
+					routeName: "Customer",
+					routeParams: {
+						id: this.customerId, 
+						tabName: 'invoices'
+					},
+					LinkText: this.invoice.CustomerName
+				},
+				{
+					routeName: null,
+					routeParams: null,
+					LinkText: `Invoice: ${this.invoice.EmailSubject}`
+				}
+			]
+		}
+	},
     methods: {
 		resetInvoice() {
 			this.invoice = {
@@ -90,7 +117,7 @@ template: `
 		},
         getInvoice() {
 			this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoice.Id}`)
+            fetch(`https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
 					this.invoice = response.data[0];

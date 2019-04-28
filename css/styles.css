@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5 {
     font-family: "Roboto";
 }
 
+.navbar {
+  margin-bottom: 0;
+}
+
 .table thead th {
     background-color: #eee;
 }
