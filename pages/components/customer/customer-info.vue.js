@@ -93,7 +93,7 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 		},
         getCustomer(id) {
 			this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/customer/${id}`)
+            fetch(`http://localhost/api/v4/customer/${id}`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customer = response.data[0];
@@ -105,14 +105,16 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
         },
         saveCustomer() {
 			this.loading = true;
-            let url = `https://api.woolston.com.au/crm/v3/customer/${this.customer.Id}`;
+			let url = `http://localhost/api/v4/customer/${this.customer.Id}`,
+				request_method = "PUT";
 
             if (this.customer.Id == null) {
-                url = `https://api.woolston.com.au/crm/v3/customer/`;
+				url = `http://localhost/api/v4/customer`;
+				request_method = "POST";
             }
 
             fetch(url, {
-                method: "POST",
+                method: request_method,
                 body: JSON.stringify(this.customer)
             })
             .then(response => response.json())

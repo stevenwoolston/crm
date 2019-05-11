@@ -102,14 +102,16 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         },
         saveInvoice() {
             this.loading = true;
-            let url = `https://api.woolston.com.au/crm/v3/invoice/${this.invoiceId}`;
+            let url = `http://localhost/api/v4/invoice/${this.invoiceId}`,
+                request_method = "PUT";
 
             if (this.invoice.Id == null) {
-                url = `https://api.woolston.com.au/crm/v3/invoice`;
+                url = `http://localhost/api/v4/invoice`;
+                request_method = "POST";
             }
 
             fetch(url, {
-                method: "POST",
+                method: request_method,
                 body: JSON.stringify(this.invoice)
             })
             .then(response => response.json())

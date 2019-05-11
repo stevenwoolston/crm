@@ -131,7 +131,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         getInvoiceItems() {
             this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/invoices/${this.invoiceId}/invoiceitems`)
+            fetch(`http://localhost/api/v4/invoices/${this.invoiceId}/invoiceitems`)
                 .then(response => response.json())
                 .then((response) => {
                     this.invoiceItems = response.data;
@@ -146,14 +146,16 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         saveInvoiceItem() {
             this.loading = true;
-            let url = `https://api.woolston.com.au/crm/v3/invoiceitem/${this.invoiceItem.Id}`;
+            let url = `http://localhost/api/v4/invoiceitem/${this.invoiceItem.Id}`,
+                request_method = "PUT";
 
             if (this.invoiceItem.Id == null) {
-                url = `https://api.woolston.com.au/crm/v3/invoiceitem`;
+                url = `http://localhost/api/v4/invoiceitem`;
+                request_method = "POST";
             }
 
             fetch(url, {
-                method: "POST",
+                method: request_method,
                 body: JSON.stringify(this.invoiceItem)
             })
             .then((data) => {
@@ -170,7 +172,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         deleteInvoiceItem(id) {
             this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/invoiceitem/${id}`, {
+            fetch(`http://localhost/api/v4/invoiceitem/${id}`, {
                 method: "DELETE"
             })
                 .then((data) => {

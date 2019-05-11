@@ -46,7 +46,7 @@ var spaCustomers = Vue.component("Customers", {
     methods: {
         getCustomers() {
             this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/customers`)
+            fetch(`http://localhost/api/v4/customers`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customers = response.data;

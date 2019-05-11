@@ -117,7 +117,7 @@ template: `
 		},
         getInvoice() {
 			this.loading = true;
-            fetch(`https://api.woolston.com.au/crm/v3/invoice/${this.invoice.Id}`)
+            fetch(`http://localhost/api/v4/invoice/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
 					this.invoice = response.data[0];

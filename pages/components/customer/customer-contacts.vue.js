@@ -99,7 +99,7 @@ methods: {
     },
     getContacts() {
         this.loading = true;
-        fetch(`https://api.woolston.com.au/crm/v3/customers/${this.customerId}/contacts`, {
+        fetch(`http://localhost/api/v4/customers/${this.customerId}/contacts`, {
             method: "GET"
         })
             .then(response => response.json())
@@ -116,7 +116,7 @@ methods: {
     },
     deleteContact(id) {
         this.loading = true;
-        fetch(`https://api.woolston.com.au/crm/v3/contact/${id}`, {
+        fetch(`http://localhost/api/v4/contact/${id}`, {
             method: "DELETE"
         })
             .then((data) => {
