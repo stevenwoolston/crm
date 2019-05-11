@@ -102,11 +102,11 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         },
         saveInvoice() {
             this.loading = true;
-            let url = `http://localhost/api/v4/invoice/${this.invoiceId}`,
+            let url = `${config.url}invoice/${this.invoiceId}`,
                 request_method = "PUT";
 
             if (this.invoice.Id == null) {
-                url = `http://localhost/api/v4/invoice`;
+                url = `${config.url}invoice`;
                 request_method = "POST";
             }
 

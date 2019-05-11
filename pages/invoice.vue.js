@@ -25,11 +25,8 @@ template: `
 				<li role="presentation">
 					<a href="#invoicePayments" aria-controls="invoicePayments" role="tab" data-toggle="tab">Payments</a>
 				</li>
-				<li role="presentation">
+				<li role="presentation" class="hidden">
 					<a href="#deliveryHistory" aria-controls="deliveryHistory" role="tab" data-toggle="tab">Delivery History</a>
-				</li>
-				<li role="presentation">
-					<a href="#debug" aria-controls="debug" role="tab" data-toggle="tab">Debug</a>
 				</li>
 			</ul>
 

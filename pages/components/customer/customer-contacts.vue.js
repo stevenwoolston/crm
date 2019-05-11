@@ -99,7 +99,7 @@ methods: {
     },
     getContacts() {
         this.loading = true;
-        fetch(`http://localhost/api/v4/customers/${this.customerId}/contacts`, {
+        fetch(`${config.url}customers/${this.customerId}/contacts`, {
             method: "GET"
         })
             .then(response => response.json())
@@ -116,7 +116,7 @@ methods: {
     },
     deleteContact(id) {
         this.loading = true;
-        fetch(`http://localhost/api/v4/contact/${id}`, {
+        fetch(`${config.url}contact/${id}`, {
             method: "DELETE"
         })
             .then((data) => {

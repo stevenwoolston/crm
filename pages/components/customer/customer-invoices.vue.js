@@ -108,7 +108,7 @@ props: ["customerId", "tabName"],
         },
         getInvoices() {
             this.loading = true;
-            fetch(`http://localhost/api/v4/customers/${this.customerId}/invoices`, {
+            fetch(`${config.url}customers/${this.customerId}/invoices`, {
                 method: "GET"
             })
             .then(response => response.json())
@@ -125,7 +125,7 @@ props: ["customerId", "tabName"],
         },
         deleteInvoice(id) {
             this.loading = true;
-            fetch(`http://localhost/api/v4/invoice/${id}`, {
+            fetch(`${config.url}invoice/${id}`, {
                 method: "DELETE"
             })
                 .then((data) => {

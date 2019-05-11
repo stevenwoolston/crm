@@ -93,7 +93,7 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 		},
         getCustomer(id) {
 			this.loading = true;
-            fetch(`http://localhost/api/v4/customer/${id}`)
+            fetch(`${config.url}customer/${id}`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customer = response.data[0];
@@ -105,11 +105,11 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
         },
         saveCustomer() {
 			this.loading = true;
-			let url = `http://localhost/api/v4/customer/${this.customer.Id}`,
+			let url = `${config.url}customer/${this.customer.Id}`,
 				request_method = "PUT";
 
             if (this.customer.Id == null) {
-				url = `http://localhost/api/v4/customer`;
+				url = `${config.url}customer`;
 				request_method = "POST";
             }
 

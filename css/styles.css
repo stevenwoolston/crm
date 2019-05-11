@@ -48,6 +48,14 @@ h1, h2, h3, h4, h5 {
 	background-color: rgba(92, 184, 92, 0.5);
 }
 
+.table tbody td.clickable {
+	cursor: pointer;
+}
+
+.table tbody td.clickable:hover {
+	text-decoration: underline;
+}
+
 #main.bordered {
     border: 1px solid #eee;
     padding: 20px;

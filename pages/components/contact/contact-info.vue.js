@@ -81,7 +81,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
         },
         getCustomer(id) {
             this.loading = true;
-            fetch(`http://localhost/api/v4/customers/${id}`)
+            fetch(`${config.url}customers/${id}`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customer = response.data[0];
@@ -93,7 +93,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
         },
         getContacts() {
             this.loading = true;
-            fetch(`http://localhost/api/v4/customers/${this.customerId}/contacts`, {
+            fetch(`${config.url}customers/${this.customerId}/contacts`, {
                 method: "GET"
             })
                 .then(response => response.json())
@@ -110,11 +110,11 @@ var spaContactInfo = Vue.component("ContactInfo", {
         },
         saveContact() {
             this.loading = true;
-            let url = `http://localhost/api/v4/contact/${this.contact.Id}`,
+            let url = `${config.url}contact/${this.contact.Id}`,
                 request_method = "PUT";
 
             if (this.contact.Id == null) {
-                url = `http://localhost/api/v4/contact`;
+                url = `${config.url}contact`;
                 request_method = "POST";
             }
 

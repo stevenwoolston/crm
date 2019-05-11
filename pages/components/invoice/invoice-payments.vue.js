@@ -23,7 +23,8 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
             </thead>
             <tbody v-if="invoicePayments.length > 0">
                 <tr v-for="invoicePayment in invoicePayments" :key="invoicePayment.Id">
-                    <td>{{ invoicePayment.DatePaid | moment }}</td>
+                    <td class="clickable" data-toggle="modal" data-target="#manageInvoicePayment" 
+                    v-on:click="getSingleInvoicePayment(invoicePayment.Id);">{{ invoicePayment.DatePaid | moment }}</td>
                     <td>{{ invoicePayment.Amount | money }}</td>
                     <td class="text-center">
                         <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoicePayment" 
@@ -127,7 +128,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
         },
         getInvoicePayments() {
             this.loading = true;
-            fetch(`http://localhost/api/v4/invoices/${this.invoiceId}/payments`)
+            fetch(`${config.url}invoices/${this.invoiceId}/payments`)
                 .then(response => response.json())
                 .then((response) => {
                     this.invoicePayments = response.data;
@@ -142,11 +143,11 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
         },
         saveInvoicePayment() {
             this.loading = true;
-            let url = `http://localhost/api/v4/payment/${this.invoicePayment.Id}`,
+            let url = `${config.url}payment/${this.invoicePayment.Id}`,
                 request_method = "PUT";
 
             if (this.invoicePayment.Id == null) {
-                url = `http://localhost/api/v4/payment`;
+                url = `${config.url}payment`;
                 request_method = "POST";
             }
 
@@ -168,7 +169,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
         },
         deleteInvoicePayment(id) {
             this.loading = true;
-            fetch(`http://localhost/api/v4/payment/${id}`, {
+            fetch(`${config.url}payment/${id}`, {
                 method: "DELETE"
             })
                 .then((data) => {

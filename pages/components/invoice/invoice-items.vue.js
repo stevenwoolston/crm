@@ -23,7 +23,9 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
             </thead>
             <tbody v-if="invoiceItems.length > 0">
                 <tr v-for="invoiceItem in invoiceItems" :key="invoiceItem.Id">
-                    <td>{{ invoiceItem.Description }}</td>
+                    <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" data-toggle="modal" data-target="#manageInvoiceItem">
+                        {{ invoiceItem.Description }}
+                    </td>
                     <td>{{ invoiceItem.Cost | money }}</td>
                     <td class="text-center">
                         <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoiceItem" 
@@ -131,7 +133,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         getInvoiceItems() {
             this.loading = true;
-            fetch(`http://localhost/api/v4/invoices/${this.invoiceId}/invoiceitems`)
+            fetch(`${config.url}invoices/${this.invoiceId}/invoiceitems`)
                 .then(response => response.json())
                 .then((response) => {
                     this.invoiceItems = response.data;
@@ -146,11 +148,11 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         saveInvoiceItem() {
             this.loading = true;
-            let url = `http://localhost/api/v4/invoiceitem/${this.invoiceItem.Id}`,
+            let url = `${config.url}invoiceitem/${this.invoiceItem.Id}`,
                 request_method = "PUT";
 
             if (this.invoiceItem.Id == null) {
-                url = `http://localhost/api/v4/invoiceitem`;
+                url = `${config.url}invoiceitem`;
                 request_method = "POST";
             }
 
@@ -172,7 +174,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         deleteInvoiceItem(id) {
             this.loading = true;
-            fetch(`http://localhost/api/v4/invoiceitem/${id}`, {
+            fetch(`${config.url}invoiceitem/${id}`, {
                 method: "DELETE"
             })
                 .then((data) => {
