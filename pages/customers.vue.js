@@ -46,7 +46,7 @@ var spaCustomers = Vue.component("Customers", {
     methods: {
         getCustomers() {
             this.loading = true;
-            fetch(`${config.url}/customers`)
+            fetch(`${config.url}customers`)
                 .then(response => response.json())
                 .then((response) => {
                     this.customers = response.data;
