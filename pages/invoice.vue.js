@@ -25,7 +25,7 @@ template: `
 				<li role="presentation">
 					<a href="#invoicePayments" aria-controls="invoicePayments" role="tab" data-toggle="tab">Payments</a>
 				</li>
-				<li role="presentation" class="hidden">
+				<li role="presentation">
 					<a href="#deliveryHistory" aria-controls="deliveryHistory" role="tab" data-toggle="tab">Delivery History</a>
 				</li>
 			</ul>
@@ -33,6 +33,7 @@ template: `
 			<div class="tab-content">
 				<InvoiceItems :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceItems>
 				<InvoicePayments :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoicePayments>
+				<InvoiceDeliveries :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceDeliveries>
 			</div>
 		</div>
 

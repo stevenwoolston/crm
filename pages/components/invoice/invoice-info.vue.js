@@ -44,7 +44,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
-                <button type="button" class="btn pull-left btn-primary">Send This Invoice</button>
+                <button type="button" class="btn pull-left btn-primary"
+                    data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
                 <button type="button" :class="invoice.IsCanceled ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
                     v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
@@ -53,16 +54,62 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 <input type="hidden" id="CustomerId" name="CustomerId" v-model="invoice.CustomerId" value="{this.customerId}" />
             </div>
         </form>
+
+        <div id="selectContactForDelivery" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" @submit.prevent="sendInvoice">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" 
+                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Select Contact For Invoice Delivery</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col style="text-align: left"/>
+                                    <col style="text-align: left"/>
+                                    <col style="text-align: center; width: 10%;" />
+                                </colgroup>
+                                <thead><tr><th>Contact Name</th><th>Contact Email</th><th class="text-center">&nbsp;</th></tr></thead>
+                                <tbody v-if="this.contacts.length > 0">
+                                    <tr v-for="contact in this.contacts" :key="contact.Id">
+                                        <td>{{ contact.FirstName + " " + contact.Surname }}</td>
+                                        <td>{{ contact.EmailAddress }}</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" :value="contact.EmailAddress" 
+                                                v-model="selectedEmailAddresses" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="3" class="text-center">No matching records</td>
+                                    </tr>
+                                </tbody>
+                            </table>                                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
     </div>
 `,
     props: ["invoice", "customerId"],
     data() {
         return {
-            loading: false
+            loading: false,
+            contacts: [],
+            selectedEmailAddresses: []
         }
     },
     created() {
-        
+        this.getContacts();
     },
     computed: {
         invoiceId() {
@@ -99,6 +146,44 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         cancelInvoice(willBeCanceled) {
             this.invoice.IsCanceled = willBeCanceled;
             this.saveInvoice();
+        },
+        getContacts() {
+            fetch(`${config.url}customers/${this.customerId}/contacts`, {
+                method: "GET"
+            })
+            .then(response => response.json())
+            .then((response) => {
+                this.contacts = response.data;
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+            })
+        },
+        sendInvoice() {
+            this.loading = true;
+            let url = `${config.url}delivery`,
+                request_method = "POST",
+                delivery = {
+                    DateDelivered: null,
+                    DeliveredTo: this.selectedEmailAddresses.toString(),
+                    InvoiceId: this.invoice.Id
+                };
+            fetch(url, {
+                method: request_method,
+                body: JSON.stringify(delivery)
+            })
+            .then(response => response.json())
+            .then((response) => {
+                if (response.data.Id == null) {
+                    toastr.error("There was a problem queueing the invoice to be sent.");
+                    throw response.message;
+                }
+                toastr.success("Invoice was successfully queued to send.");
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                $("#selectContactForDelivery").modal("hide");
+            })
         },
         saveInvoice() {
             this.loading = true;
