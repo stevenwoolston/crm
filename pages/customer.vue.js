@@ -17,7 +17,7 @@ var spaCustomer = Vue.component("Customer", {
             </ul>
 
             <div class="tab-content">
-                <CustomerInfo :customerId="this.customerId" :tabName="tabName" @customer-saved="refreshCustomer"></CustomerInfo>
+                <CustomerInfo :tabName="tabName" :customerId="this.customerId" @customer-saved="refreshCustomer"></CustomerInfo>
                 <CustomerInvoices v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerInvoices>
                 <CustomerContacts v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerContacts>
             </div>
@@ -42,10 +42,6 @@ var spaCustomer = Vue.component("Customer", {
             this.getCustomer();
         } else {
             this.resetCustomer();
-        }
-
-        if (!this.tabName) {
-            this.tabName = "details";
         }
     },
     filters: {

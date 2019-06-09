@@ -55,14 +55,14 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                             <div class="form-group">
                                 <label for="Description" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <input type="text" required class="form-control richtext" name="Description" id="Description" 
+                                    <input type="text" required class="form-control" name="Description" id="Description" 
                                         v-model="invoiceItem.Description">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="Cost" class="col-sm-2 control-label">Cost</label>
                                 <div class="col-sm-4">
-                                    <input type="number" required class="form-control" name="Cost" id="Cost" 
+                                    <input type="number" min="0" step="any" required class="form-control" name="Cost" id="Cost" 
                                         v-model="invoiceItem.Cost">
                                 </div>
                             </div>
