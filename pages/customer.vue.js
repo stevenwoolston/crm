@@ -23,6 +23,7 @@ var spaCustomer = Vue.component("Customer", {
             </div>
 
             <Loading :loading="this.loading"></Loading>
+            <Debug :debugData="this.debugData"></Debug>
         </div>
     </div>
 `,
@@ -31,6 +32,7 @@ var spaCustomer = Vue.component("Customer", {
         return {
             customerId: this.$route.params.id,
             customer: {},
+            debugData: null,
             loading: true
         }
     },
@@ -42,7 +44,7 @@ var spaCustomer = Vue.component("Customer", {
             this.resetCustomer();
         }
 
-        if (this.tabName == "") {
+        if (!this.tabName) {
             this.tabName = "details";
         }
     },
@@ -103,8 +105,12 @@ var spaCustomer = Vue.component("Customer", {
                 .then(response => response.json())
                 .then((response) => {
                     this.customer = response.data[0];
+                    this.debugData = response;
                 })
-                .catch((error) => console.log(error))
+                .catch(() => {
+                    error => console.log(error);
+                    this.debugData = error;
+                })
                 .finally(() => {
                     this.breadcrumb[1].name = this.customer.Name;
                     this.loading = false
@@ -123,8 +129,12 @@ var spaCustomer = Vue.component("Customer", {
             })
             .then((data) => {
                 toastr.success("Save was successful.");
+                this.debugData = data;
             })
-            .catch(error => console.log(error))
+            .catch(() => {
+                error => console.log(error);
+                this.debugData = error;
+            })
             .finally(() => {
                 this.loading = false
             })

@@ -38,6 +38,7 @@ template: `
 		</div>
 
         <Loading :loading="this.loading"></Loading>
+		<Debug :debugData="this.debugData"></Debug>
 	</div>
 </div>
 `,
@@ -46,6 +47,7 @@ template: `
 			invoiceId: parseInt(this.$route.params.id),
 			customerId: parseInt(this.$route.params.customerId),
 			invoice: {},
+            debugData: null,
 			loading: false
         }
     },
@@ -120,8 +122,12 @@ template: `
                 .then((response) => {
 					this.invoice = response.data[0];
 					this.invoiceId = this.invoice.Id;
+                    this.debugData = response;
                 })
-                .catch(error => console.log(error))
+                .catch(() => {
+                    error => console.log(error);
+                    this.debugData = error;
+                })
                 .finally(() => {
 					this.loading = false;
 				})

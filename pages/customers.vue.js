@@ -32,11 +32,13 @@ var spaCustomers = Vue.component("Customers", {
 		</table>
         
         <Loading :loading="this.loading"></Loading>
+        <Debug :debugData="this.debugData"></Debug>
 	</div>
     `,
     data () {
         return {
             loading: true,
+            debugData: null,
             customers: []
         }
     },
@@ -50,8 +52,12 @@ var spaCustomers = Vue.component("Customers", {
                 .then(response => response.json())
                 .then((response) => {
                     this.customers = response.data;
+                    this.debugData = response;
                 })
-                .catch(error => console.log(error))
+                .catch(() => {
+                    error => console.log(error);
+                    this.debugData = error;
+                })
                 .finally(() => {
                     this.loading = false;
                 })
