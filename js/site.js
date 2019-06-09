@@ -1,3 +1,3 @@
 var config = {
-    url: 'http://localhost/api/v4/'
+    url: 'https://api.woolston.com.au/crm/v4/'
 }

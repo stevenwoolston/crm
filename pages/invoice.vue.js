@@ -26,7 +26,7 @@ template: `
 					<a href="#invoicePayments" aria-controls="invoicePayments" role="tab" data-toggle="tab">Payments</a>
 				</li>
 				<li role="presentation">
-					<a href="#deliveryHistory" aria-controls="deliveryHistory" role="tab" data-toggle="tab">Delivery History</a>
+					<a href="#invoiceDeliveries" aria-controls="invoiceDeliveries" role="tab" data-toggle="tab">Delivery History</a>
 				</li>
 			</ul>
 

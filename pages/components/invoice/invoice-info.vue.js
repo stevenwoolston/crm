@@ -44,9 +44,9 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
-                <button type="button" class="btn pull-left btn-primary"
+                <button type="button" :class="sendButtonClass" class="btn pull-left btn-primary"
                     data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
-                <button type="button" :class="invoice.IsCanceled ? 'btn-primary' : 'btn-danger'" class="btn pull-right" 
+                <button type="button" :class="cancelButtonClass" class="btn pull-right" 
                     v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
                 <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId, tabName: 'invoices' }}">Cancel</router-link>
@@ -114,6 +114,17 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
     computed: {
         invoiceId() {
             return this.invoice.Id;
+        },
+        cancelButtonClass() {
+            let classes;
+            classes = !this.invoice.Id ? 'hidden' : '';
+            classes += this.invoice.IsCanceled ? ' btn-primary' : ' btn-danger';
+            return classes;
+        },
+        sendButtonClass() {
+            let classes;
+            classes = !this.invoice.Id ? 'hidden' : '';
+            return classes;
         }
     },
     filters: {
