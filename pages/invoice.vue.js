@@ -117,12 +117,12 @@ template: `
 		},
         getInvoice() {
 			this.loading = true;
-            fetch(`http://localhost/api/v4/invoice/${this.invoice.Id}`)
+            fetch(`${config.url}invoice/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
+                    this.debugData = response;
 					this.invoice = response.data[0];
 					this.invoiceId = this.invoice.Id;
-                    this.debugData = response;
                 })
                 .catch(() => {
                     error => console.log(error);

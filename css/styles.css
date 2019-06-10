@@ -17,6 +17,7 @@ h1, h2, h3, h4, h5 {
   color: #fff;
 }
 
+.navbar-default .navbar-brand,
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-brand:active,
 .navbar-default .navbar-brand:visited,
@@ -188,4 +189,12 @@ label.checkbox :checked + span:before {
       stroke-dashoffset: -65.973;
       -webkit-transform: rotate(90deg);
               transform: rotate(90deg); } }
-  
+
+@media only screen and (max-width: 900px) {
+    #customer-invoice-table th:nth-child(4),
+    #customer-invoice-table td:nth-child(4),
+    #customer-invoice-table th:nth-child(5),
+    #customer-invoice-table td:nth-child(5) {
+        display: none;
+    }
+}
