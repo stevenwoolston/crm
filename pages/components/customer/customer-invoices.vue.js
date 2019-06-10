@@ -8,7 +8,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
             </div>
         </div>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="customer-invoice-table">
             <colgroup>
                 <col style="text-align: left"/>
                 <col style="text-align: left; width: 40%;"/>

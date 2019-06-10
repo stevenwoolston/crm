@@ -25,18 +25,20 @@ template: `
 				<li role="presentation">
 					<a href="#invoicePayments" aria-controls="invoicePayments" role="tab" data-toggle="tab">Payments</a>
 				</li>
-				<li role="presentation" class="hidden">
-					<a href="#deliveryHistory" aria-controls="deliveryHistory" role="tab" data-toggle="tab">Delivery History</a>
+				<li role="presentation">
+					<a href="#invoiceDeliveries" aria-controls="invoiceDeliveries" role="tab" data-toggle="tab">Delivery History</a>
 				</li>
 			</ul>
 
 			<div class="tab-content">
 				<InvoiceItems :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceItems>
 				<InvoicePayments :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoicePayments>
+				<InvoiceDeliveries :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceDeliveries>
 			</div>
 		</div>
 
         <Loading :loading="this.loading"></Loading>
+		<Debug :debugData="this.debugData"></Debug>
 	</div>
 </div>
 `,
@@ -45,6 +47,7 @@ template: `
 			invoiceId: parseInt(this.$route.params.id),
 			customerId: parseInt(this.$route.params.customerId),
 			invoice: {},
+            debugData: null,
 			loading: false
         }
     },
@@ -114,13 +117,17 @@ template: `
 		},
         getInvoice() {
 			this.loading = true;
-            fetch(`http://localhost/api/v4/invoice/${this.invoice.Id}`)
+            fetch(`${config.url}invoice/${this.invoice.Id}`)
                 .then(response => response.json())
                 .then((response) => {
+                    this.debugData = response;
 					this.invoice = response.data[0];
 					this.invoiceId = this.invoice.Id;
                 })
-                .catch(error => console.log(error))
+                .catch(() => {
+                    error => console.log(error);
+                    this.debugData = error;
+                })
                 .finally(() => {
 					this.loading = false;
 				})

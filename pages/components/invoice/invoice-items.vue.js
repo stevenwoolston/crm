@@ -23,8 +23,9 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
             </thead>
             <tbody v-if="invoiceItems.length > 0">
                 <tr v-for="invoiceItem in invoiceItems" :key="invoiceItem.Id">
-                    <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" data-toggle="modal" data-target="#manageInvoiceItem">
-                        {{ invoiceItem.Description }}
+                    <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" 
+                        data-toggle="modal" data-target="#manageInvoiceItem"
+                        v-html="invoiceItem.Description">
                     </td>
                     <td>{{ invoiceItem.Cost | money }}</td>
                     <td class="text-center">
@@ -61,7 +62,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                             <div class="form-group">
                                 <label for="Cost" class="col-sm-2 control-label">Cost</label>
                                 <div class="col-sm-4">
-                                    <input type="number" required class="form-control" name="Cost" id="Cost" 
+                                    <input type="number" min="0" step="any" required class="form-control" name="Cost" id="Cost" 
                                         v-model="invoiceItem.Cost">
                                 </div>
                             </div>
