@@ -1,6 +1,6 @@
 Vue.component('Debug', {
     template: `
-	<div>{{ this.debugData }}</div>
+	<div class="debug-info">{{ this.debugData }}</div>
 `,
     props: ['debugData']
 })
