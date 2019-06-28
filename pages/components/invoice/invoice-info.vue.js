@@ -51,6 +51,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
                 <router-link class="btn btn-default pull-right" :to="{name: 'Customer', params: { id: this.customerId, tabName: 'invoices' }}">Cancel</router-link>
                 <input type="hidden" id="Id" name="Id" v-model="invoice.Id" />
+                <input type="hidden" id="DateSent" name="DateSent" v-model="invoice.DateSent" />
                 <input type="hidden" id="CustomerId" name="CustomerId" v-model="invoice.CustomerId" value="{this.customerId}" />
             </div>
         </form>
@@ -151,7 +152,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         }
     },
     methods: {
-        refreshInvoice () {
+        refreshInvoice() {
             this.$emit('refresh-invoice', this.invoice);
         },
         cancelInvoice(willBeCanceled) {
@@ -162,13 +163,13 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             fetch(`${config.url}customers/${this.customerId}/contacts`, {
                 method: "GET"
             })
-            .then(response => response.json())
-            .then((response) => {
-                this.contacts = response.data;
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-            })
+                .then(response => response.json())
+                .then((response) => {
+                    this.contacts = response.data;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                })
         },
         sendInvoice() {
             this.loading = true;
@@ -183,18 +184,18 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 method: request_method,
                 body: JSON.stringify(delivery)
             })
-            .then(response => response.json())
-            .then((response) => {
-                if (response.data.Id == null) {
-                    toastr.error("There was a problem queueing the invoice to be sent.");
-                    throw response.message;
-                }
-                toastr.success("Invoice was successfully queued to send.");
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-                $("#selectContactForDelivery").modal("hide");
-            })
+                .then(response => response.json())
+                .then((response) => {
+                    if (response.data.Id == null) {
+                        toastr.error("There was a problem queueing the invoice to be sent.");
+                        throw response.message;
+                    }
+                    toastr.success("Invoice was successfully queued to send.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    $("#selectContactForDelivery").modal("hide");
+                })
         },
         saveInvoice() {
             this.loading = true;
@@ -210,17 +211,17 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 method: request_method,
                 body: JSON.stringify(this.invoice)
             })
-            .then(response => response.json())
-            .then((response) => {
-                if (this.invoice.Id == null) {
-                    this.invoice.Id = response.data.Id;
-                }
-                toastr.success("Save was successful.");
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-                this.refreshInvoice();
-            })
+                .then(response => response.json())
+                .then((response) => {
+                    if (this.invoice.Id == null) {
+                        this.invoice.Id = response.data.Id;
+                    }
+                    toastr.success("Save was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.refreshInvoice();
+                })
         }
     }
 });

@@ -7,14 +7,14 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: "Roboto";
+		font-family: "Roboto";
 }
 
 .navbar, .navbar-default {
-  margin-bottom: 0;
-  background-color: #337ab7;
-  border-radius: 0;
-  color: #fff;
+	margin-bottom: 0;
+	background-color: #337ab7;
+	border-radius: 0;
+	color: #fff;
 }
 
 .navbar-default .navbar-brand,
@@ -27,23 +27,23 @@ h1, h2, h3, h4, h5 {
 .navbar-default .navbar-nav > li > a:active
 .navbar-default .navbar-nav > li > a:visited
 .navbar-default .navbar-nav > li > a:hover {
-  color: #fff;
+	color: #fff;
 }
 
 .navbar-default .navbar-toggle {
-  border-width: 0;
+	border-width: 0;
 }
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
-  background-color: #337ab7;
+	background-color: #337ab7;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #fff;
+	background-color: #fff;
 }
 
 .table thead th {
-    background-color: #eee;
+	background-color: #eee;
 }
 
 .table tbody td.text-center .glyphicon {
@@ -70,8 +70,8 @@ h1, h2, h3, h4, h5 {
 }
 
 #main.bordered {
-    border: 1px solid #eee;
-    padding: 20px;
+	border: 1px solid #eee;
+	padding: 20px;
 }
 
 .nav-tabs > li.active > a {
@@ -87,114 +87,118 @@ h1, h2, h3, h4, h5 {
 }
 
 .form-control, .btn {
-    border-radius: 0;
+	border-radius: 0;
 }
 
 .form-commands {
-    padding: 10px;
-    background-color: #ccc;
+	padding: 10px;
+	background-color: #ccc;
 }
 
 .form-commands a, .form-commands button {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 .table-controls {
-    padding: 10px;
-    background-color: #ccc;
+	padding: 10px;
+	background-color: #ccc;
 }
 
 .table-controls a, .table-controls button {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 label.checkbox input[type="checkbox"]  {
-    display: none;
+	display: none;
 }
 
 label.required:after {
-    content: "*";
-    font-weight: 700;
-    margin-left: 10px;
-    color: #ff0000;
+	content: "*";
+	font-weight: 700;
+	margin-left: 10px;
+	color: #ff0000;
 }
 
 label.checkbox span:before  {
-    font-size: 1.3em;
-    content: "\e014";
-    color: #a94442;
+	font-size: 1.3em;
+	content: "\e014";
+	color: #a94442;
 }
 
 label.checkbox :checked + span:before {
-    content: '\e013';
-    color: #3c763d;
+	content: '\e013';
+	color: #3c763d;
+}
+
+.debug-info {
+	display: none;
 }
 
 /*  Loader  */
 .loader {
-    left: 50%;
-    top: 50%;
-    position: fixed;
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%); }
-    .loader #spinner {
-      box-sizing: border-box;
-      stroke: #337ab7;
-      stroke-width: 3px;
-      -webkit-transform-origin: 50%;
-              transform-origin: 50%;
-      -webkit-animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite;
-              animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite; }
-  
-  @-webkit-keyframes rotate {
-    from {
-      -webkit-transform: rotate(0);
-              transform: rotate(0); }
-    to {
-      -webkit-transform: rotate(450deg);
-              transform: rotate(450deg); } }
-  
-  @keyframes rotate {
-    from {
-      -webkit-transform: rotate(0);
-              transform: rotate(0); }
-    to {
-      -webkit-transform: rotate(450deg);
-              transform: rotate(450deg); } }
-  
-  @-webkit-keyframes line {
-    0% {
-      stroke-dasharray: 2, 85.964;
-      -webkit-transform: rotate(0);
-              transform: rotate(0); }
-    50% {
-      stroke-dasharray: 65.973, 21.9911;
-      stroke-dashoffset: 0; }
-    100% {
-      stroke-dasharray: 2, 85.964;
-      stroke-dashoffset: -65.973;
-      -webkit-transform: rotate(90deg);
-              transform: rotate(90deg); } }
-  
-  @keyframes line {
-    0% {
-      stroke-dasharray: 2, 85.964;
-      -webkit-transform: rotate(0);
-              transform: rotate(0); }
-    50% {
-      stroke-dasharray: 65.973, 21.9911;
-      stroke-dashoffset: 0; }
-    100% {
-      stroke-dasharray: 2, 85.964;
-      stroke-dashoffset: -65.973;
-      -webkit-transform: rotate(90deg);
-              transform: rotate(90deg); } }
+	left: 50%;
+	top: 50%;
+	position: fixed;
+	-webkit-transform: translate(-50%, -50%);
+					transform: translate(-50%, -50%); }
+	.loader #spinner {
+		box-sizing: border-box;
+		stroke: #337ab7;
+		stroke-width: 3px;
+		-webkit-transform-origin: 50%;
+						transform-origin: 50%;
+		-webkit-animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite;
+						animation: line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 1.6s linear infinite; }
+	
+	@-webkit-keyframes rotate {
+		from {
+			-webkit-transform: rotate(0);
+							transform: rotate(0); }
+		to {
+			-webkit-transform: rotate(450deg);
+							transform: rotate(450deg); } }
+	
+	@keyframes rotate {
+		from {
+			-webkit-transform: rotate(0);
+							transform: rotate(0); }
+		to {
+			-webkit-transform: rotate(450deg);
+							transform: rotate(450deg); } }
+	
+	@-webkit-keyframes line {
+		0% {
+			stroke-dasharray: 2, 85.964;
+			-webkit-transform: rotate(0);
+							transform: rotate(0); }
+		50% {
+			stroke-dasharray: 65.973, 21.9911;
+			stroke-dashoffset: 0; }
+		100% {
+			stroke-dasharray: 2, 85.964;
+			stroke-dashoffset: -65.973;
+			-webkit-transform: rotate(90deg);
+							transform: rotate(90deg); } }
+	
+	@keyframes line {
+		0% {
+			stroke-dasharray: 2, 85.964;
+			-webkit-transform: rotate(0);
+							transform: rotate(0); }
+		50% {
+			stroke-dasharray: 65.973, 21.9911;
+			stroke-dashoffset: 0; }
+		100% {
+			stroke-dasharray: 2, 85.964;
+			stroke-dashoffset: -65.973;
+			-webkit-transform: rotate(90deg);
+							transform: rotate(90deg); } }
 
 @media only screen and (max-width: 900px) {
-    #customer-invoice-table th:nth-child(4),
-    #customer-invoice-table td:nth-child(4),
-    #customer-invoice-table th:nth-child(5),
-    #customer-invoice-table td:nth-child(5) {
-        display: none;
-    }
+	#customer-invoice-table th:nth-child(4),
+	#customer-invoice-table td:nth-child(4),
+	#customer-invoice-table th:nth-child(5),
+	#customer-invoice-table td:nth-child(5) {
+			display: none;
+	}
 }
