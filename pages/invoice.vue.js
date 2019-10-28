@@ -1,5 +1,5 @@
 var spaInvoice = Vue.component("Invoice", {
-template: `
+	template: `
 <div>
 
 	<Breadcrumb :breadcrumb="this.breadcrumb"></Breadcrumb>
@@ -42,54 +42,54 @@ template: `
 	</div>
 </div>
 `,
-    data() {
-        return {
+	data() {
+		return {
 			invoiceId: parseInt(this.$route.params.id),
 			customerId: parseInt(this.$route.params.customerId),
 			invoice: {},
-            debugData: null,
+			debugData: null,
 			loading: false
-        }
-    },
-    created() {
-        if (this.invoiceId > 0) {
+		}
+	},
+	created() {
+		if (this.invoiceId > 0) {
 			this.invoice.Id = this.invoiceId;
 			this.getInvoice();
 		} else {
 			this.resetInvoice();
 		}
-    },
-    filters: {
-        moment: function (date) {
-            if (moment(date).isValid()) {
-                return moment(date).format("YYYY-MM-DD");
-            }
-            return null;
-        },
-        money: function (value) {
-            var moneyValue = parseInt(value);
-            if (typeof moneyValue !== "number") {
-                return value;
-            }
-            var formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0
-            });
-            return formatter.format(value);
-        }
+	},
+	filters: {
+		moment: function (date) {
+			if (moment(date).isValid()) {
+				return moment(date).format("YYYY-MM-DD");
+			}
+			return null;
+		},
+		money: function (value) {
+			var moneyValue = parseInt(value);
+			if (typeof moneyValue !== "number") {
+				return value;
+			}
+			var formatter = new Intl.NumberFormat('en-US', {
+				style: 'currency',
+				currency: 'USD',
+				minimumFractionDigits: 0
+			});
+			return formatter.format(value);
+		}
 	},
 	computed: {
-		breadcrumb: function() {
+		breadcrumb: function () {
 			return [
-                {
-                    routeName: "Customers",
-                    LinkText: "View All Customers"
-                },
+				{
+					routeName: "Customers",
+					LinkText: "View All Customers"
+				},
 				{
 					routeName: "Customer",
 					routeParams: {
-						id: this.customerId, 
+						id: this.customerId,
 						tabName: 'invoices'
 					},
 					LinkText: this.invoice.CustomerName
@@ -102,7 +102,7 @@ template: `
 			]
 		}
 	},
-    methods: {
+	methods: {
 		resetInvoice() {
 			this.invoice = {
 				Id: null,
@@ -115,22 +115,22 @@ template: `
 				IsCanceled: false
 			}
 		},
-        getInvoice() {
+		getInvoice() {
 			this.loading = true;
-            fetch(`${config.url}invoice/${this.invoice.Id}`)
-                .then(response => response.json())
-                .then((response) => {
-                    this.debugData = response;
+			fetch(`${config.url}invoice/${this.invoice.Id}`)
+				.then(response => response.json())
+				.then((response) => {
+					this.debugData = response;
 					this.invoice = response.data[0];
 					this.invoiceId = this.invoice.Id;
-                })
-                .catch(() => {
-                    error => console.log(error);
-                    this.debugData = error;
-                })
-                .finally(() => {
+				})
+				.catch(() => {
+					error => console.log(error);
+					this.debugData = error;
+				})
+				.finally(() => {
 					this.loading = false;
 				})
-        }
-    }
+		}
+	}
 });

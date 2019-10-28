@@ -43,6 +43,26 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="IsSupportCustomer" class="col-sm-2 control-label">Is Support Customer?</label>
+						<div class="col-sm-4">
+							<label class="checkbox">
+								<input type="checkbox" name="IsSupportCustomer" id="IsSupportCustomer" v-model="customer.IsSupportCustomer">
+								<span class="glyphicon"></span>
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="SupportEndDate" class="col-sm-2 control-label">Support End Date</label>
+						<div class="col-sm-4 col-md-3 col-lg-2">
+							<div class="input-group date">
+								<DatePicker v-model="customer.SupportEndDate"></DatePicker>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="IsVisible" class="col-sm-2 control-label">Active?</label>
 						<div class="col-sm-4">
 							<label class="checkbox">
@@ -66,25 +86,25 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 	</div>
 `,
 	props: ["tabName"],
-    data() {
-        return {
+	data() {
+		return {
 			customerId: this.$route.params.id,
 			customer: {},
 			loading: true
-        }
-    },
-    created() {
-        if (this.customerId > 0) {
-            this.getCustomer(this.customerId);
-        } else {
-            this.resetCustomer();
-        }
-    },
-    methods: {
-        resetCustomer() {
-            this.customer = {
-                IsVisible: true,
-                InvoicingText: "Invoicing is on 14 day terms."
+		}
+	},
+	created() {
+		if (this.customerId > 0) {
+			this.getCustomer(this.customerId);
+		} else {
+			this.resetCustomer();
+		}
+	},
+	methods: {
+		resetCustomer() {
+			this.customer = {
+				IsVisible: true,
+				InvoicingText: "Invoicing is on 14 day terms."
 			}
 			this.loading = false;
 		},
@@ -92,45 +112,45 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 			this.customer.IsVisible = willBeCanceled;
 			this.saveCustomer();
 		},
-        getCustomer(id) {
+		getCustomer(id) {
 			this.loading = true;
-            fetch(`${config.url}customer/${id}`)
-                .then(response => response.json())
-                .then((response) => {
-                    this.customer = response.data[0];
-                })
-                .catch((error) => console.log(error))
-                .finally(() => {
-                    this.loading = false
-                })
-        },
-        saveCustomer() {
+			fetch(`${config.url}customer/${id}`)
+				.then(response => response.json())
+				.then((response) => {
+					this.customer = response.data[0];
+				})
+				.catch((error) => console.log(error))
+				.finally(() => {
+					this.loading = false
+				})
+		},
+		saveCustomer() {
 			this.loading = true;
 			let url = `${config.url}customer/${this.customer.Id}`,
 				request_method = "PUT";
 
-            if (this.customer.Id == null) {
+			if (this.customer.Id == null) {
 				url = `${config.url}customer`;
 				request_method = "POST";
-            }
+			}
 
-            fetch(url, {
-                method: request_method,
-                body: JSON.stringify(this.customer)
-            })
-            .then(response => response.json())
-            .then((response) => {
-                if (this.customer.Id == null) {
-					this.customer.Id = response.data.Id;
-					this.customerId = response.data.Id;
-                }
-                toastr.success("Save was successful.");
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-				this.loading = false;
-                this.$emit("customer-saved", this.customer.Id);
-            })
-        }
-    }
+			fetch(url, {
+				method: request_method,
+				body: JSON.stringify(this.customer)
+			})
+				.then(response => response.json())
+				.then((response) => {
+					if (this.customer.Id == null) {
+						this.customer.Id = response.data.Id;
+						this.customerId = response.data.Id;
+					}
+					toastr.success("Save was successful.");
+				})
+				.catch(error => console.log(error))
+				.finally(() => {
+					this.loading = false;
+					this.$emit("customer-saved", this.customer.Id);
+				})
+		}
+	}
 });
