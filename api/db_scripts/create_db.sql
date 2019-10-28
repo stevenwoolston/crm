@@ -9,6 +9,7 @@ CREATE TABLE `customer` (
   `InvoicingText` varchar(100) DEFAULT NULL,
   `IsSupportCustomer` tinyint(1) NOT NULL,
   `SupportEndDate` date DEFAULT NULL,
+  `URL` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 

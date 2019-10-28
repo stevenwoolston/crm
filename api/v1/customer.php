@@ -44,6 +44,7 @@ switch($request_method)
                     "Suburb" => $Suburb,
                     "State" => $State,
                     "Postcode" => $Postcode,
+                    "URL" => $URL,
                     "InvoicingText" => $InvoicingText,
                     "IsSupportCustomer" => (bool)$IsSupportCustomer,
                     "SupportEndDate" => $SupportEndDate
@@ -71,6 +72,7 @@ switch($request_method)
         $customer->State = $data["State"];
         $customer->Postcode = $data["Postcode"];
         $customer->InvoicingText = $data["InvoicingText"];
+        $customer->URL = $data["URL"];
         $customer->IsSupportCustomer = $data["IsSupportCustomer"];
         $customer->SupportEndDate = $data["SupportEndDate"];
         $customer->IsVisible = $data["IsVisible"];
@@ -94,6 +96,7 @@ switch($request_method)
         $customer->State = $data["State"];
         $customer->Postcode = $data["Postcode"];
         $customer->InvoicingText = $data["InvoicingText"];
+        $customer->URL = $data["URL"];
         $customer->IsSupportCustomer = $data["IsSupportCustomer"];
         $customer->SupportEndDate = $data["SupportEndDate"];
         $customer->IsVisible = $data["IsVisible"];

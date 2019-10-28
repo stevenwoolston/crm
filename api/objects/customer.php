@@ -13,7 +13,8 @@ class Customer {
 	public $Suburb;
 	public $State;
     public $Postcode;
-    public $InvoicingText;
+	public $InvoicingText;
+	public $URL;
     public $IsSupportCustomer;
     public $SupportEndDate;
  
@@ -26,7 +27,7 @@ class Customer {
 	function read() {
 	
 		// select all query
-		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText,
+		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, 
 			IsSupportCustomer, SupportEndDate
 			FROM
 				" . $this->table_name . " c
@@ -44,7 +45,7 @@ class Customer {
 	//	read single customer
 	function read_one($id) {
 	
-		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText,
+		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, 
 			IsSupportCustomer, SupportEndDate
 		FROM
 					" . $this->table_name . " c
@@ -66,6 +67,7 @@ class Customer {
 		$this->State=htmlspecialchars(strip_tags($this->State));
 		$this->Postcode=htmlspecialchars(strip_tags($this->Postcode));
 		$this->InvoicingText=htmlspecialchars(strip_tags($this->InvoicingText));
+		$this->URL=htmlspecialchars(strip_tags($this->URL));
 		return $this;
 	}
 
@@ -78,7 +80,8 @@ class Customer {
 					Suburb=:Suburb, State=:State, Postcode=:Postcode, 
 					InvoicingText=:InvoicingText,
 					IsSupportCustomer=:IsSupportCustomer, 
-					SupportEndDate=:SupportEndDate";
+					SupportEndDate=:SupportEndDate,
+					URL=:URL";
 	
 		// prepare query
 		$stmt = $this->conn->prepare($query);
@@ -91,6 +94,7 @@ class Customer {
 		$stmt->bindParam(':State', $this->State);
 		$stmt->bindParam(":Postcode", $this->Postcode);
 		$stmt->bindParam(":InvoicingText", $this->InvoicingText);
+		$stmt->bindParam(":URL", $this->URL);
 		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, PDO::PARAM_BOOL);
 		$stmt->bindParam(":SupportEndDate", $this->SupportEndDate);
 	
@@ -116,7 +120,8 @@ class Customer {
 					InvoicingText = :InvoicingText,
 					IsVisible = :IsVisible,
 					IsSupportCustomer = :IsSupportCustomer, 
-					SupportEndDate = :SupportEndDate
+					SupportEndDate = :SupportEndDate,
+					URL = :URL
 				WHERE
 					Id = :Id";
 	
@@ -132,6 +137,7 @@ class Customer {
 		$stmt->bindParam(':State', $this->State);
 		$stmt->bindParam(":Postcode", $this->Postcode);
 		$stmt->bindParam(":InvoicingText", $this->InvoicingText);
+		$stmt->bindParam(":URL", $this->URL);
 		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, PDO::PARAM_BOOL);
 		$stmt->bindParam(":SupportEndDate", $this->SupportEndDate);
 	
