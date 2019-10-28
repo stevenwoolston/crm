@@ -44,6 +44,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
+                <button type="button" v-on:click="duplicate" class="btn btn-primary pull-right">Copy</button>
                 <button type="button" :class="sendButtonClass" class="btn pull-left btn-primary"
                     data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
                 <button type="button" :class="cancelButtonClass" class="btn pull-right" 
@@ -152,8 +153,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         }
     },
     methods: {
-        refreshInvoice() {
-            this.$emit('refresh-invoice', this.invoice);
+        refreshInvoice(invoice) {
+            this.$emit('refresh-invoice', invoice);
         },
         cancelInvoice(willBeCanceled) {
             this.invoice.IsCanceled = willBeCanceled;
@@ -220,7 +221,35 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    this.refreshInvoice();
+                    this.refreshInvoice(this.invoice);
+                })
+        },
+        duplicate() {
+            this.loading = true;
+            let url = `${config.url}invoice`;
+            request_method = "POST",
+                newInvoice = {
+                    CustomerId: this.invoice.CustomerId,
+                    EmailSubject: this.invoice.EmailSubject,
+                    InvoiceDate: moment().format("YYYY-MM-DD"),
+                    InvoiceDueDate: moment().add(14, "day"),
+                    DateSent: null,
+                    IsCanceled: 0,
+                    DatePaid: null
+                };
+
+            fetch(url, {
+                method: request_method,
+                body: JSON.stringify(newInvoice)
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    newInvoice.Id = response.data.Id;
+                    toastr.success("Save was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    router.push({ name: "Customer", params: { id: newInvoice.CustomerId } });
                 })
         }
     }
