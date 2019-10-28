@@ -43,6 +43,12 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="URL" class="col-sm-2 control-label">URL</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="URL" id="URL" placeholder="URL" v-model="customer.URL">
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="IsSupportCustomer" class="col-sm-2 control-label">Is Support Customer?</label>
 						<div class="col-sm-4">
 							<label class="checkbox">
