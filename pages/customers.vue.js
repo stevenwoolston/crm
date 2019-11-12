@@ -35,7 +35,7 @@ var spaCustomers = Vue.component("Customers", {
         <Debug :debugData="this.debugData"></Debug>
 	</div>
     `,
-    data () {
+    data() {
         return {
             loading: true,
             debugData: null,
@@ -54,10 +54,7 @@ var spaCustomers = Vue.component("Customers", {
                     this.customers = response.data;
                     this.debugData = response;
                 })
-                .catch(() => {
-                    error => console.log(error);
-                    this.debugData = error;
-                })
+                .catch(error => console.log(error))
                 .finally(() => {
                     this.loading = false;
                 })
