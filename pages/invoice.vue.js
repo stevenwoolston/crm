@@ -124,10 +124,7 @@ var spaInvoice = Vue.component("Invoice", {
 					this.invoice = response.data[0];
 					this.invoiceId = this.invoice.Id;
 				})
-				.catch(() => {
-					error => console.log(error);
-					this.debugData = error;
-				})
+				.catch(error => console.log(error))
 				.finally(() => {
 					this.loading = false;
 				})

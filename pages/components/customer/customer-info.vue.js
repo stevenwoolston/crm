@@ -125,7 +125,7 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 				.then((response) => {
 					this.customer = response.data[0];
 				})
-				.catch((error) => console.log(error))
+				.catch(error => console.log(error))
 				.finally(() => {
 					this.loading = false
 				})

@@ -67,21 +67,21 @@ var spaCustomer = Vue.component("Customer", {
             this.datetimepicker();
         }
     },
-	computed: {
-		breadcrumb: function() {
-			return [
+    computed: {
+        breadcrumb: function () {
+            return [
                 {
                     routeName: "Customers",
                     LinkText: "View All Customers"
                 },
-				{
-					routeName: null,
-					routeParams: null,
-					LinkText: this.customer.Name
-				}
-			]
-		}
-	},
+                {
+                    routeName: null,
+                    routeParams: null,
+                    LinkText: this.customer.Name
+                }
+            ]
+        }
+    },
     methods: {
         resetCustomer() {
             this.customer = {
@@ -103,10 +103,7 @@ var spaCustomer = Vue.component("Customer", {
                     this.customer = response.data[0];
                     this.debugData = response;
                 })
-                .catch(() => {
-                    error => console.log(error);
-                    this.debugData = error;
-                })
+                .catch(error => console.log(error))
                 .finally(() => {
                     this.breadcrumb[1].name = this.customer.Name;
                     this.loading = false
@@ -123,17 +120,14 @@ var spaCustomer = Vue.component("Customer", {
                 method: "PUT",
                 body: JSON.stringify(this.customer)
             })
-            .then((data) => {
-                toastr.success("Save was successful.");
-                this.debugData = data;
-            })
-            .catch(() => {
-                error => console.log(error);
-                this.debugData = error;
-            })
-            .finally(() => {
-                this.loading = false
-            })
+                .then((data) => {
+                    toastr.success("Save was successful.");
+                    this.debugData = data;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.loading = false
+                })
         }
     }
 });

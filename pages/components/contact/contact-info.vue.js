@@ -76,7 +76,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
         }
     },
     methods: {
-        cancel: function() {
+        cancel: function () {
             this.$emit('cancel');
         },
         getCustomer(id) {
@@ -86,7 +86,7 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 .then((response) => {
                     this.customer = response.data[0];
                 })
-                .catch((error) => console.log(error))
+                .catch(error => console.log(error))
                 .finally(() => {
                     this.loading = false
                 })
@@ -122,18 +122,18 @@ var spaContactInfo = Vue.component("ContactInfo", {
                 method: request_method,
                 body: JSON.stringify(this.contact)
             })
-            .then(response => response.json())
-            .then((response) => {
-                if (this.contact.Id == null) {
-                    this.contact.Id = response.data.Id;
-                }
-                toastr.success("Save was successful.");
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-                this.$emit("contact-saved", this.contact);
-                this.loading = false;
-            })
+                .then(response => response.json())
+                .then((response) => {
+                    if (this.contact.Id == null) {
+                        this.contact.Id = response.data.Id;
+                    }
+                    toastr.success("Save was successful.");
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.$emit("contact-saved", this.contact);
+                    this.loading = false;
+                })
         }
     }
 });
