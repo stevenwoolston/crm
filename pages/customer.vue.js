@@ -14,12 +14,16 @@ var spaCustomer = Vue.component("Customer", {
                 <li role="presentation" v-show="this.customerId > 0" :class="this.tabName == 'contacts' ? 'active' : ''">
                     <a href="#contacts" aria-controls="contacts" role="tab" data-toggle="tab">Contacts</a>
                 </li>
+                <li role="presentation" v-show="this.customerId > 0" :class="this.tabName == 'notes' ? 'active' : ''">
+                    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a>
+                </li>
             </ul>
 
             <div class="tab-content">
                 <CustomerInfo :tabName="tabName" :customerId="this.customerId" @customer-saved="refreshCustomer"></CustomerInfo>
                 <CustomerInvoices v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerInvoices>
                 <CustomerContacts v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerContacts>
+                <CustomerNotes v-show="this.customerId > 0" :tabName="tabName" :customerId="customerId"></CustomerNotes>
             </div>
 
             <Loading :loading="this.loading"></Loading>

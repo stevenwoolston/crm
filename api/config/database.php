@@ -8,7 +8,7 @@ class Database {
     private $password = "H@nnahN0ah";
 
     // private $host = "localhost";
-    // private $db_name = "crm";
+    // private $db_name = "vuecrm";
     // private $username = "root";
     // private $password = "root";
 
