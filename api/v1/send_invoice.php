@@ -149,19 +149,21 @@ foreach($deliveries_queued as $delivery_queued) {
 
     $pdf = new InvoicePDF();
     $pdf->data = $data;
-    $pdf->AddPage();
-    $pdf->SetTextColor(88, 89, 91);
-    //  Invoice details
-    $pdf->InvoiceDetail();
-    //  items table
-    $pdf->ItemsTable();
-    $pdf->SetFont('Arial','',12);
-    $pdf->SetFillColor(255, 255, 255);
-    $pdf->SetDrawColor(0, 0, 0);
-    $pdf->SetLineWidth(0);
-    $pdf->Cell(0, 10, 'Please make cheques payable to Steven Woolston, although EFT payment is preferred.', 0, 0, 'C');
-    $pdf->Ln(5);
-    $pdf->Cell(0, 10, $data["Customer"][0]["InvoicingText"], 0, 0, 'C');
+    // $pdf->AddPage();
+    // $pdf->SetTextColor(88, 89, 91);
+    // //  Invoice details
+    // $pdf->InvoiceDetail();
+    // //  items table
+    // $pdf->ItemsTable();
+    // $pdf->SetFont('Arial','',12);
+    // $pdf->SetFillColor(255, 255, 255);
+    // $pdf->SetDrawColor(0, 0, 0);
+    // $pdf->SetLineWidth(0);
+    // $pdf->Cell(0, 10, 'Please make cheques payable to Steven Woolston, although EFT payment is preferred.', 0, 0, 'C');
+    // $pdf->Ln(5);
+    // $pdf->Cell(0, 10, $data["Customer"][0]["InvoicingText"], 0, 0, 'C');
+    echo $pdf->generate();
+    die();
     //  Payment Advice is in footer
 
     $config = new Config();
