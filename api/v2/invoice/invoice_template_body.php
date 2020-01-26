@@ -52,7 +52,7 @@
         cellpadding="0" cellspacing="0">
         <colgroup>
             <col style="">
-            <col style=" text-align: right;"/>
+            <col style="text-align: right;"/>
         </colgroup>
         <tr>
             <td style="background-color: #eee;"><strong>Description of Work</strong></td>
@@ -64,8 +64,8 @@
         $totalInvoiceCost += $item["Cost"];
 ?>
         <tr>
-            <td style="width: 80%; border-bottom: 1px solid #ccc;"><?php echo $item['Description']; ?></td>
-            <td style="width: 20%; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;" class="alignright">$<?php echo number_format($item['Cost'], 2); ?></td>
+            <td style="width: 85%; border-bottom: 1px solid #ccc;"><?php echo $item['Description']; ?></td>
+            <td style="width: 15%; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;" class="alignright">$<?php echo number_format($item['Cost'], 2); ?></td>
         </tr>
 <?php
     endforeach;

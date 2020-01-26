@@ -2,7 +2,8 @@
     <table style="margin-top: 30px;">
     <tr>
         <td style="text-align: center">
-            Please make cheques payable to Steven Woolston, although EFT payment is preferred. Invoicing is on 14 day terms
+            Please make cheques payable to Steven Woolston, although EFT payment is preferred.<br />
+            <?php echo $InvoicingText; ?>
         </td>
     </tr>
     </table>
@@ -21,13 +22,13 @@
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td><?php echo $CustomerAddress; ?></td>
+            <td>Woolston Web Design</td>
             <td>Amount Due:</td>
             <td>$<?php echo number_format($InvoiceCost, 2); ?></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td><?php echo $CustomerSuburb; ?>&nbsp;<?php echo $CustomerState; ?>&nbsp;<?php echo $CustomerPostcode; ?></td>
+            <td>Caboolture QLD 4510</td>
             <td>Due Date:</td>
             <td><?php echo date_format(date_create($InvoiceDueDate), 'd-M-Y'); ?></td>
         </tr>
@@ -38,3 +39,4 @@
             <td><?php echo $InvoiceNumber; ?></td>
         </tr>
     </table>
+    <div style="font-size: 10px; text-align: right">v1.1</div>

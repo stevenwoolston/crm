@@ -1,5 +1,5 @@
 <?php
-require_once '../vendor/autoload.php';
+namespace APIv2\Config;
 
 class Template
 {
