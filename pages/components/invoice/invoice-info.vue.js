@@ -89,11 +89,17 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                                         <td colspan="3" class="text-center">No matching records</td>
                                     </tr>
                                 </tbody>
-                            </table>                                        
+                            </table>
+                            <div class="form-group">
+                                <label for="deliveryComment" class="col-xs-2 control-label text-left">Comments</label>
+                                <div class="col-xs-10">
+                                    <textarea id="deliveryComment" class="col-xs-12 form-control" rows="3" v-model="deliveryComment"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Queue To Send</button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -107,7 +113,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         return {
             loading: false,
             contacts: [],
-            selectedEmailAddresses: []
+            selectedEmailAddresses: [],
+            deliveryComment: null
         }
     },
     created() {
@@ -179,6 +186,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 delivery = {
                     DateDelivered: null,
                     DeliveredTo: this.selectedEmailAddresses.toString(),
+                    DeliveryComment: this.deliveryComment,
                     InvoiceId: this.invoice.Id
                 };
             fetch(url, {
@@ -195,6 +203,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    this.selectedEmailAddresses = [];
+                    this.deliveryComment = "";
                     $("#selectContactForDelivery").modal("hide");
                 })
         },

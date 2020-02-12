@@ -5,19 +5,16 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
-include_once '../config/database.php';
-include_once '../config/config.php';
-include_once '../objects/customer.php';
-include_once '../objects/customercontact.php';
-include_once '../objects/invoice.php';
-include_once '../objects/invoiceitem.php';
-include_once '../objects/delivery.php';
-include_once '../objects/invoice_pdf.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+use APIv2\Config\Database;
+use APIv2\Config\Config;
+use APIv2\objects as Models;
+use APIv2\Invoicing as Invoice;
  
 $database = new Database();
 $db = $database->getConnection();
 
-$delivery = new Delivery($db);
+$delivery = new Models\Delivery($db);
 
 //  get deliveries to be queued
 $deliveries_queued = array();
@@ -30,21 +27,22 @@ if ($num == 0) {
 }
 
 //  write deliveries to an array
-while ($row = $deliveries_stmt->fetch(PDO::FETCH_ASSOC)){
+while ($row = $deliveries_stmt->fetch(\PDO::FETCH_ASSOC)){
     extract($row);
     $delivery_item = array(
         "Id" => $Id,
         "InvoiceId" => $InvoiceId,
         "DateDelivered" => $DateDelivered,
-        "DeliveredTo" => $DeliveredTo
+        "DeliveredTo" => $DeliveredTo,
+        "DeliveryComment" => $DeliveryComment
     );
     array_push($deliveries_queued, $delivery_item);
 }
 
-$customer = new Customer($db);
-$invoice = new Invoice($db);
-$invoiceitem = new InvoiceItem($db);
-$customercontact = new CustomerContact($db);
+$customer = new Models\Customer($db);
+$invoice = new Models\Invoice($db);
+$invoiceitem = new Models\InvoiceItem($db);
+$customercontact = new Models\CustomerContact($db);
 
 //  iterate over the deliveries queue
 foreach($deliveries_queued as $delivery_queued) {
@@ -60,6 +58,7 @@ foreach($deliveries_queued as $delivery_queued) {
     $delivery->Id = $delivery_queued["Id"];
     $delivery->DeliveredTo = $delivery_queued["DeliveredTo"];
     $delivery->InvoiceId = $delivery_queued["InvoiceId"];
+    $delivery->DeliveryComment = $delivery_queued["DeliveryComment"];
     
     $id = $delivery->Id;
     $invoiceId = $delivery->InvoiceId;
@@ -73,7 +72,7 @@ foreach($deliveries_queued as $delivery_queued) {
         die();
     }
 
-    while ($row = $invoice_stmt->fetch(PDO::FETCH_ASSOC)){
+    while ($row = $invoice_stmt->fetch(\PDO::FETCH_ASSOC)){
         extract($row);
         $invoice_item = array(
             "Id" => $Id,
@@ -111,7 +110,7 @@ foreach($deliveries_queued as $delivery_queued) {
         die();
     }
 
-    while ($row = $customer_stmt->fetch(PDO::FETCH_ASSOC)){
+    while ($row = $customer_stmt->fetch(\PDO::FETCH_ASSOC)){
         extract($row);
         $customer_item = array(
             "Id" => $Id,
@@ -135,7 +134,7 @@ foreach($deliveries_queued as $delivery_queued) {
         die();
     }
 
-    while ($row = $invoiceitem_stmt->fetch(PDO::FETCH_ASSOC)){
+    while ($row = $invoiceitem_stmt->fetch(\PDO::FETCH_ASSOC)){
         extract($row);
         $invoiceitem_item=array(
             "Id" => $Id,
@@ -147,38 +146,28 @@ foreach($deliveries_queued as $delivery_queued) {
         array_push($data["InvoiceItems"], $invoiceitem_item);
     }
 
-    $pdf = new InvoicePDF();
+    $pdf = new Invoice\InvoicePDF();
     $pdf->data = $data;
-    // $pdf->AddPage();
-    // $pdf->SetTextColor(88, 89, 91);
-    // //  Invoice details
-    // $pdf->InvoiceDetail();
-    // //  items table
-    // $pdf->ItemsTable();
-    // $pdf->SetFont('Arial','',12);
-    // $pdf->SetFillColor(255, 255, 255);
-    // $pdf->SetDrawColor(0, 0, 0);
-    // $pdf->SetLineWidth(0);
-    // $pdf->Cell(0, 10, 'Please make cheques payable to Steven Woolston, although EFT payment is preferred.', 0, 0, 'C');
-    // $pdf->Ln(5);
-    // $pdf->Cell(0, 10, $data["Customer"][0]["InvoicingText"], 0, 0, 'C');
-    echo $pdf->generate();
-    die();
-    //  Payment Advice is in footer
 
     $config = new Config();
     $config->email_to_address = $delivery_queued["DeliveredTo"];
     $config->email_subject = $data["Invoice"][0]["EmailSubject"];
     $config->smtp_debug = 0;    //  0/1/2
-    $config->smtp_attachment = $pdf->Output('', 'S');
+    $config->smtp_attachment = $pdf->generate()->Output('', 'S');
     $config->smtp_attachment_name = 'WWD Invoice ' . $invoiceId . '.pdf';
 
     $body_html = '<p>Hi all.</p>';
     $body_html .= '<p>Thank you for your recent business.</p>';
     $body_html .= '<p>I have attached the invoice number <b>'. $invoiceId . '</b> for the work we did and look forward ';
     $body_html .= 'to continuing to work with you in the future.</p>';
+
+    if (!empty($delivery->DeliveryComment)) {
+        $body_html .= "<p>" . $delivery->DeliveryComment . "</p>";
+    }
+
     $body_html .= '<p>Thanks for your business.<br/>';
     $body_html .= '<i>Steven Woolston</i></p>';
+
     $config->email_body = html_entity_decode($body_html);
     
     //  testing
@@ -192,7 +181,6 @@ foreach($deliveries_queued as $delivery_queued) {
     if ($config->send_email()) {
         date_default_timezone_set('Australia/Brisbane');
         $date = date('Y-m-d H:i:s');
-
         //  prepare to update the invoice
         $invoice->DateSent = $date;
 

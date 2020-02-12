@@ -1,0 +1,10 @@
+{
+    "require": {
+        "mpdf/mpdf": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "APIv2\\": "v2"
+        }
+    }
+}

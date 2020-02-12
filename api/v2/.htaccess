@@ -24,7 +24,7 @@ RewriteRule ^payments/([0-9]+)$ payment.php?id=$1 [NC]
 RewriteRule ^invoices/([0-9]+)/deliveries$ delivery.php?invoiceid=$1 [NC]
 RewriteRule ^deliveries/([0-9]+)$ delivery.php?id=$1 [NC]
 
-RewriteRule ^invoices/sendinvoice$ send_invoice.php?id=$1 [NC,L]
+RewriteRule ^invoices/sendinvoice$ invoice/send_invoice.php?id=$1 [NC,L]
 
 # Multi request method routing
 RewriteCond %{REQUEST_METHOD} (HEAD|OPTIONS|POST|PUT|DELETE) [NC]
