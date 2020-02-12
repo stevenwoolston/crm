@@ -4,19 +4,22 @@ var spaInvoiceDeliveries = Vue.component("InvoiceDeliveries", {
         <h2>Deliveries</h2>
         <table class="table table-bordered">
             <colgroup>
+                <col style="width: 150px;" />
                 <col/>
-                <col/>
+                <col style="width:40%" />
             </colgroup>
             <thead>
                 <tr>
                     <th>Date Delivered</th>
                     <th>Delivered To</th>
+                    <th>Comments</th>
                 </tr>
             </thead>
             <tbody v-if="invoiceDeliveries.length > 0">
                 <tr v-for="invoiceDelivery in invoiceDeliveries" :key="invoiceDelivery.Id">
                     <td>{{ invoiceDelivery.DateDelivered | moment }}</td>
                     <td>{{ invoiceDelivery.DeliveredTo }}</td>
+                    <td>{{ invoiceDelivery.DeliveryComment }}</td>
                 </tr>
             </tbody>
             <tbody v-else>

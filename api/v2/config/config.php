@@ -34,7 +34,7 @@ class Config {
         
         $to_addresses = explode(",", $this->email_to_address);
         foreach($to_addresses as $to_address) {
-            $mail->AddAddress($to_address);
+            $mail->AddAddress($to_address, $to_address);
         }
         
         $mail->addBCC("accounts@woolston.com.au");

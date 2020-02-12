@@ -9,6 +9,7 @@ class Delivery {
     public $Id;
 	public $InvoiceId;
 	public $DateDelivered;
+	public $DeliveryComment;
     public $DeliveredTo;
 
     public function __construct($db) {
@@ -17,7 +18,7 @@ class Delivery {
 	
 	function read($invoiceId) {
 	
-		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo
+		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
 				FROM
 					" . $this->table_name . " c
 				WHERE c.InvoiceId = " . $invoiceId . "
@@ -31,7 +32,7 @@ class Delivery {
 
 	function read_queued() {
 	
-		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo
+		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
 				FROM
 					" . $this->table_name . " c
 				WHERE c.DateDelivered IS NULL
@@ -45,7 +46,7 @@ class Delivery {
 
 	function read_one($id) {
 	
-		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo
+		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
 				FROM
 					" . $this->table_name . " c
 				WHERE
@@ -65,14 +66,15 @@ class Delivery {
 	function create() {
 	
 		$query = "INSERT INTO " . $this->table_name . "
-				(InvoiceId, DeliveredTo)
-				VALUES (:InvoiceId, :DeliveredTo)";
+				(InvoiceId, DeliveredTo, DeliveryComment)
+				VALUES (:InvoiceId, :DeliveredTo, :DeliveryComment)";
 	
 		$stmt = $this->conn->prepare($query);
 	
 		$stmt->bindParam(":InvoiceId", $this->InvoiceId);
 		$stmt->bindParam(":DeliveredTo", $this->DeliveredTo);
-	
+		$stmt->bindParam(":DeliveryComment", $this->DeliveryComment);
+		
 		if ($stmt->execute()) {
             $this->Id=$this->conn->lastInsertId();
 			return $this->Id;
@@ -86,7 +88,8 @@ class Delivery {
 		$query = "UPDATE
 					" . $this->table_name . "
 				SET
-					InvoiceId=:InvoiceId, DateDelivered=:DateDelivered, DeliveredTo=:DeliveredTo
+					InvoiceId=:InvoiceId, DateDelivered=:DateDelivered, DeliveredTo=:DeliveredTo,
+					DeliveryComment=:DeliveryComment
 				WHERE
 					Id = :Id";
 	
@@ -100,6 +103,7 @@ class Delivery {
 		$stmt->bindParam(":InvoiceId", $this->InvoiceId);
 		$stmt->bindParam(":DateDelivered", $this->DateDelivered);
 		$stmt->bindParam(":DeliveredTo", $this->DeliveredTo);
+		$stmt->bindParam(":DeliveryComment", $this->DeliveryComment);
 
 		if ($stmt->execute()) {
 			return true;

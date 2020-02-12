@@ -33,7 +33,8 @@ while ($row = $deliveries_stmt->fetch(\PDO::FETCH_ASSOC)){
         "Id" => $Id,
         "InvoiceId" => $InvoiceId,
         "DateDelivered" => $DateDelivered,
-        "DeliveredTo" => $DeliveredTo
+        "DeliveredTo" => $DeliveredTo,
+        "DeliveryComment" => $DeliveryComment
     );
     array_push($deliveries_queued, $delivery_item);
 }
@@ -57,6 +58,7 @@ foreach($deliveries_queued as $delivery_queued) {
     $delivery->Id = $delivery_queued["Id"];
     $delivery->DeliveredTo = $delivery_queued["DeliveredTo"];
     $delivery->InvoiceId = $delivery_queued["InvoiceId"];
+    $delivery->DeliveryComment = $delivery_queued["DeliveryComment"];
     
     $id = $delivery->Id;
     $invoiceId = $delivery->InvoiceId;
@@ -158,8 +160,14 @@ foreach($deliveries_queued as $delivery_queued) {
     $body_html .= '<p>Thank you for your recent business.</p>';
     $body_html .= '<p>I have attached the invoice number <b>'. $invoiceId . '</b> for the work we did and look forward ';
     $body_html .= 'to continuing to work with you in the future.</p>';
+
+    if (!empty($delivery->DeliveryComment)) {
+        $body_html .= "<p>" . $delivery->DeliveryComment . "</p>";
+    }
+
     $body_html .= '<p>Thanks for your business.<br/>';
     $body_html .= '<i>Steven Woolston</i></p>';
+
     $config->email_body = html_entity_decode($body_html);
     
     //  testing

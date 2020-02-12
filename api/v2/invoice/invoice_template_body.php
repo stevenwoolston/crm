@@ -18,7 +18,7 @@
                 </table>
             </td>
             <td style="width: 20%; text-align: right">
-                <img style="height: 100px; width: auto;" src="../assets/img/logo.png" alt="" >
+                <img style="height: 25mm; width: auto;" src="../../assets/img/logo.png" alt="" >
             </td>
         </tr>
     </table>

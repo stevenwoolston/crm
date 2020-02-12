@@ -12,6 +12,10 @@
 </head>
 <body>
     <table>
+        <colgroup>
+            <col style="width: 80%">
+            <col style="width: 20%; text-align: right;"/>
+        </colgroup>
         <tr>
             <td>
                 <h1>Woolston Web Design</h1>
@@ -30,8 +34,8 @@
                     </tr>
                 </table>
             </td>
-            <td style="width: 20%; text-align: right">
-                <img style="height: 100px; width: auto;" src="../assets/img/logo.png" alt="" >
+            <td id="logo-cell">
+                &nbsp;
             </td>
         </tr>
     </table>

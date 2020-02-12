@@ -49,6 +49,7 @@ CREATE TABLE `delivery` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `DateDelivered` date DEFAULT NULL,
   `DeliveredTo` varchar(1000) NOT NULL,
+  `DeliveredComment` varchar(1000) NULL,
   `InvoiceId` int(11) NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

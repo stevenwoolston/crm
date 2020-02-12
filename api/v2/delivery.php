@@ -45,7 +45,8 @@ switch($request_method)
                     "Id" => $Id,
                     "InvoiceId" => $InvoiceId,
                     "DateDelivered" => $DateDelivered,
-                    "DeliveredTo" => $DeliveredTo
+                    "DeliveredTo" => $DeliveredTo,
+                    "DeliveryComment" => $DeliveryComment
                 );
                 array_push($results_arr["data"], $results_item);
             }
@@ -64,8 +65,9 @@ switch($request_method)
         $delivery->Id = $id;
 		$delivery->InvoiceId = $data["InvoiceId"];
 		$delivery->DateDelivered = $data["DateDelivered"];
-		$delivery->DeliveredTo = $data["DeliveredTo"];
-
+        $delivery->DeliveredTo = $data["DeliveredTo"];
+        $delivery->DeliveryComment = $data["DeliveryComment"];
+        
         $status = $delivery->sanitize()->update($id);
         if ($status) {
             http_response_code(200);
@@ -80,6 +82,7 @@ switch($request_method)
 
 		$delivery->InvoiceId = $data["InvoiceId"];
 		$delivery->DeliveredTo = $data["DeliveredTo"];
+        $delivery->DeliveryComment = $data["DeliveryComment"];
 
         $status = $delivery->sanitize()->create();
         if ($status) {
