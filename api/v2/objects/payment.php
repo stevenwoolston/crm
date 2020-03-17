@@ -72,7 +72,7 @@ class Payment {
 				FROM payment p
 				join invoiceitem i ON i.InvoiceId = p.InvoiceId 
 				WHERE p.InvoiceId = " .$this->InvoiceId;
-			$response = $this->conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+			$response = $this->conn->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 			$totalPayments = $response[0]["TotalPayments"];
 			$totalCost = $response[0]["TotalCost"];
 			var_dump(array("totalpayments" => $totalPayments, 

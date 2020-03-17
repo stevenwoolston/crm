@@ -90,14 +90,14 @@ class Customer {
         
         // bind values
 		$stmt->bindParam(":Name", $this->Name);
-		$stmt->bindParam(":IsVisible", $this->IsVisible, PDO::PARAM_BOOL);
+		$stmt->bindParam(":IsVisible", $this->IsVisible, \PDO::PARAM_BOOL);
 		$stmt->bindParam(":Address", $this->Address);
 		$stmt->bindParam(":Suburb", $this->Suburb);
 		$stmt->bindParam(':State', $this->State);
 		$stmt->bindParam(":Postcode", $this->Postcode);
 		$stmt->bindParam(":InvoicingText", $this->InvoicingText);
 		$stmt->bindParam(":URL", $this->URL);
-		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, PDO::PARAM_BOOL);
+		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, \PDO::PARAM_BOOL);
 		$stmt->bindParam(":SupportEndDate", $this->SupportEndDate);
 	
 		// execute query
@@ -133,14 +133,14 @@ class Customer {
         // bind values
         $stmt->bindParam(":Id", $this->Id);
 		$stmt->bindParam(":Name", $this->Name);
-		$stmt->bindParam(":IsVisible", $this->IsVisible, PDO::PARAM_BOOL);
+		$stmt->bindParam(":IsVisible", $this->IsVisible, \PDO::PARAM_BOOL);
 		$stmt->bindParam(":Address", $this->Address);
 		$stmt->bindParam(":Suburb", $this->Suburb);
 		$stmt->bindParam(':State', $this->State);
 		$stmt->bindParam(":Postcode", $this->Postcode);
 		$stmt->bindParam(":InvoicingText", $this->InvoicingText);
 		$stmt->bindParam(":URL", $this->URL);
-		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, PDO::PARAM_BOOL);
+		$stmt->bindParam(":IsSupportCustomer", $this->IsSupportCustomer, \PDO::PARAM_BOOL);
 		$stmt->bindParam(":SupportEndDate", $this->SupportEndDate);
 	
 		// execute the query

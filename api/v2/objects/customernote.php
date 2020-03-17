@@ -63,7 +63,7 @@ class CustomerNote {
 	
 		$stmt = $this->conn->prepare($query);
 	
-		$stmt->bindParam(":CustomerId", $this->CustomerId, PDO::PARAM_INT);
+		$stmt->bindParam(":CustomerId", $this->CustomerId, \PDO::PARAM_INT);
 		$stmt->bindParam(":CreatedDate", $this->CreatedDate);
 		$stmt->bindParam(":Notes", $this->Notes);
 	
