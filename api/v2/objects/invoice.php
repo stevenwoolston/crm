@@ -80,13 +80,13 @@ class Invoice {
 		
 			$stmt = $this->conn->prepare($query);
 
-			$stmt->bindParam(":CustomerId", $this->CustomerId, PDO::PARAM_INT);
+			$stmt->bindParam(":CustomerId", $this->CustomerId, \PDO::PARAM_INT);
 			$stmt->bindParam(":InvoiceDate", $this->InvoiceDate);
 			$stmt->bindParam(":InvoiceDueDate", $this->InvoiceDueDate);
 			$stmt->bindParam(":EmailSubject", $this->EmailSubject);
 			$stmt->bindParam(":DateSent", $this->DateSent);
 			$stmt->bindParam(":DatePaid", $this->DatePaid);
-			$stmt->bindValue(":IsCanceled", $this->IsCanceled, PDO::PARAM_BOOL);
+			$stmt->bindValue(":IsCanceled", $this->IsCanceled, \PDO::PARAM_BOOL);
 			if ($stmt->execute()) {
 				$this->Id=$this->conn->lastInsertId();
 				return $this->Id;
