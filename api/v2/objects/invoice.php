@@ -30,7 +30,7 @@ class Invoice {
                 COALESCE(p.TotalPayments, 0) TotalPayments,
 				c.Name CustomerName
 				FROM " . $this->table_name . " i
-				INNER JOIN Customer c ON c.Id = i.CustomerId
+				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Amount) TotalPayments FROM payment GROUP BY InvoiceId) p ON p.InvoiceId = i.Id
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
 				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
@@ -50,7 +50,7 @@ class Invoice {
                 COALESCE(p.TotalPayments, 0) TotalPayments,
 				c.Name CustomerName
 				FROM " . $this->table_name . " i
-				INNER JOIN Customer c ON c.Id = i.CustomerId
+				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Amount) TotalPayments FROM payment GROUP BY InvoiceId) p ON p.InvoiceId = i.Id
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
 				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
