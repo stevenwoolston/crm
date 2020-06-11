@@ -62,6 +62,23 @@ class Invoice {
 		return $stmt;
 	}
 
+	function due_today() {
+		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, 
+				DateSent, i.DatePaid, IsCanceled, 
+                COALESCE(ii.TotalCost, 0) TotalCost,
+				c.Name CustomerName
+				FROM " . $this->table_name . " i
+				INNER JOIN customer c ON c.Id = i.CustomerId
+                LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
+				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
+				HAVING i.InvoiceDueDate = CURDATE() AND i.DatePaid IS NULL
+				ORDER BY c.Name ASC";
+
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
+
 	function sanitize() {
 		$this->CustomerId=htmlspecialchars(strip_tags($this->CustomerId));
 		$this->EmailSubject=htmlspecialchars(strip_tags($this->EmailSubject));
