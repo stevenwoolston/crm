@@ -5,9 +5,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
+require_once __DIR__ . '../../../inc/class.phpmailer.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 use APIv2\Config\Database;
-use APIv2\Config\Config;
 use APIv2\objects as Models;
 use APIv2\Invoicing as Invoice;
  
@@ -149,7 +149,7 @@ foreach($deliveries_queued as $delivery_queued) {
     $pdf = new Invoice\InvoicePDF();
     $pdf->data = $data;
 
-    $config = new Config();
+    $config = new Configuration();
     $config->email_to_address = $delivery_queued["DeliveredTo"];
     $config->email_subject = $data["Invoice"][0]["EmailSubject"];
     $config->smtp_debug = 0;    //  0/1/2
@@ -205,5 +205,53 @@ foreach($deliveries_queued as $delivery_queued) {
 
     http_response_code(500);
     echo json_encode(array("message" => "Unable to send email for Invoice Id " . $invoiceId, "data" => $data));
+}
+
+class Configuration {
+ 
+    private $email_host = "mail.woolston.com.au";
+    private $email_username = "accounts@woolston.com.au";
+    private $email_password = "H@nnahN0ah";
+    private $email_from = "accounts@woolston.com.au";
+    private $email_from_name = "Woolston Web Design Accounts";
+
+    public $email_to_address;
+    public $email_subject;
+    public $email_body;
+    public $smtp_debug = 0;
+    public $smtp_attachment = null;
+    public $smtp_attachment_name;
+ 
+    public function send_email() {
+
+        $mail = new \PHPMailer();
+ 
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+        $mail->SMTPDebug = $this->smtp_debug;
+
+        $mail->Host = $this->email_host;
+        $mail->Username = $this->email_username;
+        $mail->Password = $this->email_password;
+         
+        $mail->setFrom($this->email_from, $this->email_from_name);
+        
+        $to_addresses = explode(",", $this->email_to_address);
+        foreach($to_addresses as $to_address) {
+            $mail->AddAddress($to_address, $to_address);
+        }
+        
+        $mail->addBCC("accounts@woolston.com.au");
+        $mail->Subject = $this->email_subject;
+        $mail->Body = $this->email_body;
+        $mail->WordWrap = 50;
+        $mail->IsHTML(true);
+
+        if ($this->smtp_attachment != null) {
+            $mail->addStringAttachment($this->smtp_attachment, $this->smtp_attachment_name);
+        }
+
+        return $mail->Send();
+    }
 }
 ?>
