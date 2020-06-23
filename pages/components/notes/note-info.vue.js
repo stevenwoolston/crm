@@ -15,18 +15,24 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="TimeTaken" class="col-sm-2 control-label">Time Taken (mins)</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="TimeTaken" id="TimeTaken" v-model="note.TimeTaken">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="Notes" class="col-sm-2 control-label">Note</label>
                     <div class="col-sm-10">
                         <textarea rows="5" required class="form-control col-xs-12" name="Notes" id="Notes" v-model="note.Notes"></textarea>
                     </div>
                 </div>
-                <div style="margin: 10px 0">
-                    <div class="col-xs-12 table-controls">
-                        <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
-                        <button type="button" v-on:click="cancel" class="btn btn-default pull-right">Cancel</button>
-                        <input type="hidden" id="Id" name="Id" v-model="note.Id" />
-                        <input type="hidden" id="CustomerId" name="CustomerId" v-model="note.CustomerId" />
-                    </div>
+            </div>
+            <div style="margin: 10px 0">
+                <div class="col-xs-12 table-controls">
+                    <button type="submit" class="btn btn-success btnSave pull-right">Save</button>
+                    <button type="button" v-on:click="cancel" class="btn btn-default pull-right">Cancel</button>
+                    <input type="hidden" id="Id" name="Id" v-model="note.Id" />
+                    <input type="hidden" id="CustomerId" name="CustomerId" v-model="note.CustomerId" />
                 </div>
             </div>
         </form>
@@ -40,7 +46,8 @@ var spaNoteInfo = Vue.component("NoteInfo", {
         }
     },
     created() {
-        this.getCustomer(this.customerId)
+        this.getCustomer(this.customerId);
+        this.cancel();
     },
     filters: {
         moment: function (date) {
@@ -100,6 +107,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 .catch(error => console.log(error))
                 .finally(() => {
                     this.$emit("note-saved", this.note);
+                    this.cancel();
                     this.loading = false;
                 })
         }

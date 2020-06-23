@@ -6,31 +6,34 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
 
         <table class="table table-bordered">
             <colgroup>
-                <col style="text-align: left; width: 150px;" />
-                <col style="text-align: left; />
-                <col style="text-align: center; width: 100px;" />
+                <col />
+                <col />
+                <col />
+                <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th style="text-align: left; width: 150px;">Date</th>
+                    <th class="col-narrow">Date</th>
                     <th>Notes</th>
-                    <th style="text-align: center; width: 100px;">&nbsp;</th>
+                    <th class="col-narrow col-center">Time</th>
+                    <th class="col-narrow col-center">&nbsp;</th>
                 </tr>
             </thead>
             <tbody v-if="notes.length > 0">
                 <tr v-for="note in notes" 
                     :key="note.Id" 
                     :class="{ highlighted: isSelectedNote(note) }">
-                    <td>{{ note.CreatedDate }}</td>
+                    <td>{{ note.CreatedDate | moment }}</td>
                     <td>{{ note.Notes }}</td>
-                    <td class="text-center">
+                    <td class="col-center">{{ note.TimeTaken | showTime }}</td>
+                    <td class="col-center">
                         <span style="cursor: pointer" v-on:click="deleteNote(note.Id)" class="glyphicon glyphicon-trash"></span>
                     </td>
                 </tr>
             </tbody>
             <tbody v-else>
                 <tr>
-                    <td colspan="3" class="text-center">No matching records</td>
+                    <td colspan="4" class="text-center">No matching records</td>
                 </tr>
             </tbody>
         </table>
@@ -73,6 +76,9 @@ filters: {
     },
     datePicker: function () {
         this.datetimepicker();
+    },
+    showTime: function(value) {
+        return value ? value + 'mins' : '';
     }
 },
 methods: {
@@ -83,7 +89,8 @@ methods: {
         this.selectedNote = {
             CustomerId: this.customerId,
             CreatedDate: moment().format("YYYY-MM-DD"),
-            Notes: null
+            Notes: null,
+            TimeTaken: null
         }
     },
     getNotes() {

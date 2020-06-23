@@ -11,6 +11,7 @@ class CustomerNote {
 	public $CustomerName;
 	public $CreatedDate;
 	public $Notes;
+	public $TimeTaken;
  
     public function __construct($db) {
         $this->conn = $db;
@@ -59,13 +60,14 @@ class CustomerNote {
 					" . $this->table_name . "
 				SET
 					CustomerId=:CustomerId, CreatedDate=:CreatedDate, 
-					Notes=:Notes";
+					Notes=:Notes, TimeTaken=:TimeTaken";
 	
 		$stmt = $this->conn->prepare($query);
 	
 		$stmt->bindParam(":CustomerId", $this->CustomerId, \PDO::PARAM_INT);
 		$stmt->bindParam(":CreatedDate", $this->CreatedDate);
 		$stmt->bindParam(":Notes", $this->Notes);
+		$stmt->bindParam(":TimeTaken", $this->TimeTaken);
 	
 		if ($stmt->execute()) {
             $this->Id=$this->conn->lastInsertId();

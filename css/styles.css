@@ -69,6 +69,18 @@ h1, h2, h3, h4, h5 {
 	text-decoration: underline;
 }
 
+.table .col-narrow {
+	width: 100px !important;
+}
+
+.table .col-medium {
+	width: 150px !important;
+}
+
+.table .col-center {
+	text-align: center !important;
+}
+
 #main.bordered {
 	border: 1px solid #eee;
 	padding: 20px;
