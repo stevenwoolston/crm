@@ -8,12 +8,14 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
             <colgroup>
                 <col />
                 <col />
+                <col style="width: 50%" />
                 <col />
                 <col />
             </colgroup>
             <thead>
                 <tr>
                     <th class="col-narrow">Date</th>
+                    <th>Description</th>
                     <th>Notes</th>
                     <th class="col-narrow col-center">Time</th>
                     <th class="col-narrow col-center">&nbsp;</th>
@@ -24,6 +26,7 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                     :key="note.Id" 
                     :class="{ highlighted: isSelectedNote(note) }">
                     <td>{{ note.CreatedDate | moment }}</td>
+                    <td>{{ note.Description }}</td>
                     <td>{{ note.Notes }}</td>
                     <td class="col-center">{{ note.TimeTaken | showTime }}</td>
                     <td class="col-center">
@@ -33,9 +36,17 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
             </tbody>
             <tbody v-else>
                 <tr>
-                    <td colspan="4" class="text-center">No matching records</td>
+                    <td colspan="5" class="text-center">No matching records</td>
                 </tr>
             </tbody>
+            <tfoot v-if="notes.length > 0">
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-right">Total Time</td>
+                    <td class="col-center">{{ this.totalTime }}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 `,
@@ -53,6 +64,13 @@ created() {
 computed: {
     noteId() {
         return this.selectedNoteId ? this.selectedNoteId.Id : 0
+    },
+    totalTime: function() {
+        var total = this.notes.reduce(function(prev, note) {
+            return prev + note.TimeTaken;
+        }, 0);
+
+        return total > 60 ? `${parseFloat(total / 60)} hrs` : `${total} mins`;
     }
 },
 filters: {
@@ -78,7 +96,7 @@ filters: {
         this.datetimepicker();
     },
     showTime: function(value) {
-        return value ? value + 'mins' : '';
+        return value ? `${value} mins` : '';
     }
 },
 methods: {

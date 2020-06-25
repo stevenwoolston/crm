@@ -50,7 +50,8 @@ switch($request_method)
                     "CustomerName" => $CustomerName,
                     "CreatedDate" => $CreatedDate,
                     "Notes" => $Notes,
-                    "TimeTaken" => $TimeTaken
+                    "TimeTaken" => $TimeTaken,
+                    "Description" => $Description
                 );
                 array_push($results_arr["data"], $results_item);
             }
@@ -64,7 +65,8 @@ switch($request_method)
 		$customernote->CustomerId = $data["CustomerId"];
 		$customernote->CreatedDate = $data["CreatedDate"];
 		$customernote->Notes = $data["Notes"];
-		$customernote->TimeTaken = $data["TimeTaken"];
+        $customernote->TimeTaken = $data["TimeTaken"];
+        $customernote->Description = $data["Description"];
 
         $status = $customernote->sanitize()->create();
         if ($status) {

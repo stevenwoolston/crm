@@ -12,6 +12,7 @@ class CustomerNote {
 	public $CreatedDate;
 	public $Notes;
 	public $TimeTaken;
+	public $Description;
  
     public function __construct($db) {
         $this->conn = $db;
@@ -60,7 +61,7 @@ class CustomerNote {
 					" . $this->table_name . "
 				SET
 					CustomerId=:CustomerId, CreatedDate=:CreatedDate, 
-					Notes=:Notes, TimeTaken=:TimeTaken";
+					Notes=:Notes, TimeTaken=:TimeTaken, Description=:Description";
 	
 		$stmt = $this->conn->prepare($query);
 	
@@ -68,6 +69,7 @@ class CustomerNote {
 		$stmt->bindParam(":CreatedDate", $this->CreatedDate);
 		$stmt->bindParam(":Notes", $this->Notes);
 		$stmt->bindParam(":TimeTaken", $this->TimeTaken);
+		$stmt->bindParam(":Description", $this->Description);
 	
 		if ($stmt->execute()) {
             $this->Id=$this->conn->lastInsertId();
