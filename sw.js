@@ -34,7 +34,9 @@ self.addEventListener("install", e => {
                     "./pages/components/datepicker.vue.js",
                     "./pages/components/loading.vue.js",
                     "./pages/components/debug.vue.js",
-                
+
+                    "./pages/login.vue.js",
+
                     "./pages/customers.vue.js",
                     "./pages/customer.vue.js",
                     "./pages/components/customer/customer-info.vue.js",

@@ -63,7 +63,7 @@
 	<script src="./js/vendor/moment-with-locales.min.js"></script>
 	<script src="./js/vendor/bootstrap-datetimepicker.min.js"></script>
 	<script src="./js/vendor/toastr.min.js"></script>
-	<script src="./js/site.js?v=1.2"></script>
+	<script src="./js/site.js?v=1.6"></script>
 
 	<!-- Vue Pages and Components here -->
 	<script src='./pages/components/breadcrumbs.vue.js'></script>
@@ -73,6 +73,7 @@
 
 	<script src='./pages/customers.vue.js'></script>
 	<script src='./pages/customer.vue.js'></script>
+	<script src='./pages/login.vue.js'></script>
 	<script src='./pages/components/customer/customer-info.vue.js'></script>
 	<script src='./pages/components/customer/customer-invoices.vue.js'></script>
 	<script src='./pages/components/customer/customer-contacts.vue.js'></script>
@@ -98,6 +99,12 @@
 				props: true
 			},
 			{
+				path: '/login',
+				name: "Login",
+				component: spaLogin,
+				props: true
+			},
+			{
 				path: '/customer/:id',
 				name: 'Customer',
 				component: spaCustomer,
@@ -113,7 +120,20 @@
 
 		const router = new VueRouter({
 			routes
-		})
+		});
+
+		router.beforeEach((to, from, next) => {
+			// redirect to login page if not logged in and trying to access a restricted page
+			const publicPages = ['/login'];
+			const authRequired = !publicPages.includes(to.path);
+			const loggedIn = localStorage.getItem('user');
+
+			if (authRequired && !loggedIn) {
+				return next('/login');
+			}
+
+			next();
+		});
 
 		new Vue({
 			el: '#app',

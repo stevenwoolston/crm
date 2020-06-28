@@ -16,7 +16,7 @@ if ("serviceWorker" in navigator) {
 
 Notification.requestPermission(result => {
     if (result === 'granted') {
-        pollForCustomers();
+        // pollForCustomers();
     }
 });
 

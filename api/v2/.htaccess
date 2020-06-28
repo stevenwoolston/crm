@@ -49,4 +49,8 @@ RewriteRule ^delivery$ delivery.php [NC]
 RewriteRule ^delivery/([0-9]+)$ delivery.php?id=$1 [NC]
 
 RewriteRule ^payment$ payment.php [NC]
-RewriteRule ^payment/([0-9]+)$ payment.php?id=$1 [N,L]
+RewriteRule ^payment/([0-9]+)$ payment.php?id=$1 [NC]
+
+RewriteRule ^auth/signin$ auth.php?route=signin [NC]
+RewriteRule ^auth/signout$ auth.php?route=signout [NC]
+RewriteRule ^auth/me$ auth.php?route=me [NC,L]

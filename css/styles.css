@@ -146,6 +146,21 @@ label.checkbox :checked + span:before {
 	display: none;
 }
 
+#login {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#login form {
+	padding: 40px;
+	background-color: #337ab7;
+	color: #fff;
+}
+
 /*  Loader  */
 .loader {
 	left: 50%;

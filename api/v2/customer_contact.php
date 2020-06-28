@@ -5,13 +5,12 @@ header("Access-Control-Allow-Headers: authorization, content-type, accept, origi
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, HEAD, OPTIONS, POST, PUT, DELETE");
 
-require_once __DIR__ . '/../vendor/autoload.php';
-use APIv2\Config\Database;
-use APIv2\objects as Models;
+require_once __DIR__ . '/../v2/config/database.php';
+require_once __DIR__ . '/../v2/objects/customercontact.php';
 
-$database = new Database();
+$database = new APIv2\config\Database();
 $db = $database->getConnection();
-$customercontact = new Models\CustomerContact($db);
+$customercontact = new APIv2\objects\CustomerContact($db);
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!empty($_GET["customerid"]))
