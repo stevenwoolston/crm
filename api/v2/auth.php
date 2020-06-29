@@ -8,9 +8,9 @@ header("Access-Control-Allow-Methods: GET, HEAD, OPTIONS, POST, PUT, DELETE");
 require_once __DIR__ . '/../v2/config/database.php';
 require_once __DIR__ . '/../v2/objects/auth.php';
 
-$database = new APIv2\config\Database();
+$database = new Database();
 $db = $database->getConnection();
-$auth = new APIv2\objects\Auth($db);
+$auth = new Auth($db);
 $route = $_GET['route'];
 $data = json_decode(file_get_contents('php://input'), true);
 
