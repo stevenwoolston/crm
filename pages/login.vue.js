@@ -62,7 +62,7 @@ var spaLogin = Vue.component("Login", {
 					this.user = response.data[0];
 					localStorage.setItem("user", JSON.stringify(this.user));
 					this.error = {};
-					this.$router.push("/");
+					location.href = "/crm";
 				})
 				.catch(error => {
 					console.log(error)

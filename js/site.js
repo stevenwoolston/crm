@@ -4,7 +4,7 @@ var config = {
 }
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")
+    navigator.serviceWorker.register("sw.js?v2.0")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);

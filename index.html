@@ -18,30 +18,33 @@
 	<link href="./css/vendor/bootstrap3-wysihtml5.min.css" rel="stylesheet">
 	<link href="./css/vendor/bootstrap-datetimepicker.min.css" rel="stylesheet">
 	<link href="./css/vendor/toastr.css" rel="stylesheet">
-	<link href="./css/styles.css?v=1.2" rel="stylesheet">
+	<link href="./css/styles.css?v=2.0" rel="stylesheet">
 </head>
 
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="/crm">Woolston Web Design CRM</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li>
-					<a href="/crm">
-						<span class="glyphicon glyphicon-home"></span>
-					</a>
-				</li>
-			</ul>
-		</div><!--/.nav-collapse -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/crm">Woolston Web Design CRM</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="/crm">
+							<span class="glyphicon glyphicon-home"></span>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" id="btnSignout">Sign Out</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
 		</div><!--/.container-fluid -->
 	</nav>
 	<div id="app" v-cloak>
@@ -88,6 +91,13 @@
 	<script src='./pages/components/notes/note-info.vue.js'></script>
 
 	<script>
+
+		$(function() {
+			$("#btnSignout").on("click", function() {
+				localStorage.removeItem("user");
+				location.href = "/crm";
+			});
+		});
 
 		Vue.use(VueRouter);
 
