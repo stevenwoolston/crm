@@ -74,14 +74,16 @@ class Payment {
 			$response = $this->conn->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 			$totalPayments = $response[0]["TotalPayments"];
 			$totalCost = $response[0]["TotalCost"];
-			// var_dump(array("totalpayments" => $totalPayments, 
+
+			// $this->conn->rollback();
+			// return(array("totalpayments" => $totalPayments, 
 			// 	"totalCost" => $totalCost, 
 			// 	"response" => $response, 
 			// 	"payment" => $this)
 			// );
 
 			if ($totalPayments >= $totalCost) {
-				$query = "UPDATE " . $this->table_name . " SET DatePaid = :DatePaid WHERE Id = :InvoiceId";
+				$query = "UPDATE invoice SET DatePaid = :DatePaid WHERE Id = :InvoiceId";
 				$stmt = $this->conn->prepare($query);
 				$stmt->bindParam(":InvoiceId", $this->InvoiceId);
 				$stmt->bindParam(":DatePaid", $this->DatePaid);
