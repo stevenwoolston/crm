@@ -1,5 +1,4 @@
 <?php
-namespace APIv2\objects;
 
 class Payment {
  

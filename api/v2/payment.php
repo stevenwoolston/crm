@@ -8,9 +8,9 @@ header("Access-Control-Allow-Methods: GET, HEAD, OPTIONS, POST, PUT, DELETE");
 require_once __DIR__ . '/../v2/config/database.php';
 require_once __DIR__ . '/../v2/objects/payment.php';
 
-$database = new APIv2\config\Database();
+$database = new Database();
 $db = $database->getConnection();
-$payment = new APIv2\objects\Payment($db);
+$payment = new Payment($db);
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!empty($_GET["invoiceid"]))

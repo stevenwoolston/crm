@@ -1,8 +1,13 @@
 <?php
-namespace APIv2\Invoicing;
+use Mpdf\Mpdf;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-use APIv2\Config\Template;
+if (!defined('__ROOT__')) {
+	define('__ROOT__', dirname(dirname(dirname(__FILE__))));
+}
+
+require_once __ROOT__ . '/vendor/autoload.php';
+require_once __ROOT__ . '/v2/invoice/invoice_pdf.php';
+require_once __ROOT__ . '/v2/config/template.php';
 
 class InvoicePDF {
 
