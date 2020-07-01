@@ -23,7 +23,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 <div class="form-group">
                     <label for="Description" class="col-sm-2 control-label">Project Summary</label>
                     <div class="col-sm-10">
-                        <input type="number" required class="form-control" name="Description" id="Description" v-model="note.Description">
+                        <input type="text" required class="form-control" name="Description" id="Description" v-model="note.Description">
                     </div>
                 </div>
                 <div class="form-group">
