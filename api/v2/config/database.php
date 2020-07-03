@@ -1,18 +1,17 @@
 <?php
-namespace APIv2\Config;
 
 class Database {
  
     // specify your own database credentials
-    // private $host = "s212.syd3.hostingplatform.net.au";
-    // private $db_name = "woolsto1_crm";
-    // private $username = "woolsto1_root";
-    // private $password = "7mHNURiJKgnz";
+    private $host = "s212.syd3.hostingplatform.net.au";
+    private $db_name = "woolsto1_crm";
+    private $username = "woolsto1_root";
+    private $password = "7mHNURiJKgnz";
 
-    private $host = "localhost";
-    private $db_name = "vuecrm";
-    private $username = "root";
-    private $password = "root";
+    // private $host = "localhost";
+    // private $db_name = "crm";
+    // private $username = "root";
+    // private $password = "root";
 
     public $conn;
  

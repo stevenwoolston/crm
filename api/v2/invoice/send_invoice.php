@@ -4,17 +4,27 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
- 
-require_once __DIR__ . '../../../inc/class.phpmailer.php';
-require_once __DIR__ . '/../../vendor/autoload.php';
-use APIv2\Config\Database;
-use APIv2\objects as Models;
-use APIv2\Invoicing as Invoice;
- 
+
+if (!defined('__ROOT__')) {
+	define('__ROOT__', dirname(dirname(dirname(__FILE__))));
+}
+
+require_once __ROOT__ . '/inc/class.phpmailer.php';
+require_once __ROOT__ . '/v2/config/database.php';
+require_once __ROOT__ . '/v2/config/configuration.php';
+require_once __ROOT__ . '/v2/invoice/invoice_pdf.php';
+require_once __ROOT__ . '/v2/objects/customer.php';
+require_once __ROOT__ . '/v2/objects/customercontact.php';
+require_once __ROOT__ . '/v2/objects/customernote.php';
+require_once __ROOT__ . '/v2/objects/delivery.php';
+require_once __ROOT__ . '/v2/objects/invoice.php';
+require_once __ROOT__ . '/v2/objects/invoiceitem.php';
+require_once __ROOT__ . '/v2/objects/payment.php';
+
 $database = new Database();
 $db = $database->getConnection();
 
-$delivery = new Models\Delivery($db);
+$delivery = new Delivery($db);
 
 //  get deliveries to be queued
 $deliveries_queued = array();
@@ -39,10 +49,10 @@ while ($row = $deliveries_stmt->fetch(\PDO::FETCH_ASSOC)){
     array_push($deliveries_queued, $delivery_item);
 }
 
-$customer = new Models\Customer($db);
-$invoice = new Models\Invoice($db);
-$invoiceitem = new Models\InvoiceItem($db);
-$customercontact = new Models\CustomerContact($db);
+$customer = new Customer($db);
+$invoice = new Invoice($db);
+$invoiceitem = new InvoiceItem($db);
+$customercontact = new CustomerContact($db);
 
 //  iterate over the deliveries queue
 foreach($deliveries_queued as $delivery_queued) {
@@ -146,7 +156,7 @@ foreach($deliveries_queued as $delivery_queued) {
         array_push($data["InvoiceItems"], $invoiceitem_item);
     }
 
-    $pdf = new Invoice\InvoicePDF();
+    $pdf = new InvoicePDF();
     $pdf->data = $data;
 
     $config = new Configuration();
@@ -206,52 +216,3 @@ foreach($deliveries_queued as $delivery_queued) {
     http_response_code(500);
     echo json_encode(array("message" => "Unable to send email for Invoice Id " . $invoiceId, "data" => $data));
 }
-
-class Configuration {
- 
-    private $email_host = "mail.woolston.com.au";
-    private $email_username = "accounts@woolston.com.au";
-    private $email_password = "H@nnahN0ah";
-    private $email_from = "accounts@woolston.com.au";
-    private $email_from_name = "Woolston Web Design Accounts";
-
-    public $email_to_address;
-    public $email_subject;
-    public $email_body;
-    public $smtp_debug = 0;
-    public $smtp_attachment = null;
-    public $smtp_attachment_name;
- 
-    public function send_email() {
-
-        $mail = new \PHPMailer();
- 
-        $mail->IsSMTP();
-        $mail->SMTPAuth = true;
-        $mail->SMTPDebug = $this->smtp_debug;
-
-        $mail->Host = $this->email_host;
-        $mail->Username = $this->email_username;
-        $mail->Password = $this->email_password;
-         
-        $mail->setFrom($this->email_from, $this->email_from_name);
-        
-        $to_addresses = explode(",", $this->email_to_address);
-        foreach($to_addresses as $to_address) {
-            $mail->AddAddress($to_address, $to_address);
-        }
-        
-        $mail->addBCC("accounts@woolston.com.au");
-        $mail->Subject = $this->email_subject;
-        $mail->Body = $this->email_body;
-        $mail->WordWrap = 50;
-        $mail->IsHTML(true);
-
-        if ($this->smtp_attachment != null) {
-            $mail->addStringAttachment($this->smtp_attachment, $this->smtp_attachment_name);
-        }
-
-        return $mail->Send();
-    }
-}
-?>

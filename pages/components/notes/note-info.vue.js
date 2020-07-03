@@ -21,6 +21,12 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="Description" class="col-sm-2 control-label">Project Summary</label>
+                    <div class="col-sm-10">
+                        <input type="text" required class="form-control" name="Description" id="Description" v-model="note.Description">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="Notes" class="col-sm-2 control-label">Note</label>
                     <div class="col-sm-10">
                         <textarea rows="5" required class="form-control col-xs-12" name="Notes" id="Notes" v-model="note.Notes"></textarea>
@@ -106,7 +112,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    this.$emit("note-saved", this.note);
+                    this.$emit("note-saved");
                     this.cancel();
                     this.loading = false;
                 })

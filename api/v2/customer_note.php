@@ -5,13 +5,12 @@ header("Access-Control-Allow-Headers: authorization, content-type, accept, origi
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, HEAD, OPTIONS, POST, PUT, DELETE");
 
-require_once __DIR__ . '/../vendor/autoload.php';
-use APIv2\Config\Database;
-use APIv2\objects as Models;
+require_once __DIR__ . '/../v2/config/database.php';
+require_once __DIR__ . '/../v2/objects/customernote.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$customernote = new Models\CustomerNote($db);
+$customernote = new CustomerNote($db);
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!empty($_GET["customerid"]))
@@ -50,7 +49,8 @@ switch($request_method)
                     "CustomerName" => $CustomerName,
                     "CreatedDate" => $CreatedDate,
                     "Notes" => $Notes,
-                    "TimeTaken" => $TimeTaken
+                    "TimeTaken" => $TimeTaken,
+                    "Description" => $Description
                 );
                 array_push($results_arr["data"], $results_item);
             }
@@ -64,7 +64,8 @@ switch($request_method)
 		$customernote->CustomerId = $data["CustomerId"];
 		$customernote->CreatedDate = $data["CreatedDate"];
 		$customernote->Notes = $data["Notes"];
-		$customernote->TimeTaken = $data["TimeTaken"];
+        $customernote->TimeTaken = $data["TimeTaken"];
+        $customernote->Description = $data["Description"];
 
         $status = $customernote->sanitize()->create();
         if ($status) {
