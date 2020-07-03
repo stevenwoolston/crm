@@ -112,7 +112,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
-                    this.$emit("note-saved", this.note);
+                    this.$emit("note-saved");
                     this.cancel();
                     this.loading = false;
                 })

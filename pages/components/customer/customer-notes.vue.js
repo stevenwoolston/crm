@@ -107,6 +107,7 @@ methods: {
         this.selectedNote = {
             CustomerId: this.customerId,
             CreatedDate: moment().format("YYYY-MM-DD"),
+            Description: null,
             Notes: null,
             TimeTaken: null
         }
