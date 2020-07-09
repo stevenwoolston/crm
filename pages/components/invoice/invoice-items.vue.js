@@ -53,12 +53,12 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="Description" class="col-sm-2 control-label">Description</label>
-                                <div class="col-sm-10">
-                                    <input type="text" required class="form-control" name="Description" id="Description" 
-                                        v-model="invoiceItem.Description">
+                                <label for="Sequence" class="col-sm-2 control-label">Sequence</label>
+                                <div class="col-sm-4">
+                                    <input type="number" required class="form-control" name="Sequence" id="Sequence" 
+                                        v-model="invoiceItem.Sequence">
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label for="Cost" class="col-sm-2 control-label">Cost</label>
                                 <div class="col-sm-4">
@@ -67,12 +67,12 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="Sequence" class="col-sm-2 control-label">Sequence</label>
-                                <div class="col-sm-4">
-                                    <input type="number" required class="form-control" name="Sequence" id="Sequence" 
-                                        v-model="invoiceItem.Sequence">
+                                <label for="Description" class="col-sm-2 control-label">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea required rows="8" class="form-control" name="Description" id="Description" 
+                                        v-model="invoiceItem.Description"></textarea>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" v-on:click="resetInvoiceItem" data-dismiss="modal">Close</button>

@@ -6,7 +6,7 @@ var spaCustomer = Vue.component("Customer", {
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" :class="(this.tabName == 'details' || !this.tabName) ? 'active' : ''">
-                    <a href="#customer-details" aria-controls="customer" role="tab" data-toggle="tab">Customer Information</a>
+                    <a href="#customer-details" aria-controls="customer" role="tab" data-toggle="tab">Info</a>
                 </li>
                 <li role="presentation" v-show="this.customerId > 0" :class="this.tabName == 'invoices' ? 'active' : ''">
                     <a href="#invoices" aria-controls="invoices" role="tab" data-toggle="tab">Invoices</a>
