@@ -26,6 +26,17 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="InvoiceScheduledDeliveryDate" class="col-sm-2 control-label">Delivery Schedule Date</label>
+                    <div class="col-sm-4 col-md-3 col-lg-2">
+                        <div class="input-group date">
+                            <DatePicker v-model="invoice.InvoiceScheduledDeliveryDate"></DatePicker>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="EmailSubject" class="col-sm-2 control-label">Email Subject</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" name="EmailSubject" id="EmailSubject" v-model="invoice.EmailSubject">

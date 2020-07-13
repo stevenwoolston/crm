@@ -16,6 +16,7 @@ class Invoice {
 	public $TotalCost;
 	public $TotalPayments;
 	public $CustomerName;
+	public $InvoiceScheduledDeliveryDate;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -23,8 +24,8 @@ class Invoice {
 	
 	function read($customerId) {
 	
-		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, 
-				DateSent, i.DatePaid, IsCanceled, 
+		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate,
+				EmailSubject, DateSent, i.DatePaid, IsCanceled, 
                 COALESCE(ii.TotalCost, 0) TotalCost,
                 COALESCE(p.TotalPayments, 0) TotalPayments,
 				c.Name CustomerName
@@ -32,7 +33,7 @@ class Invoice {
 				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Amount) TotalPayments FROM payment GROUP BY InvoiceId) p ON p.InvoiceId = i.Id
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
-				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
+				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
 				HAVING CustomerId = " . $customerId . "
 				ORDER BY i.InvoiceDate DESC";
 	
@@ -43,8 +44,8 @@ class Invoice {
 
 	function read_one($id) {
 
-		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, 
-				DateSent, i.DatePaid, IsCanceled, 
+		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate,
+				EmailSubject, DateSent, i.DatePaid, IsCanceled, 
                 COALESCE(ii.TotalCost, 0) TotalCost,
                 COALESCE(p.TotalPayments, 0) TotalPayments,
 				c.Name CustomerName
@@ -52,7 +53,7 @@ class Invoice {
 				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Amount) TotalPayments FROM payment GROUP BY InvoiceId) p ON p.InvoiceId = i.Id
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
-				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
+				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
 				HAVING i.Id = " . $id . "
 				ORDER BY i.Id ASC";
 
@@ -62,14 +63,14 @@ class Invoice {
 	}
 
 	function due_today() {
-		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, 
-				DateSent, i.DatePaid, IsCanceled, 
+		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate,
+				EmailSubject, DateSent, i.DatePaid, IsCanceled, 
                 COALESCE(ii.TotalCost, 0) TotalCost,
 				c.Name CustomerName
 				FROM " . $this->table_name . " i
 				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
-				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
+				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
 				HAVING i.InvoiceDueDate = CURDATE() AND i.DatePaid IS NULL
 				ORDER BY c.Name ASC";
 
@@ -91,7 +92,7 @@ class Invoice {
 						" . $this->table_name . "
 					SET
 						CustomerId=:CustomerId, InvoiceDate=:InvoiceDate, InvoiceDueDate=:InvoiceDueDate, 
-						EmailSubject=:EmailSubject, DateSent=:DateSent, 
+						InvoiceScheduledDeliveryDate=:InvoiceScheduledDeliveryDate, EmailSubject=:EmailSubject, DateSent=:DateSent, 
 						DatePaid=:DatePaid, IsCanceled=:IsCanceled";
 		
 			$stmt = $this->conn->prepare($query);
@@ -99,6 +100,7 @@ class Invoice {
 			$stmt->bindParam(":CustomerId", $this->CustomerId, \PDO::PARAM_INT);
 			$stmt->bindParam(":InvoiceDate", $this->InvoiceDate);
 			$stmt->bindParam(":InvoiceDueDate", $this->InvoiceDueDate);
+			$stmt->bindParam(":InvoiceScheduledDeliveryDate", $this->InvoiceScheduledDeliveryDate);
 			$stmt->bindParam(":EmailSubject", $this->EmailSubject);
 			$stmt->bindParam(":DateSent", $this->DateSent);
 			$stmt->bindParam(":DatePaid", $this->DatePaid);
@@ -119,7 +121,8 @@ class Invoice {
 				SET
                     CustomerId = :CustomerId,
                     InvoiceDate = :InvoiceDate,
-                    InvoiceDueDate = :InvoiceDueDate,
+					InvoiceDueDate = :InvoiceDueDate,
+					InvoiceScheduledDeliveryDate = :InvoiceScheduledDeliveryDate,
                     EmailSubject = :EmailSubject,
                     DateSent = :DateSent,
 					DatePaid = :DatePaid,
@@ -133,6 +136,7 @@ class Invoice {
 		$stmt->bindParam(":CustomerId", $this->CustomerId);
 		$stmt->bindParam(":InvoiceDate", $this->InvoiceDate);
 		$stmt->bindParam(":InvoiceDueDate", $this->InvoiceDueDate);
+		$stmt->bindParam(":InvoiceScheduledDeliveryDate", $this->InvoiceScheduledDeliveryDate);
 		$stmt->bindParam(":EmailSubject", $this->EmailSubject);
 		$stmt->bindParam(":DateSent", $this->DateSent);
 		$stmt->bindParam(":DatePaid", $this->DatePaid);

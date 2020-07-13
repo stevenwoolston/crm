@@ -29,7 +29,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 <div class="form-group">
                     <label for="Billable" class="col-sm-2 control-label">Billable?</label>
                     <div class="col-sm-10">
-                        <input type="checkbox" required name="Billable" id="Billable" v-model="note.Billable">
+                        <input type="checkbox" name="Billable" id="Billable" v-model="note.Billable">
                     </div>
                 </div>
                 <div class="form-group">
