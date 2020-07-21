@@ -35,6 +35,10 @@ class Delivery {
 				FROM
 					" . $this->table_name . " c
 				WHERE c.DateDelivered IS NULL
+				AND (
+					c.InvoiceScheduledDeliveryDate IS NULL OR 
+					c.InvoiceScheduledDeliveryDate = CURDATE()
+				)
 				ORDER BY
 					c.Id DESC";
 	
