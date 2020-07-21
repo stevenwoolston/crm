@@ -35,7 +35,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 <div class="form-group">
                     <label for="Notes" class="col-sm-2 control-label">Note</label>
                     <div class="col-sm-10">
-                        <textarea rows="5" required class="form-control col-xs-12" name="Notes" id="Notes" v-model="note.Notes"></textarea>
+                        <textarea rows="5" required class="form-control col-xs-12 richtext" name="Notes" id="Notes" v-model="note.Notes"></textarea>
                     </div>
                 </div>
             </div>
@@ -105,6 +105,8 @@ var spaNoteInfo = Vue.component("NoteInfo", {
             let url = `${config.url}note`,
                 request_method = "POST";
 
+            this.note.Notes = $("textarea#Notes + .note-editor .note-editable").html();
+
             fetch(url, {
                 method: request_method,
                 body: JSON.stringify(this.note)
@@ -118,6 +120,12 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    $("textarea#Notes")
+                        .val(null)
+                        .summernote('destroy');
+
+                    $("textarea#Notes").summernote({ height: 300 });
+                    
                     this.$emit("note-saved");
                     this.cancel();
                     this.loading = false;

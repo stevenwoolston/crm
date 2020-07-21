@@ -11,8 +11,19 @@ self.addEventListener("install", e => {
                     "./img/icons/wwd-icon-256.png",
                     "./img/icons/wwd-icon-512.png",
 
+                    "./css/vendor/fonts/glyphicons-halflings-regular.eot",
+                    "./css/vendor/fonts/glyphicons-halflings-regular.svg",
+                    "./css/vendor/fonts/glyphicons-halflings-regular.ttf",
+                    "./css/vendor/fonts/glyphicons-halflings-regular.woff",
+                    "./css/vendor/fonts/glyphicons-halflings-regular.woff2",
+
+                    "./css/vendor/fonts/summernote.eot",
+                    "./css/vendor/fonts/summernote.ttf",
+                    "./css/vendor/fonts/summernote.woff",
+                    "./css/vendor/fonts/summernote.woff2",
+
                     "./css/vendor/bootstrap.min.css",
-                    "./css/vendor/bootstrap3-wysihtml5.min.css",
+                    "./css/vendor/summernote.min.css",
                     "./css/vendor/bootstrap-datetimepicker.min.css",
                     "./css/vendor/toastr.css",
                     "./css/styles.css",
@@ -23,11 +34,9 @@ self.addEventListener("install", e => {
                     "./js/vendor/vue-router.min.js",
                     "./js/vendor/jquery-3.3.1.min.js",
                     "./js/vendor/bootstrap.min.js",
-                    "./js/vendor/wysihtml5-0.3.0.js",
-                    "./js/vendor/bootstrap3-wysihtml5.all.min.js",
-                    "./js/vendor/richtext.js",
                     "./js/vendor/moment-with-locales.min.js",
                     "./js/vendor/bootstrap-datetimepicker.min.js",
+                    "./js/vendor/summernote.min.js",
                     "./js/vendor/toastr.min.js",
 
                     "./pages/components/breadcrumbs.vue.js",

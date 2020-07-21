@@ -29,7 +29,7 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                     :class="{ highlighted: isSelectedNote(note) }">
                     <td>{{ note.CreatedDate | moment }}</td>
                     <td>{{ note.Description }}</td>
-                    <td>{{ note.Notes }}</td>
+                    <td v-html="toHtml(note.Notes)"></td>
                     <td>{{ note.Billable | bool }}</td>
                     <td class="col-center">{{ note.TimeTaken | showTime }}</td>
                     <td class="col-center">
@@ -39,7 +39,7 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
             </tbody>
             <tbody v-else>
                 <tr>
-                    <td colspan="5" class="text-center">No matching records</td>
+                    <td colspan="6" class="text-center">No matching records</td>
                 </tr>
             </tbody>
         </table>
@@ -98,6 +98,11 @@ filters: {
     }
 },
 methods: {
+    toHtml: function(html) {
+        let txt = document.createElement('textarea');
+        txt.innerHTML = html;
+        return txt.value;
+    },
     isSelectedNote(note) {
         return note == this.selectedNote;
     },
@@ -108,7 +113,7 @@ methods: {
             Description: null,
             Notes: null,
             TimeTaken: null
-        }
+        };
     },
     getNotes() {
         this.loading = true;
