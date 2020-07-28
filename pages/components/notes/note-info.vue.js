@@ -97,6 +97,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    $("textarea#Notes").summernote({ height: 300 });
                     this.loading = false
                 })
         },
