@@ -48,7 +48,7 @@ class InvoiceItem {
 		$this->Id=htmlspecialchars(strip_tags($this->Id));
 		$this->InvoiceId=htmlspecialchars(strip_tags($this->InvoiceId));
 		$this->Sequence=htmlspecialchars(strip_tags($this->Sequence));
-		$this->Description=htmlspecialchars(strip_tags($this->Description));
+		$this->Description=htmlspecialchars($this->Description);
 		$this->Cost=htmlspecialchars(strip_tags($this->Cost));
 		return $this;
 	}

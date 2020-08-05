@@ -25,7 +25,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 <tr v-for="invoiceItem in invoiceItems" :key="invoiceItem.Id">
                     <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" 
                         data-toggle="modal" data-target="#manageInvoiceItem"
-                        v-html="invoiceItem.Description">
+                        v-html="toHtml(invoiceItem.Description)">
                     </td>
                     <td>{{ invoiceItem.Cost | money }}</td>
                     <td class="text-center">
@@ -69,7 +69,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                             <div class="form-group">
                                 <label for="Description" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea required rows="8" class="form-control" name="Description" id="Description" 
+                                    <textarea rows="8" required class="form-control col-xs-12 richtext" name="Description" id="Description" 
                                         v-model="invoiceItem.Description"></textarea>
                                 </div>
                             </div>
@@ -123,6 +123,11 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         }
     },
     methods: {
+        toHtml: function(html) {
+            let txt = document.createElement('textarea');
+            txt.innerHTML = html;
+            return txt.value;
+        },
         resetInvoiceItem() {
             this.invoiceItem = {
                 Id: null,
@@ -138,6 +143,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 .then(response => response.json())
                 .then((response) => {
                     this.invoiceItems = response.data;
+                    $("textarea#Description").summernote({ height: 300 });
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
@@ -146,6 +152,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
         },
         getSingleInvoiceItem(id) {
             this.invoiceItem = this.invoiceItems.filter((invoiceItem) => { return invoiceItem.Id == id })[0];
+            $("textarea#Description").summernote({ height: 300 });
         },
         saveInvoiceItem() {
             this.loading = true;
@@ -157,11 +164,17 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 request_method = "POST";
             }
 
+            this.invoiceItem.Description = $("textarea#Description + .note-editor .note-editable").html();
+
             fetch(url, {
                 method: request_method,
                 body: JSON.stringify(this.invoiceItem)
             })
-            .then((data) => {
+            .then(response => response.json())
+            .then((response) => {
+                if (this.invoiceItem.Id == null) {
+                    this.invoiceItem.Id = response.data.Id;
+                }
                 toastr.success("Save was successful.");
                 this.getInvoiceItems();
                 this.resetInvoiceItem();
@@ -169,6 +182,12 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
             })
             .catch(error => console.log(error))
             .finally(() => {
+                $("textarea#Description")
+                    .val(null)
+                    .summernote('destroy');
+
+                $("textarea#Description").summernote({ height: 300 });
+
                 $("#manageInvoiceItem").modal("hide");
                 this.loading = false;
             })
