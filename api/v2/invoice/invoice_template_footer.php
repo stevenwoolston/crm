@@ -1,14 +1,14 @@
 
-    <table style="margin-top: 30px;">
+    <table style="margin-top: 10px;">
     <tr>
-        <td style="text-align: center">
-            Please make cheques payable to Steven Woolston, although EFT payment is preferred.<br />
+        <td style="text-align: center; font-size: 12px">
+            Only EFT payments will be accepted.<br />
             <?php echo $InvoicingText; ?>
         </td>
     </tr>
     </table>
 
-    <table class="payment-advice" style="margin-top: 30px; background-color: #eee; border: 1px solid #ccc;">
+    <table class="payment-advice" style="margin-top: 5px; background-color: #eee; border: 1px solid #ccc;">
         <tr>
             <td colspan="4">
                 <h2>Payment Advice</h2>

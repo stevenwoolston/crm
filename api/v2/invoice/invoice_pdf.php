@@ -21,14 +21,17 @@ class InvoicePDF {
 			'format' => 'A4',
 			'setAutoTopMargin' => 'stretch',
 			'setAutoBottomMargin' => 'stretch',
+			'autoMarginPadding' => 5,
 			'orientation' => 'P'    
 		);		
 		$pdf = new \Mpdf\Mpdf($mpdfConfig);
-		$stylesheet = 'body{font-family:Arial;font-size:16px;color:rgb(88,89,91)}h1,h2,h3,h4{font-weight:400}table{width:100%}table.invoice-container td{text-align:right}table.invoice-container td.cell-label{width:100px}.alignright{text-align:right}.items-list td{padding:8px}.payment-advice td{padding:3px}';
+		$stylesheet = 'body{font-family:Arial;font-size:16px;color:rgb(88,89,91)}h1,h2,h3,h4{font-weight:400}table{width:100%}table.invoice-container td{text-align:right}table.invoice-container td.cell-label{width:100px}.alignright{text-align:right}.items-list td{padding:8px;font-size:14px}.payment-advice td{padding:3px;font-size:14px}';
 		$pdf->WriteHtml($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
 		$pdf->SetHTMLHeader($this->PDFHeader());
-		$pdf->WriteHTML($this->Template(), \Mpdf\HTMLParserMode::HTML_BODY);
 		$pdf->SetHTMLFooter($this->PDFFooter());
+		$pdf->WriteHTML($this->Template(), \Mpdf\HTMLParserMode::HTML_BODY);
+		// var_dump($this->Template());
+		// die();
 		return $pdf;
 	}
 

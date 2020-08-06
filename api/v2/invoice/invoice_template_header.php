@@ -23,7 +23,7 @@
         </tr>
     </table>
 
-    <table style="margin-top: 50px;">
+    <table style="margin-top: 15px;">
         <colgroup>
             <col style="width: 60%">
             <col style="width: 40%; text-align: right;"/>

@@ -15,7 +15,7 @@
         $totalInvoiceCost += $item["Cost"];
 ?>
         <tr>
-            <td style="width: 85%; border-bottom: 1px solid #ccc;"><?php echo $item['Description']; ?></td>
+            <td style="width: 85%; border-bottom: 1px solid #ccc;"><?php echo htmlspecialchars_decode($item['Description']); ?></td>
             <td style="width: 15%; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;" class="alignright">$<?php echo number_format($item['Cost'], 2); ?></td>
         </tr>
 <?php
