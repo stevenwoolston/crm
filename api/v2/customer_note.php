@@ -50,7 +50,8 @@ switch($request_method)
                     "CreatedDate" => $CreatedDate,
                     "Notes" => $Notes,
                     "TimeTaken" => $TimeTaken,
-                    "Description" => $Description
+                    "Description" => $Description,
+                    "Billable" => (bool)$Billable
                 );
                 array_push($results_arr["data"], $results_item);
             }
@@ -66,6 +67,7 @@ switch($request_method)
 		$customernote->Notes = $data["Notes"];
         $customernote->TimeTaken = $data["TimeTaken"];
         $customernote->Description = $data["Description"];
+        $customernote->Billable = $data["Billable"];
 
         $status = $customernote->sanitize()->create();
         if ($status) {

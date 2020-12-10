@@ -230,3 +230,14 @@ label.checkbox :checked + span:before {
 			display: none;
 	}
 }
+
+@media only screen and (max-width: 425px) {
+
+	.nav.nav-tabs {
+		display: flex;
+		align-items: flex-end;
+		flex-wrap: nowrap;
+		overflow-x: scroll;
+		overflow-y: hidden;
+	}
+}

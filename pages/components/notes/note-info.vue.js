@@ -21,15 +21,21 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="Description" class="col-sm-2 control-label">Project Summary</label>
+                    <label for="Description" class="col-sm-2 control-label">Description</label>
                     <div class="col-sm-10">
                         <input type="text" required class="form-control" name="Description" id="Description" v-model="note.Description">
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="Billable" class="col-sm-2 control-label">Billable?</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" name="Billable" id="Billable" v-model="note.Billable">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="Notes" class="col-sm-2 control-label">Note</label>
                     <div class="col-sm-10">
-                        <textarea rows="5" required class="form-control col-xs-12" name="Notes" id="Notes" v-model="note.Notes"></textarea>
+                        <textarea rows="5" required class="form-control col-xs-12 richtext" name="Notes" id="Notes" v-model="note.Notes"></textarea>
                     </div>
                 </div>
             </div>
@@ -91,6 +97,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    $("textarea#Notes").summernote({ height: 300 });
                     this.loading = false
                 })
         },
@@ -98,6 +105,8 @@ var spaNoteInfo = Vue.component("NoteInfo", {
             this.loading = true;
             let url = `${config.url}note`,
                 request_method = "POST";
+
+            this.note.Notes = $("textarea#Notes + .note-editor .note-editable").html();
 
             fetch(url, {
                 method: request_method,
@@ -112,6 +121,12 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 })
                 .catch(error => console.log(error))
                 .finally(() => {
+                    $("textarea#Notes")
+                        .val(null)
+                        .summernote('destroy');
+
+                    $("textarea#Notes").summernote({ height: 300 });
+                    
                     this.$emit("note-saved");
                     this.cancel();
                     this.loading = false;

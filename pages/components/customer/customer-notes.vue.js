@@ -11,12 +11,14 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                 <col style="width: 50%" />
                 <col />
                 <col />
+                <col />
             </colgroup>
             <thead>
                 <tr>
                     <th class="col-narrow">Date</th>
                     <th>Description</th>
                     <th>Notes</th>
+                    <th class="col-narrow col-center">Billable?</th>
                     <th class="col-narrow col-center">Time</th>
                     <th class="col-narrow col-center">&nbsp;</th>
                 </tr>
@@ -27,7 +29,8 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                     :class="{ highlighted: isSelectedNote(note) }">
                     <td>{{ note.CreatedDate | moment }}</td>
                     <td>{{ note.Description }}</td>
-                    <td>{{ note.Notes }}</td>
+                    <td v-html="toHtml(note.Notes)"></td>
+                    <td>{{ note.Billable | bool }}</td>
                     <td class="col-center">{{ note.TimeTaken | showTime }}</td>
                     <td class="col-center">
                         <span style="cursor: pointer" v-on:click="deleteNote(note.Id)" class="glyphicon glyphicon-trash"></span>
@@ -36,17 +39,9 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
             </tbody>
             <tbody v-else>
                 <tr>
-                    <td colspan="5" class="text-center">No matching records</td>
+                    <td colspan="6" class="text-center">No matching records</td>
                 </tr>
             </tbody>
-            <tfoot v-if="notes.length > 0">
-                <tr>
-                    <td colspan="2"></td>
-                    <td class="text-right">Total Time</td>
-                    <td class="col-center">{{ this.totalTime }}</td>
-                    <td></td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 `,
@@ -97,9 +92,17 @@ filters: {
     },
     showTime: function(value) {
         return value ? `${value} mins` : '';
+    },
+    bool: function(value) {
+        return value == 0 ? "No" : 'Yes';
     }
 },
 methods: {
+    toHtml: function(html) {
+        let txt = document.createElement('textarea');
+        txt.innerHTML = html;
+        return txt.value;
+    },
     isSelectedNote(note) {
         return note == this.selectedNote;
     },
@@ -110,7 +113,7 @@ methods: {
             Description: null,
             Notes: null,
             TimeTaken: null
-        }
+        };
     },
     getNotes() {
         this.loading = true;

@@ -31,18 +31,28 @@ class Delivery {
 
 	function read_queued() {
 	
-		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
-				FROM
-					" . $this->table_name . " c
-				WHERE c.DateDelivered IS NULL
-				ORDER BY
-					c.Id DESC";
+		$query = "SELECT * FROM (
+            SELECT 
+			    d.Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
+			    FROM delivery d
+			    INNER JOIN invoice i ON i.Id = d.InvoiceId
+			    WHERE DateDelivered IS NULL
+			    AND i.InvoiceScheduledDeliveryDate IS NULL
+            UNION 
+            SELECT 
+			    d.Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
+			    FROM delivery d
+			    INNER JOIN invoice i ON i.Id = d.InvoiceId
+			    WHERE DateDelivered IS NULL
+			    AND i.InvoiceScheduledDeliveryDate = CURDATE()
+            ) d 
+            ORDER BY d.Id DESC";
 	
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 		return $stmt;
 	}
-
+	
 	function read_one($id) {
 	
 		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment

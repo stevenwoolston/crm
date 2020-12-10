@@ -3,8 +3,16 @@ var config = {
     // url: 'http://localhost/crm/api/v2/'
 }
 
+$(function() {
+
+    $("textarea.richtext").summernote({
+        height: 300
+    });
+
+});
+
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js?v2.1")
+    navigator.serviceWorker.register("sw.js?v2.5")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);

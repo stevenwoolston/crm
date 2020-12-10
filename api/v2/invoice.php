@@ -53,6 +53,7 @@ switch($request_method)
                     "CustomerId" => $CustomerId,
                     "InvoiceDate" => $InvoiceDate,
                     "InvoiceDueDate" => $InvoiceDueDate,
+                    "InvoiceScheduledDeliveryDate" => $InvoiceScheduledDeliveryDate,
                     "EmailSubject" => $EmailSubject,
                     "DateSent" => $DateSent,
                     "DatePaid" => $DatePaid,
@@ -76,6 +77,7 @@ switch($request_method)
 		$invoice->CustomerId = $data["CustomerId"];
 		$invoice->InvoiceDate = $data["InvoiceDate"];
 		$invoice->InvoiceDueDate = $data["InvoiceDueDate"];
+		$invoice->InvoiceScheduledDeliveryDate = $data["InvoiceScheduledDeliveryDate"];
 		$invoice->EmailSubject = $data["EmailSubject"];
 		$invoice->DateSent = $data["DateSent"];
 		$invoice->DatePaid = $data["DatePaid"];
@@ -100,7 +102,8 @@ switch($request_method)
 
 		$invoice->CustomerId = $data["CustomerId"];
 		$invoice->InvoiceDate = $data["InvoiceDate"];
-		$invoice->InvoiceDueDate = $data["InvoiceDueDate"];
+        $invoice->InvoiceDueDate = $data["InvoiceDueDate"];
+		$invoice->InvoiceScheduledDeliveryDate = $data["InvoiceScheduledDeliveryDate"];
 		$invoice->EmailSubject = $data["EmailSubject"];
 		$invoice->DateSent = $data["DateSent"];
 		$invoice->DatePaid = $data["DatePaid"];

@@ -12,6 +12,7 @@ class CustomerNote {
 	public $Notes;
 	public $TimeTaken;
 	public $Description;
+	public $Billable;
  
     public function __construct($db) {
         $this->conn = $db;
@@ -25,7 +26,7 @@ class CustomerNote {
 				INNER JOIN customer c ON c.Id = cc.CustomerId
 				WHERE cc.CustomerId = " . $customerId . "
 				ORDER BY
-					cc.CreatedDate DESC";
+					cc.CreatedDate DESC, cc.Id DESC";
 	
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
@@ -39,9 +40,7 @@ class CustomerNote {
 					" . $this->table_name . " cc
 				INNER JOIN customer c ON c.Id = cc.CustomerId
 				WHERE
-					cc.Id = " . $id . "
-				ORDER BY
-					cc.CreatedDate DESC";
+					cc.Id = " . $id;
 	
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
@@ -60,7 +59,8 @@ class CustomerNote {
 					" . $this->table_name . "
 				SET
 					CustomerId=:CustomerId, CreatedDate=:CreatedDate, 
-					Notes=:Notes, TimeTaken=:TimeTaken, Description=:Description";
+					Notes=:Notes, TimeTaken=:TimeTaken, Description=:Description,
+					Billable=:Billable";
 	
 		$stmt = $this->conn->prepare($query);
 	
@@ -69,7 +69,8 @@ class CustomerNote {
 		$stmt->bindParam(":Notes", $this->Notes);
 		$stmt->bindParam(":TimeTaken", $this->TimeTaken);
 		$stmt->bindParam(":Description", $this->Description);
-	
+		$stmt->bindParam(":Billable", $this->Billable);
+
 		if ($stmt->execute()) {
             $this->Id=$this->conn->lastInsertId();
 			return $this->Id;
