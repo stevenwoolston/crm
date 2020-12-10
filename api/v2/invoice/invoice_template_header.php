@@ -18,7 +18,7 @@
                 </table>
             </td>
             <td style="width: 20%; text-align: right">
-                <img style="height: 25mm; width: auto;" src="../../assets/img/logo.png" alt="" >
+                <img style="height: 25mm; width: auto;" src="/home/woolsto1/api.woolston.com.au/crm/assets/img/logo.png" alt="" >
             </td>
         </tr>
     </table>

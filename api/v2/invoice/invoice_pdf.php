@@ -36,7 +36,7 @@ class InvoicePDF {
 	}
 
 	function PDFHeader() {
-		$template = new Template('invoice_template_header.php');
+		$template = new Template(__ROOT__ . '/v2/invoice/invoice_template_header.php');
 		$template->set('InvoiceNumber', $this->data["Invoice"][0]["Id"]);
 		$template->set('InvoiceDate', $this->data["Invoice"][0]["InvoiceDate"]);
 		$template->set('InvoiceDueDate', $this->data["Invoice"][0]["InvoiceDueDate"]);
@@ -49,7 +49,7 @@ class InvoicePDF {
 	}
 
 	function Template() {
-		$template = new Template('invoice_template_body.php');
+		$template = new Template(__ROOT__ . '/v2/invoice/invoice_template_body.php');
 		$template->set('InvoicingText', $this->data["Customer"][0]["InvoicingText"]);
 		$template->set('invoice_items', $this->data["InvoiceItems"]);
 		$template->set('InvoiceCost', $this->data["Invoice"][0]["TotalCost"]);
@@ -57,7 +57,7 @@ class InvoicePDF {
 	}
 
 	function PDFFooter() {
-		$template = new Template('invoice_template_footer.php');
+		$template = new Template(__ROOT__ . '/v2/invoice/invoice_template_footer.php');
 		$template->set('InvoiceNumber', $this->data["Invoice"][0]["Id"]);
 		$template->set('CustomerName', $this->data["Customer"][0]["Name"]);
 		$template->set('InvoiceDate', $this->data["Invoice"][0]["InvoiceDate"]);

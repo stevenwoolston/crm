@@ -32,7 +32,7 @@ $deliveries_stmt = $delivery->read_queued();
 $num = $deliveries_stmt->rowCount();
 if ($num == 0) {
     http_response_code(200);
-    echo json_encode(array("message" => "There were no deliveries queued to send."));
+    // echo json_encode(array("message" => "There were no deliveries queued to send."));
     die();
 }
 
