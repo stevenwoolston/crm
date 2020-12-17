@@ -4,9 +4,9 @@ var spaInvoiceDeliveries = Vue.component("InvoiceDeliveries", {
         <h2>Deliveries</h2>
         <table class="table table-bordered">
             <colgroup>
-                <col style="width: 150px;" />
-                <col/>
-                <col style="width:40%" />
+                <col style="width: 15%;" />
+                <col style="width: 30%;" />
+                <col />
             </colgroup>
             <thead>
                 <tr>
