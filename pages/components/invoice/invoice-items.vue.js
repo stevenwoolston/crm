@@ -10,9 +10,9 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
 
         <table class="table table-bordered">
             <colgroup>
-                <col style="text-align: left"/>
-                <col style="text-align: right; width: 10%;"/>																								
-                <col style="text-align: center; width: 10%;" />
+                <col style="text-align: left;" />
+                <col style="text-align: right; width: 15%;" />
+                <col style="text-align: center; width: 15%;" />
             </colgroup>
             <thead>
                 <tr>

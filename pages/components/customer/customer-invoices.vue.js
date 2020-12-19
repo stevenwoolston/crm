@@ -20,7 +20,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
             <thead>
                 <tr>
                     <th>Invoice Date</th>
-                    <th style="width: 50%">Email Subject</th>
+                    <th>Email Subject</th>
                     <th>Date Sent</th>
                     <th>Date Due</th>
                     <th>Total Cost</th>
