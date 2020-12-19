@@ -54,7 +54,7 @@ var spaInvoice = Vue.component("Invoice", {
 	created() {
 		if (this.invoiceId > 0) {
 			this.invoice.Id = this.invoiceId;
-			this.getInvoice();
+            this.getInvoice();
 		} else {
 			this.resetInvoice();
 		}
@@ -97,7 +97,7 @@ var spaInvoice = Vue.component("Invoice", {
 				{
 					routeName: null,
 					routeParams: null,
-					LinkText: `Invoice: ${this.invoice.EmailSubject}`
+					LinkText: `Invoice #${this.invoice.Id}: ${this.invoice.EmailSubject}`
 				}
 			]
 		}

@@ -125,7 +125,8 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             loading: false,
             contacts: [],
             selectedEmailAddresses: [],
-            deliveryComment: null
+            deliveryComment: null,
+            newInvoice: null
         }
     },
     created() {
@@ -247,31 +248,28 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         },
         duplicate() {
             this.loading = true;
+            this.newInvoice = this.invoice;
+            this.newInvoice.InvoiceDate = moment().format("YYYY-MM-DD");
+            this.newInvoice.InvoiceDueDate = moment().add(14, "day").format("YYYY-MM-DD");
+            this.newInvoice.InvoiceScheduledDeliveryDate = null;
+            this.newInvoice.DateSent = null;
+            this.newInvoice.IsCanceled = 0;
+            this.newInvoice.DatePaid = null;
+
             let url = `${config.url}invoice`;
-            request_method = "POST",
-                newInvoice = {
-                    CustomerId: this.invoice.CustomerId,
-                    EmailSubject: this.invoice.EmailSubject,
-                    InvoiceDate: moment().format("YYYY-MM-DD"),
-                    InvoiceDueDate: moment().add(14, "day"),
-                    DateSent: null,
-                    IsCanceled: 0,
-                    DatePaid: null
-                };
+            request_method = "POST";
 
             fetch(url, {
                 method: request_method,
-                body: JSON.stringify(newInvoice)
+                body: JSON.stringify(this.newInvoice)
             })
                 .then(response => response.json())
                 .then((response) => {
-                    newInvoice.Id = response.data.Id;
-                    toastr.success("Save was successful.");
+                    this.newInvoice.Id = response.data.Id;
+                    toastr.success(`Invoice copy was successful as #${this.newInvoice.Id}. Invoice refreshed.`);
+                    router.push({ name: "Customer", params: { id: this.newInvoice.CustomerId } });
                 })
                 .catch(error => console.log(error))
-                .finally(() => {
-                    router.push({ name: "Customer", params: { id: newInvoice.CustomerId } });
-                })
         }
     }
 });
