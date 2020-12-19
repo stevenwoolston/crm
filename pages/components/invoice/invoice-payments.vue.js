@@ -83,7 +83,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
     props: ["invoiceId"],
     data() {
         return {
-            invoicePayments: [], invoicePayment: {},
+            invoicePayments: [], invoicePayment: {}, invoiceTotal: 0,
             loading: false
         }
     },
@@ -119,13 +119,24 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
     },
     methods: {
         resetInvoicePayment() {
-            this.invoicePayment = {
-                Id: null,
-                InvoiceId: this.invoiceId,
-                DatePaid: null,
-                Amount: 0
-            }
+            this.getInvoiceItems()
+            .then(() => {
+                this.invoicePayment = {
+                    Id: null,
+                    InvoiceId: this.invoiceId,
+                    DatePaid: moment().format("YYYY-MM-DD"),
+                    Amount: this.invoiceTotal
+                }
+            });
         },
+        getInvoiceItems() {
+            return fetch(`${config.url}invoices/${this.invoiceId}/invoiceitems`)
+                .then(response => response.json())
+                .then((response) => {
+                    this.invoiceTotal = response.data.length == 0 ? 0 : 
+                        response.data.map(item => item.Cost).reduce((prev, next) => prev + next)
+                });
+        },        
         getInvoicePayments() {
             this.loading = true;
             fetch(`${config.url}invoices/${this.invoiceId}/payments`)
@@ -136,6 +147,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                 .catch(error => console.log(error))
                 .finally(() => {
                     this.loading = false;
+                    this.getInvoiceItems();
                 })
         },
         getSingleInvoicePayment(id) {

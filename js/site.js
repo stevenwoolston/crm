@@ -9,10 +9,18 @@ $(function() {
         height: 300
     });
 
+    $("#manageInvoiceItem").on('shown.bs.modal', function(){
+        $(this).find('#Cost').select();
+    });
+
+    $("#manageInvoicePayment").on('shown.bs.modal', function(){
+        $(this).find('#Amount').select();
+    });
+
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js?v2.5")
+    navigator.serviceWorker.register("sw.js?v2.7")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);
