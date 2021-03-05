@@ -39,12 +39,14 @@ self.addEventListener("install", e => {
                     "./js/vendor/summernote.min.js",
                     "./js/vendor/toastr.min.js",
 
+                    "./pages/components/toolbar.vue.js",
                     "./pages/components/breadcrumbs.vue.js",
                     "./pages/components/datepicker.vue.js",
                     "./pages/components/loading.vue.js",
                     "./pages/components/debug.vue.js",
 
                     "./pages/login.vue.js",
+                    "./pages/home.vue.js",
 
                     "./pages/customers.vue.js",
                     "./pages/customer.vue.js",

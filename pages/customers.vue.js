@@ -17,7 +17,7 @@ var spaCustomers = Vue.component("Customers", {
 			<tbody v-if="customers.length > 0">
 				<tr v-for="customer in customers" :key="customer.Id">
                     <td>
-						<router-link :to="{name: 'Customer', params: {id: customer.Id, tabName: 'details'}}">{{customer.Name}}</router-link>
+						<router-link :to="{name: 'Customer', params: {id: customer.Id, tabName: 'invoices'}}">{{customer.Name}}</router-link>
 					</td>
 					<td class="text-center">
 						<span class="glyphicon" v-bind:class="[customer.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>

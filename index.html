@@ -40,6 +40,9 @@
 							<span class="glyphicon glyphicon-home"></span>
 						</a>
 					</li>
+					<li>
+						<a href="/crm/#/customers">Customers</a>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" id="btnSignout">Sign Out</a></li>
@@ -64,14 +67,16 @@
 	<script src="./js/vendor/bootstrap-datetimepicker.min.js"></script>
 	<script src="./js/vendor/summernote.min.js"></script>
 	<script src="./js/vendor/toastr.min.js"></script>
-	<script src="./js/site.js?v=2.7"></script>
+	<script src="./js/site.js?v=2.91"></script>
 
 	<!-- Vue Pages and Components here -->
+	<script src='./pages/components/toolbar.vue.js'></script>
 	<script src='./pages/components/breadcrumbs.vue.js'></script>
 	<script src='./pages/components/datepicker.vue.js'></script>
 	<script src='./pages/components/loading.vue.js'></script>
 	<script src='./pages/components/debug.vue.js'></script>
 
+	<script src='./pages/home.vue.js'></script>
 	<script src='./pages/customers.vue.js'></script>
 	<script src='./pages/customer.vue.js'></script>
 	<script src='./pages/login.vue.js'></script>
@@ -100,8 +105,14 @@
 		Vue.use(VueRouter);
 
 		const routes = [
-			{
+            {
 				path: '/',
+				name: "Home",
+				component: spaHome,
+				props: true
+			},
+			{
+				path: '/customers',
 				name: "Customers",
 				component: spaCustomers,
 				props: true
