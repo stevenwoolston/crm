@@ -18,6 +18,9 @@ var spaToolbar = Vue.component('Toolbar', {
 							<span class="glyphicon glyphicon-home"></span>
 						</a>
 					</li>
+                    <li>
+						<a href="/crm/customers">Customers</a>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" id="btnSignout">Sign Out</a></li>
