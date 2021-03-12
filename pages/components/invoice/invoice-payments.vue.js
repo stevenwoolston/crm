@@ -65,6 +65,7 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                                 <label for="Amount" class="col-sm-2 control-label">Amount</label>
                                 <div class="col-sm-4">
                                     <input type="number" class="form-control" name="Amount" id="Amount" 
+                                        min="1" step="any" 
                                         v-model="invoicePayment.Amount">
                                 </div>
                             </div>								

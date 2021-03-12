@@ -8,11 +8,13 @@ var spaHome = Vue.component("Home", {
             <col style="text-align: left;" />
             <col style="text-align: right; width: 15%;" />
             <col style="text-align: right; width: 15%;" />
+            <col style="text-align: right; width: 15%;" />
         </colgroup>
         <thead>
             <tr>
                 <th>Customer</th>
                 <th>Description</th>
+                <th>Inv Date</th>
                 <th>Due Date</th>
                 <th>Cost</th>
             </tr>
@@ -25,13 +27,14 @@ var spaHome = Vue.component("Home", {
                 <td>
                     <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: invoice.CustomerId}}">{{ invoice.EmailSubject }}</router-link>
                 </td>
+                <td>{{ invoice.InvoiceDate | moment }}</td>
                 <td>{{ invoice.InvoiceDueDate | moment }}</td>
                 <td>{{ invoice.TotalCost | money }}</td>
             </tr>
         </tbody>
         <tbody v-else>
             <tr>
-                <td colspan="4" class="text-center">No matching records</td>
+                <td colspan="5" class="text-center">No matching records</td>
             </tr>
         </tbody>
     </table>
