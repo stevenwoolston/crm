@@ -53,6 +53,7 @@ class InvoicePDF {
 		$template->set('InvoicingText', $this->data["Customer"][0]["InvoicingText"]);
 		$template->set('invoice_items', $this->data["InvoiceItems"]);
 		$template->set('InvoiceCost', $this->data["Invoice"][0]["TotalCost"]);
+		$template->set('invoice_notes', $this->data["InvoiceNotes"]);
 		return $template->render();
 	}
 

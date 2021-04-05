@@ -53,6 +53,7 @@ $customer = new Customer($db);
 $invoice = new Invoice($db);
 $invoiceitem = new InvoiceItem($db);
 $customercontact = new CustomerContact($db);
+$invoicenote = new CustomerNote($db);
 
 //  iterate over the deliveries queue
 foreach($deliveries_queued as $delivery_queued) {
@@ -62,7 +63,8 @@ foreach($deliveries_queued as $delivery_queued) {
         "CustomerContact" => array(),
         "Invoice" => array(),
         "InvoiceItems" => array(),
-        "Delivery" => $delivery_queued
+        "Delivery" => $delivery_queued,
+        "InvoiceNotes" => array()
     );
 
     $delivery->Id = $delivery_queued["Id"];
@@ -154,6 +156,23 @@ foreach($deliveries_queued as $delivery_queued) {
             "Cost" => $Cost
         );
         array_push($data["InvoiceItems"], $invoiceitem_item);
+    }
+
+    //  get invoice notes
+    $invoicenote_stmt = $invoicenote->readInvoiceNotes($invoiceId);
+    $num = $invoicenote_stmt->rowCount();
+    if ($num > 0) {
+        while ($row = $invoicenote_stmt->fetch(\PDO::FETCH_ASSOC)){
+            extract($row);
+            $invoicenote_item=array(
+                "Id" => $Id,
+                "CreatedDate" => $CreatedDate,
+                "Notes" => $Notes,
+                "Description" => $Description,
+                "TimeTaken" => $TimeTaken
+            );
+            array_push($data["InvoiceNotes"], $invoicenote_item);
+        }
     }
 
     $pdf = new InvoicePDF();

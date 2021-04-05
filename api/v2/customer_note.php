@@ -51,7 +51,8 @@ switch($request_method)
                     "Notes" => $Notes,
                     "TimeTaken" => $TimeTaken,
                     "Description" => $Description,
-                    "Billable" => (bool)$Billable
+                    "Billable" => (bool)$Billable,
+                    "InvoiceId" => $InvoiceId
                 );
                 array_push($results_arr["data"], $results_item);
             }
@@ -61,6 +62,28 @@ switch($request_method)
         echo json_encode($results_arr, JSON_NUMERIC_CHECK);
 
         break;
+        case 'PUT':
+            if (empty($id)) {
+                http_response_code(500);
+                echo json_encode(array("message" => "No record selected."));
+                die();
+            }
+    
+            $customernote->Id = $id;
+            $customernote->CustomerId = $data["CustomerId"];
+            $customernote->InvoiceId = $data["InvoiceId"];
+        
+            $status = $customernote->sanitize()->update($id);
+            if ($status) {
+                http_response_code(200);
+                echo json_encode(array("message" => "Record updated successfully.", "data" => $customernote));
+            } else {
+                http_response_code(500);
+                echo json_encode(array("message" => "Unable to create record."));
+            }
+    
+            die();
+            break;            
     case 'POST':
 		$customernote->CustomerId = $data["CustomerId"];
 		$customernote->CreatedDate = $data["CreatedDate"];
