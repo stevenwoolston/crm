@@ -107,6 +107,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                 request_method = "POST";
 
             this.note.Notes = $("textarea#Notes + .note-editor .note-editable").html();
+            this.note.Billable = $("#Billable").is(":checked");
 
             fetch(url, {
                 method: request_method,

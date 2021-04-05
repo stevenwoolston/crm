@@ -13,6 +13,7 @@ class CustomerNote {
 	public $TimeTaken;
 	public $Description;
 	public $Billable;
+	public $InvoiceId;
  
     public function __construct($db) {
         $this->conn = $db;
@@ -33,6 +34,16 @@ class CustomerNote {
 		return $stmt;
 	}
 
+	function readInvoiceNotes($invoiceId) {
+	
+		$query = "SELECT * FROM " . $this->table_name . " WHERE InvoiceId = " . $invoiceId . "
+				ORDER BY CreatedDate DESC, Id DESC";
+	
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
+	
 	function read_one($id) {
 	
 		$query = "SELECT c.Name 'CustomerName', cc.*
@@ -52,6 +63,29 @@ class CustomerNote {
 		$this->CustomerId=htmlspecialchars(strip_tags($this->CustomerId));
 		$this->Notes=htmlspecialchars($this->Notes);
 		return $this;
+	}
+
+	function update($id) {
+
+		$query = "UPDATE
+					" . $this->table_name . "
+				SET
+                    CustomerId = :CustomerId,
+                    InvoiceId = :InvoiceId
+				WHERE
+					Id = :Id";
+	
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(':Id', $this->Id);
+		$stmt->bindParam(":CustomerId", $this->CustomerId);
+		$stmt->bindParam(":InvoiceId", $this->InvoiceId);
+
+		if ($stmt->execute()) {
+			return true;
+		}
+	
+		return false;
 	}
 
 	function create() {

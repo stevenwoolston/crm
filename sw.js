@@ -25,6 +25,8 @@ self.addEventListener("install", e => {
                     "./css/vendor/bootstrap.min.css",
                     "./css/vendor/summernote.min.css",
                     "./css/vendor/bootstrap-datetimepicker.min.css",
+                    "./css/vendor/bootstrap-dialog.min.css",
+
                     "./css/vendor/toastr.css",
                     "./css/styles.css",
 
@@ -36,6 +38,7 @@ self.addEventListener("install", e => {
                     "./js/vendor/bootstrap.min.js",
                     "./js/vendor/moment-with-locales.min.js",
                     "./js/vendor/bootstrap-datetimepicker.min.js",
+                    "./js/vendor/bootstrap-dialog.min.js",
                     "./js/vendor/summernote.min.js",
                     "./js/vendor/toastr.min.js",
 

@@ -23,6 +23,9 @@ var spaInvoice = Vue.component("Invoice", {
 					<a href="#invoiceItems" aria-controls="invoiceItems" role="tab" data-toggle="tab">Invoice Items</a>
 				</li>
 				<li role="presentation">
+					<a href="#invoiceNotes" aria-controls="invoiceNotes" role="tab" data-toggle="tab">Notes</a>
+				</li>
+				<li role="presentation">
 					<a href="#invoicePayments" aria-controls="invoicePayments" role="tab" data-toggle="tab">Payments</a>
 				</li>
 				<li role="presentation">
@@ -32,6 +35,7 @@ var spaInvoice = Vue.component("Invoice", {
 
 			<div class="tab-content">
 				<InvoiceItems :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceItems>
+				<InvoiceNotes :invoiceId="invoiceId" :customerId="customerId" @refresh-invoice="getInvoice"></InvoiceNotes>
 				<InvoicePayments :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoicePayments>
 				<InvoiceDeliveries :invoiceId="invoiceId" @refresh-invoice="getInvoice"></InvoiceDeliveries>
 			</div>

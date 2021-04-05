@@ -26,3 +26,18 @@
             <td style="background-color: #eee; border-left: 1px solid #ccc;" class="alignright"><strong>$<?php echo number_format($totalInvoiceCost, 2); ?></strong></td>
         </tr>
     </table>
+
+
+<?php
+    if (count($invoice_notes) > 0): ?>
+    <h2 style="margin-top: 40px; font-weight: 700;">Notes related to this invoice</h2>
+<?php
+        foreach($invoice_notes as $item):
+?>
+    <div>
+        <span style="font-weight: 700; font-size: 90%"><?php echo date_format(date_create($item["CreatedDate"]), 'd-M-Y'); ?></span>:&nbsp;
+        <?php echo htmlspecialchars_decode($item['Description']); ?>
+    </div>
+<?php
+        endforeach;
+    endif;  ?>
