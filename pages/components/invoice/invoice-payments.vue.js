@@ -8,38 +8,36 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
                 class="pull-right btn btn-success">Create Payment</button>
         </h2>
 
-        <table class="table table-bordered">
-            <colgroup>
-                <col style="text-align: left;" />
-                <col style="text-align: right; width: 15%;" />
-                <col style="text-align: center; width: 15%;" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Date Paid</th>
-                    <th>Amount</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="invoicePayments.length > 0">
-                <tr v-for="invoicePayment in invoicePayments" :key="invoicePayment.Id">
-                    <td class="clickable" data-toggle="modal" data-target="#manageInvoicePayment" 
-                    v-on:click="getSingleInvoicePayment(invoicePayment.Id);">{{ invoicePayment.DatePaid | moment }}</td>
-                    <td>{{ invoicePayment.Amount | money }}</td>
-                    <td class="text-center">
-                        <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoicePayment" 
-                            v-on:click="getSingleInvoicePayment(invoicePayment.Id);"></span>
-                        <span style="cursor: pointer" v-on:click="deleteInvoicePayment(invoicePayment.Id)" class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="3" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
-
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date Paid</th>
+                        <th>Amount</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="invoicePayments.length > 0">
+                    <tr v-for="invoicePayment in invoicePayments" :key="invoicePayment.Id">
+                        <td class="clickable" data-toggle="modal" data-target="#manageInvoicePayment" 
+                            v-on:click="getSingleInvoicePayment(invoicePayment.Id);">{{ invoicePayment.DatePaid | moment }}
+                        </td>
+                        <td>{{ invoicePayment.Amount | money }}</td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoicePayment" 
+                                v-on:click="getSingleInvoicePayment(invoicePayment.Id);"></span>
+                            <span style="cursor: pointer" v-on:click="deleteInvoicePayment(invoicePayment.Id)" class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="3" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
         <div id="manageInvoicePayment" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

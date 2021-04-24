@@ -8,40 +8,37 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                 class="pull-right btn btn-success">Create Invoice Item</button>
         </h2>
 
-        <table class="table table-bordered">
-            <colgroup>
-                <col style="text-align: left;" />
-                <col style="text-align: right; width: 15%;" />
-                <col style="text-align: center; width: 15%;" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Cost</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="invoiceItems.length > 0">
-                <tr v-for="invoiceItem in invoiceItems" :key="invoiceItem.Id">
-                    <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" 
-                        data-toggle="modal" data-target="#manageInvoiceItem"
-                        v-html="toHtml(invoiceItem.Description)">
-                    </td>
-                    <td>{{ invoiceItem.Cost | money }}</td>
-                    <td class="text-center">
-                        <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoiceItem" 
-                            v-on:click="getSingleInvoiceItem(invoiceItem.Id);"></span>
-                        <span style="cursor: pointer" v-on:click="deleteInvoiceItem(invoiceItem.Id)" class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="4" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
-
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="invoiceItems.length > 0">
+                    <tr v-for="invoiceItem in invoiceItems" :key="invoiceItem.Id">
+                        <td class="clickable" v-on:click="getSingleInvoiceItem(invoiceItem.Id);" 
+                            data-toggle="modal" data-target="#manageInvoiceItem"
+                            v-html="toHtml(invoiceItem.Description)">
+                        </td>
+                        <td>{{ invoiceItem.Cost | money }}</td>
+                        <td class="text-center">
+                            <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#manageInvoiceItem" 
+                                v-on:click="getSingleInvoiceItem(invoiceItem.Id);"></span>
+                            <span style="cursor: pointer" v-on:click="deleteInvoiceItem(invoiceItem.Id)" class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="4" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
         <div id="manageInvoiceItem" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

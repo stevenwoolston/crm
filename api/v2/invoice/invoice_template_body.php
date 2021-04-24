@@ -35,8 +35,15 @@
         foreach($invoice_notes as $item):
 ?>
     <div>
-        <span style="font-weight: 700; font-size: 90%"><?php echo date_format(date_create($item["CreatedDate"]), 'd-M-Y'); ?></span>:&nbsp;
-        <?php echo htmlspecialchars_decode($item['Description']); ?>
+        <div style="width: 100%; font-weight: 700; font-size: 80%; border-bottom: 1px solid #ccc">
+            <?php echo date_format(date_create($item["CreatedDate"]), 'd-M-Y'); ?>:&nbsp;
+            <?php echo htmlspecialchars_decode($item['Description']); ?>
+        </div>
+<?php   if ($item['Notes']):    ?>
+        <div style="font-size: 70%; padding: 0 0 20px 0;">
+            <?php echo htmlspecialchars_decode($item['Notes']); ?>
+        </div>
+<?php   endif;  ?>
     </div>
 <?php
         endforeach;
