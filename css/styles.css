@@ -273,3 +273,8 @@ td.table-column-1-3 {
 .table-column-3-4 {
 	width: 75%;
 }
+
+.tab-pane.active {
+	display: flex;
+	flex-direction: column;
+}
