@@ -20,7 +20,7 @@ $(function() {
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js?v2.10")
+    navigator.serviceWorker.register("sw.js?v2.11")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);
