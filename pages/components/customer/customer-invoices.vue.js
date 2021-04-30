@@ -8,49 +8,43 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
             </div>
         </div>
 
-        <table class="table table-bordered" id="customer-invoice-table">
-            <colgroup>
-                <col style="text-align: left"/>
-                <col style="text-align: left; width: 40%;"/>
-                <col style="text-align: left"/>
-                <col style="text-align: left"/>
-                <col style="text-align: left"/>																								
-                <col style="text-align: center; width: 10%;" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Invoice Date</th>
-                    <th>Email Subject</th>
-                    <th>Date Sent</th>
-                    <th>Date Due</th>
-                    <th>Total Cost</th>
-                    <th>Total Payments</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="invoices.length > 0">
-                <tr v-for="invoice in invoices" :key="invoice.Id">
-                    <td>{{ invoice.InvoiceDate | moment }}</td>
-                    <td>
-                        <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: customerId}}">{{ invoice.EmailSubject }}</router-link>
-                    </td>
-                    <td>{{ invoice.DateSent | moment }}</td>
-                    <td>{{ invoice.InvoiceDueDate | moment }}</td>
-                    <td>{{ invoice.TotalCost | money }}</td>
-                    <td>{{ invoice.TotalPayments | money }}</td>
-                    <td class="text-center">
-                        <span class="glyphicon" title="Is this invoice active?" 
-                            v-bind:class="[!invoice.IsCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
-                        <span style="cursor: pointer" v-on:click="deleteInvoice(invoice.Id)" class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="7" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="customer-invoice-table">
+                <thead>
+                    <tr>
+                        <th>Invoice Date</th>
+                        <th>Email Subject</th>
+                        <th>Date Sent</th>
+                        <th>Date Due</th>
+                        <th>Total Cost</th>
+                        <th>Total Payments</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="invoices.length > 0">
+                    <tr v-for="invoice in invoices" :key="invoice.Id">
+                        <td>{{ invoice.InvoiceDate | moment }}</td>
+                        <td>
+                            <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: customerId}}">{{ invoice.EmailSubject }}</router-link>
+                        </td>
+                        <td>{{ invoice.DateSent | moment }}</td>
+                        <td>{{ invoice.InvoiceDueDate | moment }}</td>
+                        <td>{{ invoice.TotalCost | money }}</td>
+                        <td>{{ invoice.TotalPayments | money }}</td>
+                        <td class="action-column two-actions">
+                            <span class="glyphicon" title="Is this invoice active?" 
+                                v-bind:class="[!invoice.IsCanceled ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
+                            <span style="cursor: pointer" v-on:click="deleteInvoice(invoice.Id)" class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="7" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 `,
 props: ["customerId", "tabName"],

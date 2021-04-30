@@ -9,15 +9,20 @@ var spaCustomers = Vue.component("Customers", {
         </div>
 
 		<table class="table table-bordered">
-			<colgroup>
-				<col style="text-align: left"/>
-				<col style="text-align: center; width: 10%;" />
-			</colgroup>
-			<thead><tr><th>Customer Name</th><th class="text-center">Active?</th></tr></thead>
+			<thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th class="text-center">Active?</th>
+                </tr>
+            </thead>
 			<tbody v-if="customers.length > 0">
 				<tr v-for="customer in customers" :key="customer.Id">
                     <td>
 						<router-link :to="{name: 'Customer', params: {id: customer.Id, tabName: 'invoices'}}">{{customer.Name}}</router-link>
+                        <a style="margin-left: 20px;" class="text-primary"
+                            :href="customer.URL" v-if="customer.URL"
+                            target="_blank"><span class="glyphicon glyphicon-globe"></span>
+                        </a>
 					</td>
 					<td class="text-center">
 						<span class="glyphicon" v-bind:class="[customer.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>

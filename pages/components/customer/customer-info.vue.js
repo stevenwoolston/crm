@@ -109,7 +109,10 @@ var spaCustomerInfo = Vue.component("CustomerInfo", {
 	methods: {
 		resetCustomer() {
 			this.customer = {
-				IsVisible: true,
+				IsVisible: false,
+                IsSupportCustomer: false,
+                SupportEndDate: null,
+                URL: null,
 				InvoicingText: "Invoicing is on 14 day terms."
 			}
 			this.loading = false;

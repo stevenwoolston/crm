@@ -8,40 +8,36 @@ var spaInvoiceNotes = Vue.component("InvoiceNotes", {
                 class="pull-right btn btn-success">Assign Invoice Note</button>
         </h2>
 
-        <table class="table table-bordered">
-            <colgroup>
-                <col style="text-align: left; width: 15%;" />
-                <col style="text-align: left;" />
-                <col style="text-align: left; width: 15%;" />
-                <col style="text-align: center; width: 5%;" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Date Created</th>
-                    <th>Description</th>
-                    <th>Time Taken</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="invoiceNotes.length > 0">
-                <tr v-for="invoiceNote in invoiceNotes" :key="invoiceNote.Id">
-                    <td>{{ invoiceNote.DateCreated | moment }}</td>
-                    <td>{{ invoiceNote.Description }}</td>
-                    <td>{{ invoiceNote.TimeTaken }} mins</td>
-                    <td class="text-center">
-                        <span style="cursor: pointer" 
-                            v-on:click="deleteInvoiceNote(invoiceNote.Id)"
-                            class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="4" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
-
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date Created</th>
+                        <th>Description</th>
+                        <th>Time Taken</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="invoiceNotes.length > 0">
+                    <tr v-for="invoiceNote in invoiceNotes" :key="invoiceNote.Id">
+                        <td>{{ invoiceNote.DateCreated | moment }}</td>
+                        <td>{{ invoiceNote.Description }}</td>
+                        <td>{{ invoiceNote.TimeTaken }} mins</td>
+                        <td class="text-center">
+                            <span style="cursor: pointer" 
+                                v-on:click="deleteInvoiceNote(invoiceNote.Id)"
+                                class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="4" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
         <div id="manageInvoiceNote" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">

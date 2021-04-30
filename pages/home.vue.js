@@ -20,7 +20,7 @@ var spaHome = Vue.component("Home", {
             </tr>
         </thead>
         <tbody v-if="invoices.length > 0">
-            <tr v-for="invoice in invoices" :key="invoice.Id">
+            <tr v-for="invoice in invoices" :key="invoice.Id" :class="{ 'bg-danger': invoice.isOverDue }">
                 <td>
                     <router-link :to="{ name: 'Customer', params: { id: invoice.CustomerId, tabName: 'invoices' }}">{{ invoice.CustomerName }}</router-link>
                 </td>

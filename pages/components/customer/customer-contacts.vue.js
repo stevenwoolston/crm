@@ -10,37 +10,34 @@ var spaCustomerContacts = Vue.component("CustomerContacts", {
 
         <ContactInfo :customerId="customerId" :contact="selectedContact" @contact-saved="getContacts" @cancel="resetContact"></ContactInfo>
 
-        <table class="table table-bordered">
-            <colgroup>
-                <col style="text-align: left"/>
-                <col style="text-align: left; />
-                <col style="text-align: center; width: 10%;" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email Address</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="contacts.length > 0">
-                <tr v-for="contact in contacts" 
-                    :key="contact.Id" 
-                    :class="{ highlighted: isSelectedContact(contact) }">
-                    <td v-on:click="getSingleContact(contact.Id)"><a href="#">{{ contact.FirstName }} {{ contact.Surname }}</a></td>
-                    <td>{{ contact.EmailAddress }}</td>
-                    <td class="text-center">
-                        <span class="glyphicon" v-bind:class="[contact.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
-                        <span style="cursor: pointer" v-on:click="deleteContact(contact.Id)" class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="3" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="contacts.length > 0">
+                    <tr v-for="contact in contacts" 
+                        :key="contact.Id" 
+                        :class="{ highlighted: isSelectedContact(contact) }">
+                        <td v-on:click="getSingleContact(contact.Id)"><a href="#">{{ contact.FirstName }} {{ contact.Surname }}</a></td>
+                        <td>{{ contact.EmailAddress }}</td>
+                        <td class="text-center">
+                            <span class="glyphicon" v-bind:class="[contact.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
+                            <span style="cursor: pointer" v-on:click="deleteContact(contact.Id)" class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="3" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 `,
 props: ["customerId", "tabName"],

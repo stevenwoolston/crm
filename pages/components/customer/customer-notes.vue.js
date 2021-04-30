@@ -4,45 +4,39 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
 
         <NoteInfo :customerId="customerId" :note="selectedNote" @note-saved="getNotes" @cancel="resetNote"></NoteInfo>
 
-        <table class="table table-bordered">
-            <colgroup>
-                <col />
-                <col />
-                <col style="width: 50%" />
-                <col />
-                <col />
-                <col />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="col-narrow">Date</th>
-                    <th>Description</th>
-                    <th>Notes</th>
-                    <th class="col-narrow col-center">Billable?</th>
-                    <th class="col-narrow col-center">Time</th>
-                    <th class="col-narrow col-center">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody v-if="notes.length > 0">
-                <tr v-for="note in notes" 
-                    :key="note.Id" 
-                    :class="{ highlighted: isSelectedNote(note) }">
-                    <td>{{ note.CreatedDate | moment }}</td>
-                    <td>{{ note.Description }}</td>
-                    <td v-html="toHtml(note.Notes)"></td>
-                    <td>{{ note.Billable | bool }}</td>
-                    <td class="col-center">{{ note.TimeTaken | showTime }}</td>
-                    <td class="col-center">
-                        <span style="cursor: pointer" v-on:click="deleteNote(note.Id)" class="glyphicon glyphicon-trash"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                    <td colspan="6" class="text-center">No matching records</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-narrow">Date</th>
+                        <th>Description</th>
+                        <th>Notes</th>
+                        <th class="col-narrow col-center">Billable?</th>
+                        <th class="col-narrow col-center">Time</th>
+                        <th class="col-narrow col-center">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody v-if="notes.length > 0">
+                    <tr v-for="note in notes" 
+                        :key="note.Id" 
+                        :class="{ highlighted: isSelectedNote(note) }">
+                        <td>{{ note.CreatedDate | moment }}</td>
+                        <td>{{ note.Description }}</td>
+                        <td v-html="toHtml(note.Notes)"></td>
+                        <td>{{ note.Billable | bool }}</td>
+                        <td class="col-center">{{ note.TimeTaken | showTime }}</td>
+                        <td class="col-center">
+                            <span style="cursor: pointer" v-on:click="deleteNote(note.Id)" class="glyphicon glyphicon-trash"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="6" class="text-center">No matching records</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 `,
     props: ["customerId", "tabName"],
@@ -112,10 +106,16 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                 CreatedDate: moment().format("YYYY-MM-DD"),
                 Description: null,
                 Notes: null,
-                TimeTaken: null
+                TimeTaken: null,
+                Billable: false
             };
         },
         getNotes() {
+            if (this.customerId == 0) {
+                this.resetNote();
+                return;
+            }
+
             this.loading = true;
             fetch(`${config.url}customers/${this.customerId}/notes`, {
                 method: "GET"

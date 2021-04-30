@@ -16,7 +16,7 @@ $report_name = $_GET["rpt"];
 switch($report_name)
 {
     case 'invoicesdue':
-        $stmt = $invoice->due_today();
+        $stmt = $invoice->awaitingpayment();
         if (empty($stmt)) die();
 
         $num = $stmt->rowCount();

@@ -104,10 +104,11 @@ switch($request_method)
         $status = $customer->sanitize()->create();
         if ($status) {
             http_response_code(200);
+            $customer->Id = $status;
             echo json_encode(array("message" => "Record created successfully.", "data" => $customer));
         } else {
             http_response_code(500);
-            echo json_encode(array("message" => "Unable to create record."));
+            echo json_encode(array("message" => "Unable to create record.", "data" => $customer));
         }
 
         die();

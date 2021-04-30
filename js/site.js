@@ -20,7 +20,7 @@ $(function() {
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js?v2.8")
+    navigator.serviceWorker.register("sw.js?v2.11")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);
@@ -61,7 +61,7 @@ function showNotification(title, message) {
                 renotify: true,
                 requireInteraction: true,
                 vibrate: [200, 100, 200],
-                icon: '../img/icons/wwd-icon-512.png'
+                icon: '../crm/img/icons/wwd-icon-512.png'
             });
         });
     }

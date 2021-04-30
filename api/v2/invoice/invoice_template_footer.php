@@ -39,4 +39,4 @@
             <td><?php echo $InvoiceNumber; ?></td>
         </tr>
     </table>
-    <div style="font-size: 10px; text-align: right">v1.2</div>
+    <div style="font-size: 10px; text-align: right">v2.0</div>

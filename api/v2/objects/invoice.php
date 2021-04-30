@@ -62,17 +62,21 @@ class Invoice {
 		return $stmt;
 	}
 
-	function due_today() {
+	function awaitingpayment() {
 		$query = "SELECT i.Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate,
 				EmailSubject, DateSent, i.DatePaid, IsCanceled, 
                 COALESCE(ii.TotalCost, 0) TotalCost,
-				c.Name CustomerName
+				c.Name CustomerName,
+				CASE 
+					WHEN i.InvoiceDueDate < CURDATE() THEN 1
+					ELSE 0
+				END isOverDue
 				FROM " . $this->table_name . " i
 				INNER JOIN customer c ON c.Id = i.CustomerId
                 LEFT JOIN ( SELECT InvoiceId, SUM(Cost) TotalCost FROM invoiceitem GROUP BY InvoiceId) ii ON ii.InvoiceId = i.Id
 				GROUP BY Id, CustomerId, InvoiceDate, InvoiceDueDate, InvoiceScheduledDeliveryDate, EmailSubject, DateSent, DatePaid, IsCanceled, c.Name
-				HAVING i.InvoiceDueDate < CURDATE() AND i.DatePaid IS NULL AND i.IsCanceled = 0
-				ORDER BY c.Name ASC";
+				HAVING i.DatePaid IS NULL AND i.IsCanceled = 0
+				ORDER BY i.InvoiceDueDate ASC";
 
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
