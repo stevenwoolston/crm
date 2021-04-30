@@ -1,0 +1,121 @@
+[20-Aug-2020 17:24:30 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[20-Aug-2020 17:26:27 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[20-Aug-2020 17:26:44 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[20-Aug-2020 17:27:05 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[20-Aug-2020 17:27:27 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[26-Aug-2020 14:53:01 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[27-Aug-2020 16:42:09 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[27-Aug-2020 16:42:42 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[01-Sep-2020 20:01:32 Australia/Sydney] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[01-Sep-2020 20:02:17 Australia/Sydney] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[08-Sep-2020 18:06:03 Australia/Sydney] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[10-Sep-2020 17:58:35 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[10-Sep-2020 17:59:57 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[10-Sep-2020 18:00:41 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[11-Oct-2020 11:06:34 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[11-Oct-2020 11:09:16 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[11-Oct-2020 12:57:16 Australia/Sydney] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[11-Oct-2020 12:57:27 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[11-Oct-2020 12:57:50 Australia/Sydney] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[15-Oct-2020 10:57:23 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[26-Oct-2020 20:17:05 Australia/Sydney] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[04-Nov-2020 06:45:17 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[04-Nov-2020 06:46:05 Australia/Brisbane] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[04-Nov-2020 06:46:57 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[04-Nov-2020 06:47:48 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[02-Dec-2020 10:09:52 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[02-Dec-2020 10:09:52 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[02-Dec-2020 10:09:52 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[02-Dec-2020 10:09:59 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[02-Dec-2020 10:09:59 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[02-Dec-2020 10:10:41 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[02-Dec-2020 10:10:47 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[07-Dec-2020 17:22:21 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[07-Dec-2020 17:23:47 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[07-Dec-2020 17:24:18 Australia/Brisbane] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[11-Dec-2020 01:04:54 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[11-Dec-2020 01:05:19 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[12-Dec-2020 05:38:18 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[12-Dec-2020 05:43:08 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[12-Dec-2020 05:43:18 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[13-Dec-2020 07:06:35 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[13-Dec-2020 07:07:44 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[13-Dec-2020 07:08:30 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:18:22 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:19:53 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:20:50 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:22:27 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:31:04 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[17-Dec-2020 23:33:10 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[18-Dec-2020 00:05:12 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[19-Dec-2020 09:01:28 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[19-Dec-2020 09:02:02 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[19-Dec-2020 21:32:08 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[19-Dec-2020 21:33:38 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[19-Dec-2020 21:57:20 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[20-Dec-2020 01:18:15 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[04-Jan-2021 21:03:18 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[04-Jan-2021 21:03:26 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[04-Jan-2021 21:03:29 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[15-Feb-2021 21:07:16 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[15-Feb-2021 21:07:37 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[15-Feb-2021 21:07:41 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[23-Feb-2021 15:53:35 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[23-Feb-2021 15:53:47 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[25-Feb-2021 12:11:23 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[25-Feb-2021 12:11:39 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[26-Feb-2021 13:23:26 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[26-Feb-2021 13:23:48 Australia/Brisbane] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[04-Mar-2021 22:21:08 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[04-Mar-2021 22:21:45 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[06-Mar-2021 12:15:38 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[06-Mar-2021 12:16:10 Australia/Brisbane] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[06-Mar-2021 12:16:22 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[06-Mar-2021 12:16:29 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[06-Mar-2021 12:16:50 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[06-Mar-2021 12:17:50 Australia/Brisbane] PHP Notice:  Undefined index: Description in /home/woolsto1/api.woolston.com.au/crm/v2/invoice_item.php on line 92
+[15-Mar-2021 13:51:44 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[15-Mar-2021 13:51:44 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[15-Mar-2021 13:52:40 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[15-Mar-2021 13:53:17 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[15-Mar-2021 13:53:44 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[18-Mar-2021 19:28:01 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[18-Mar-2021 23:17:45 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[19-Mar-2021 21:09:15 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[22-Mar-2021 14:10:32 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[22-Mar-2021 14:13:38 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[22-Mar-2021 14:50:47 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[22-Mar-2021 14:51:08 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[22-Mar-2021 22:39:23 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/delivery.php on line 31
+[22-Mar-2021 22:39:44 Australia/Brisbane] PHP Notice:  Undefined index: InvoiceScheduledDeliveryDate in /home/woolsto1/api.woolston.com.au/crm/v2/invoice.php on line 106
+[01-Apr-2021 17:44:05 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 70
+[05-Apr-2021 18:00:31 Australia/Brisbane] PHP Notice:  Undefined variable: invoiceId in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 44
+[05-Apr-2021 19:23:37 Australia/Brisbane] PHP Notice:  Undefined variable: customer in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 78
+[05-Apr-2021 19:25:58 Australia/Brisbane] PHP Notice:  Undefined variable: customer in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 78
+[26-Apr-2021 16:43:06 Australia/Brisbane] PHP Fatal error:  Uncaught Error: Call to undefined method Invoice::awaitingpayment() in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php on line 19
+[26-Apr-2021 16:43:10 Australia/Brisbane] PHP Fatal error:  Uncaught Error: Call to undefined method Invoice::awaitingpayment() in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php on line 19
+[26-Apr-2021 16:43:18 Australia/Brisbane] PHP Fatal error:  Uncaught Error: Call to undefined method Invoice::awaitingpayment() in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/woolsto1/api.woolston.com.au/crm/v2/reports.php on line 19
+[27-Apr-2021 23:55:24 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[27-Apr-2021 23:55:30 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[29-Apr-2021 15:56:10 Australia/Brisbane] PHP Notice:  Undefined index: Billable in /home/woolsto1/api.woolston.com.au/crm/v2/customer_note.php on line 93
+[30-Apr-2021 19:14:24 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[30-Apr-2021 19:14:24 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[30-Apr-2021 19:14:24 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[30-Apr-2021 19:16:26 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[30-Apr-2021 19:16:26 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[30-Apr-2021 19:16:26 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[30-Apr-2021 19:17:49 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[30-Apr-2021 19:17:49 Australia/Brisbane] PHP Notice:  Undefined index: IsSupportCustomer in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 100
+[30-Apr-2021 19:17:49 Australia/Brisbane] PHP Notice:  Undefined index: SupportEndDate in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 101
+[30-Apr-2021 20:21:01 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[30-Apr-2021 20:24:03 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99
+[30-Apr-2021 20:25:42 Australia/Brisbane] PHP Notice:  Undefined index: URL in /home/woolsto1/api.woolston.com.au/crm/v2/customer.php on line 99

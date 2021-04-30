@@ -89,17 +89,26 @@ var spaCustomer = Vue.component("Customer", {
     methods: {
         resetCustomer() {
             this.customer = {
-                IsVisible: true,
+                IsVisible: false,
+                IsSupportCustomer: false,
+                SupportEndDate: null,
+                URL: null,
                 InvoicingText: "Invoicing is on 14 day terms."
             }
             this.loading = false;
         },
         refreshCustomer(customerId) {
-            this.customer.Id = customerId;
-            this.customerId = customerId;
-            this.getCustomer();
+            // this.customer.Id = customerId;
+            // this.customerId = customerId;
+            // this.getCustomer();
+            router.push({ path: '/customers/'} );
         },
         getCustomer() {
+            if (this.customerId == 0 || this.customer.Id == 0) {
+                this.resetNote();
+                return;
+            }
+
             this.loading = true;
             fetch(`${config.url}customers/${this.customer.Id}`)
                 .then(response => response.json())

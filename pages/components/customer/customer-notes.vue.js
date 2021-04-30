@@ -106,10 +106,16 @@ var spaCustomerNotes = Vue.component("CustomerNotes", {
                 CreatedDate: moment().format("YYYY-MM-DD"),
                 Description: null,
                 Notes: null,
-                TimeTaken: null
+                TimeTaken: null,
+                Billable: false
             };
         },
         getNotes() {
+            if (this.customerId == 0) {
+                this.resetNote();
+                return;
+            }
+
             this.loading = true;
             fetch(`${config.url}customers/${this.customerId}/notes`, {
                 method: "GET"
