@@ -17,10 +17,13 @@ $(function() {
         $(this).find('#Amount').select();
     });
 
+    $("#navbar ul a").on("click", function(e) {
+        $("#navbar").removeClass("in");
+    })
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js?v2.11")
+    navigator.serviceWorker.register("sw.js?v2.14")
         .then(registration => {
             // toastr.success("Service worker registered");
             // toastr.success(registration);

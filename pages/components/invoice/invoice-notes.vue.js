@@ -20,7 +20,7 @@ var spaInvoiceNotes = Vue.component("InvoiceNotes", {
                 </thead>
                 <tbody v-if="invoiceNotes.length > 0">
                     <tr v-for="invoiceNote in invoiceNotes" :key="invoiceNote.Id">
-                        <td>{{ invoiceNote.DateCreated | moment }}</td>
+                        <td>{{ invoiceNote.CreatedDate | moment }}</td>
                         <td>{{ invoiceNote.Description }}</td>
                         <td>{{ invoiceNote.TimeTaken }} mins</td>
                         <td class="text-center">
@@ -65,7 +65,7 @@ var spaInvoiceNotes = Vue.component("InvoiceNotes", {
                                 </thead>
                                 <tbody v-if="availableInvoiceNotes.length > 0">
                                     <tr v-for="availableInvoiceNote in availableInvoiceNotes" :key="availableInvoiceNote.Id">
-                                        <td>{{ availableInvoiceNote.DateCreated | moment }}</td>
+                                        <td>{{ availableInvoiceNote.CreatedDate | moment }}</td>
                                         <td>{{ availableInvoiceNote.Description }}</td>
                                         <td>{{ availableInvoiceNote.TimeTaken }} mins</td>
                                         <td class="text-center">
@@ -135,7 +135,7 @@ var spaInvoiceNotes = Vue.component("InvoiceNotes", {
                     this.customerNotes = response.data;
                 })
                 .then(() => {
-                    this.invoiceNotes = this.customerNotes.filter((invoiceNote) => { return invoiceNote.InvoiceId });
+                    this.invoiceNotes = this.customerNotes.filter((invoiceNote) => { return invoiceNote.InvoiceId == this.invoiceId });
                     this.availableInvoiceNotes = this.customerNotes.filter((invoiceNote) => { return invoiceNote.InvoiceId == null})        
                 })
                 .catch(error => console.log(error))
