@@ -55,7 +55,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                 </div>
             </div>
             <div class="col-xs-12 table-controls">
-                <button type="button" v-on:click="duplicate" class="btn btn-primary pull-right">Copy</button>
+                <button type="button" :class="sendButtonClass" v-on:click="duplicate" class="btn btn-primary pull-right">Copy</button>
                 <button type="button" :class="sendButtonClass" class="btn pull-left btn-primary"
                     :disabled="invoice.IsCanceled" data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
                 <button type="button" :class="cancelButtonClass" class="btn pull-right" 
@@ -228,6 +228,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             if (this.invoice.Id == null) {
                 url = `${config.url}invoice`;
                 request_method = "POST";
+                this.invoice.InvoiceScheduledDeliveryDate = null;
             }
 
             fetch(url, {
@@ -241,7 +242,10 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     }
                     toastr.success("Save was successful.");
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    toastr.error(error);
+                    console.log(error);                  
+                })
                 .finally(() => {
                     this.refreshInvoice(this.invoice);
                 })

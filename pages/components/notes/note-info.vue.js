@@ -47,6 +47,62 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                     <input type="hidden" id="CustomerId" name="CustomerId" v-model="note.CustomerId" />
                 </div>
             </div>
+
+            <div id="customerInvoices" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form class="form-horizontal">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Assign Invoice</h4>
+                            </div>
+                            <div class="modal-body" style="max-height: 75vh; overflow-y: scroll;">
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col style="text-align: left; width: 20%;" />
+                                        <col style="text-align: left;" />
+                                        <col style="text-align: left; width: 15%;" />
+                                        <col style="text-align: center; width: 15%;" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice Date</th>
+                                            <th>Email Subject</th>
+                                            <th>Total Cost</th>
+                                            <th>Due Date</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-if="customerInvoices.length > 0">
+                                        <tr v-for="customerInvoice in customerInvoices" :key="customerInvoice.Id">
+                                            <td>{{ customerInvoice.InvoiceDate | moment }}</td>
+                                            <td>{{ customerInvoice.EmailSubject }}</td>
+                                            <td>{{ customerInvoice.TotalCost | money }}</td>
+                                            <td>{{ customerInvoice.InvoiceDueDate | moment }}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-primary"
+                                                    v-on:click="updateInvoiceNote(customerInvoice.Id);">Link</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td colspan="5" class="text-center">No matching records</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" 
+                                    v-on:click="cancelUpdateInvoiceNote();" data-dismiss="modal">No Thanks</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
         </form>
     </div>
 `,
@@ -54,12 +110,14 @@ var spaNoteInfo = Vue.component("NoteInfo", {
     data() {
         return {
             customer: {},
+            customerInvoices: [],
             loading: true
         }
     },
     created() {
         this.getCustomer(this.customerId);
         this.cancel();
+        this.getCustomerInvoices();
     },
     filters: {
         moment: function (date) {
@@ -101,6 +159,22 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                     this.loading = false
                 })
         },
+        getCustomerInvoices() {
+            fetch(`${config.url}customers/${this.customerId}/invoices`, {
+                method: "GET"
+            })
+            .then(response => response.json())
+            .then((response) => {
+                this.customerInvoices = response.data.filter(invoice => !invoice.DateSent);
+            })
+            .catch(error => {
+                toastr.error('There was some problem getting the customer invoices. Check the console.');
+                console.log(error);                
+            })
+            .finally(() => {
+                this.loading = false
+            })
+        },
         saveNote() {
             this.loading = true;
             let url = `${config.url}note`,
@@ -119,19 +193,51 @@ var spaNoteInfo = Vue.component("NoteInfo", {
                         this.note.Id = response.data.Id;
                     }
                     toastr.success("Save was successful.");
-                })
-                .catch(error => console.log(error))
-                .finally(() => {
                     $("textarea#Notes")
                         .val(null)
                         .summernote('destroy');
 
                     $("textarea#Notes").summernote({ height: 300 });
                     
-                    this.$emit("note-saved");
-                    this.cancel();
+                    if (this.customerInvoices.length > 0) {
+                        $("#customerInvoices").modal('show');
+                    }
+                })
+                .catch(error => {
+                    toastr.error(error);
+                    console.log(error);
+                })
+                .finally(() => {
                     this.loading = false;
                 })
+        },
+        updateInvoiceNote(invoiceId) {
+            this.loading = true;
+            let url = `${config.url}note/${this.note.Id}`,
+                request_method = "PUT";
+
+            fetch(url, {
+                method: request_method,
+                body: JSON.stringify({
+                    InvoiceId: invoiceId,
+                    CustomerId: this.customerId
+                })
+            })
+            .then(response => response.json())
+            .then(response =>  {
+                this.$emit("note-saved");
+                this.cancel();
+                $("#customerInvoices").modal('hide');
+                toastr.success("Note linked to invoice.");
+            })
+            .catch(error => {
+                toastr.error(error);
+                console.log(error);
+            })
+        },
+        cancelUpdateInvoiceNote() {
+            this.$emit("note-saved");
+            this.cancel();
         }
     }
 });
