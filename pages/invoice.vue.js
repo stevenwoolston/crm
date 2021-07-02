@@ -51,6 +51,7 @@ var spaInvoice = Vue.component("Invoice", {
 			invoiceId: parseInt(this.$route.params.id),
 			customerId: parseInt(this.$route.params.customerId),
 			invoice: {},
+			customer: {},
 			debugData: null,
 			loading: false
 		}
@@ -62,6 +63,7 @@ var spaInvoice = Vue.component("Invoice", {
 		} else {
 			this.resetInvoice();
 		}
+		this.getCustomer();
 	},
 	filters: {
 		moment: function (date) {
@@ -93,15 +95,15 @@ var spaInvoice = Vue.component("Invoice", {
 				{
 					routeName: "Customer",
 					routeParams: {
-						id: this.customerId,
+						id: this.customer.Id,
 						tabName: 'invoices'
 					},
-					LinkText: this.invoice.CustomerName
+					LinkText: this.customer.Name
 				},
 				{
 					routeName: null,
 					routeParams: null,
-					LinkText: `Invoice #${this.invoice.Id}: ${this.invoice.EmailSubject}`
+					LinkText: this.invoiceId == 0 ? null : `Invoice #${this.invoice.Id}: ${this.invoice.EmailSubject}`
 				}
 			]
 		}
@@ -117,7 +119,8 @@ var spaInvoice = Vue.component("Invoice", {
 				DateSent: null,
 				DatePaid: null,
 				IsCanceled: false
-			}
+			};
+			this.breadcrumb[2].LinkText = "";
 		},
 		getInvoice() {
 			this.loading = true;
@@ -132,6 +135,19 @@ var spaInvoice = Vue.component("Invoice", {
 				.finally(() => {
 					this.loading = false;
 				})
+		},
+		getCustomer() {
+            fetch(`${config.url}customers/${this.customerId}`)
+                .then(response => response.json())
+                .then((response) => {
+                    this.customer = response.data[0];
+                    this.debugData = response;
+                })
+                .catch(error => console.log(error))
+                .finally(() => {
+                    this.breadcrumb[1].name = this.customer.Name;
+                    this.loading = false;
+                })
 		}
 	}
 });

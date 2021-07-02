@@ -118,6 +118,11 @@ var spaInvoicePayments = Vue.component("InvoicePayments", {
     },
     methods: {
         resetInvoicePayment() {
+            if (this.invoiceId == 0) {
+                this.invoicePayment = {};
+                return;
+            };
+            
             this.getInvoiceItems()
             .then(() => {
                 this.invoicePayment = {

@@ -62,6 +62,11 @@ var spaInvoiceDeliveries = Vue.component("InvoiceDeliveries", {
     },
     methods: {
         getInvoiceDeliveries() {
+            if (this.invoiceId == 0) {
+                this.invoiceDeliveries = [];
+                return;
+            }
+            
             this.loading = true;
             fetch(`${config.url}invoices/${this.invoiceId}/deliveries`)
                 .then(response => response.json())

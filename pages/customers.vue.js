@@ -12,7 +12,8 @@ var spaCustomers = Vue.component("Customers", {
 			<thead>
                 <tr>
                     <th>Customer Name</th>
-                    <th class="text-center">Active?</th>
+                    <th style="width: 15%" class="text-center">Support Customer?</th>
+                    <th style="width: 15%" class="text-center">Active?</th>
                 </tr>
             </thead>
 			<tbody v-if="customers.length > 0">
@@ -23,6 +24,13 @@ var spaCustomers = Vue.component("Customers", {
                             :href="customer.URL" v-if="customer.URL"
                             target="_blank"><span class="glyphicon glyphicon-globe"></span>
                         </a>
+                        <a style="margin-left: 10px;" class="text-primary"
+                            :href="customer.URL + '/wp-admin'" v-if="customer.URL"
+                            target="_blank"><span class="glyphicon glyphicon-cog"></span>
+                        </a>                        
+					</td>
+					<td class="text-center">
+						<span class="glyphicon" v-bind:class="[customer.IsSupportCustomer ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
 					</td>
 					<td class="text-center">
 						<span class="glyphicon" v-bind:class="[customer.IsVisible ? 'text-success glyphicon-ok' : 'text-danger glyphicon-remove']"></span>
