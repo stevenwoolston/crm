@@ -57,7 +57,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             <div class="col-xs-12 table-controls">
                 <button type="button" v-on:click="duplicate" class="btn btn-primary pull-right">Copy</button>
                 <button type="button" :class="sendButtonClass" class="btn pull-left btn-primary"
-                    data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
+                    :disabled="invoice.IsCanceled" data-toggle="modal" data-target="#selectContactForDelivery">Send This Invoice</button>
                 <button type="button" :class="cancelButtonClass" class="btn pull-right" 
                     v-on:click="cancelInvoice(!invoice.IsCanceled)">{{ invoice.IsCanceled ? 'Activate' : 'Cancel' }} This Invoice</button>
                 <button type="submit" class="btn btn-success btnSave pull-right">Save</button>

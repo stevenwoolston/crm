@@ -29,12 +29,13 @@ class Delivery {
 
 	function read_queued() {
 	
-		$query = "SELECT Id, InvoiceId, DateDelivered, DeliveredTo
-				FROM
-					" . $this->table_name . " c
-				WHERE c.DateDelivered IS NULL
+		$query = "SELECT d.Id, InvoiceId, DateDelivered, DeliveredTo
+				FROM delivery d
+				INNER JOIN invoice i ON i.Id = d.InvoiceId
+				WHERE d.DateDelivered IS NULL
+				AND i.IsCanceled = 0
 				ORDER BY
-					c.Id DESC";
+					d.Id DESC";
 	
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
