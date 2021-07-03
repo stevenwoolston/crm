@@ -24,7 +24,7 @@ var spaDatePicker = Vue.component('DatePicker', {
 				} else {
 					selectedDate = moment(this.value).format("YYYY-MM-DD");
 				}
-				vm.$emit("input", selectedDate);
+				vm.$emit("dateChanged", selectedDate);
 			});
 	}
 })
