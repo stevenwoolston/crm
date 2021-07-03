@@ -7,7 +7,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     <label for="InvoiceDate" class="col-sm-2 control-label">Invoice Date</label>
                     <div class="col-sm-4 col-md-3 col-lg-2">
                         <div class="input-group date">
-                            <DatePicker v-model="invoice.InvoiceDate"></DatePicker>
+                            <DatePicker v-model="invoice.InvoiceDate" @dateChanged="invoiceDateChanged"></DatePicker>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -193,32 +193,51 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
         },
         sendInvoice() {
             this.loading = true;
-            let url = `${config.url}delivery`,
-                request_method = "POST",
-                delivery = {
-                    DateDelivered: null,
-                    DeliveredTo: this.selectedEmailAddresses.toString(),
-                    DeliveryComment: this.deliveryComment,
-                    InvoiceId: this.invoice.Id
-                };
-            fetch(url, {
-                method: request_method,
-                body: JSON.stringify(delivery)
-            })
+            let invoiceItems = [];
+
+            fetch(`${config.url}invoices/${this.invoice.Id}/invoiceitems`)
                 .then(response => response.json())
                 .then((response) => {
-                    if (response.data.Id == null) {
-                        toastr.error("There was a problem queueing the invoice to be sent.");
-                        throw response.message;
+
+                    if (response.data.length == 0) {
+                        toastr.error('There are no invoice items created yet.');
+                        return false;
                     }
-                    toastr.success("Invoice was successfully queued to send.");
+        
+                    let url = `${config.url}delivery`,
+                        request_method = "POST",
+                        delivery = {
+                            DateDelivered: null,
+                            DeliveredTo: this.selectedEmailAddresses.toString(),
+                            DeliveryComment: this.deliveryComment,
+                            InvoiceId: this.invoice.Id
+                        };
+                    fetch(url, {
+                        method: request_method,
+                        body: JSON.stringify(delivery)
+                    })
+                        .then(response => response.json())
+                        .then((response) => {
+                            if (response.data.Id == null) {
+                                toastr.error("There was a problem queueing the invoice to be sent.");
+                                throw response.message;
+                            }
+                            toastr.success("Invoice was successfully queued to send.");
+                        })
+                        .catch(error => console.log(error))
+                        .finally(() => {
+                            this.selectedEmailAddresses = [];
+                            this.deliveryComment = "";
+                            $("#selectContactForDelivery").modal("hide");
+                        })
+        
                 })
-                .catch(error => console.log(error))
-                .finally(() => {
-                    this.selectedEmailAddresses = [];
-                    this.deliveryComment = "";
-                    $("#selectContactForDelivery").modal("hide");
+                .catch(error => {
+                    console.log(error);
+                    toastr.error(error);
+                    return false;
                 })
+
         },
         saveInvoice() {
             this.loading = true;
@@ -274,6 +293,22 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     router.push({ name: "Customer", params: { id: this.newInvoice.CustomerId } });
                 })
                 .catch(error => console.log(error))
+        },
+        invoiceDateChanged(value) {
+            this.invoice.InvoiceDate = value;
+            this.invoice.InvoiceScheduledDeliveryDate = value;
+            this.invoice.InvoiceDueDate = moment(value).add(14, "day").format("YYYY-MM-DD");
+
+            this.toggleFormGroup("InvoiceScheduledDeliveryDate");
+            this.toggleFormGroup("InvoiceDueDate");
+
+            toastr.success('Invoice scheduled delivery date and due dates have been updated too.');
+        },
+        toggleFormGroup(controlName) {
+            $("label[for=" + controlName + "]").closest(".form-group").toggleClass("has-success");
+            setTimeout(function() {
+                $("label[for=" + controlName + "]").closest(".form-group").toggleClass("has-success");
+            }, 3000);
         }
     }
 });

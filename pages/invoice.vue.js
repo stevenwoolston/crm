@@ -115,6 +115,7 @@ var spaInvoice = Vue.component("Invoice", {
 				CustomerId: this.customerId,
 				InvoiceDate: moment().format("YYYY-MM-DD"),
 				InvoiceDueDate: moment().add(14, "days").format("YYYY-MM-DD"),
+				InvoiceScheduledDeliveryDate: null,
 				EmailSubject: null,
 				DateSent: null,
 				DatePaid: null,
