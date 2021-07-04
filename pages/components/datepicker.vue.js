@@ -20,7 +20,7 @@ var spaDatePicker = Vue.component('DatePicker', {
 			.on("blur", function() { 
 				var selectedDate;
 				if (this.value == "") {
-					selectedDate = null
+					selectedDate = null;
 				} else {
 					selectedDate = moment(this.value).format("YYYY-MM-DD");
 				}

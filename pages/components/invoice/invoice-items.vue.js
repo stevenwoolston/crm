@@ -14,7 +14,7 @@ var spaInvoiceItems = Vue.component("InvoiceItems", {
                     <tr>
                         <th>Description</th>
                         <th>Cost</th>
-                        <th>&nbsp;</th>
+                        <th style="width: 15%;">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody v-if="invoiceItems.length > 0">
