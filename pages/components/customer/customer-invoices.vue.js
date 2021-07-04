@@ -12,6 +12,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
             <table class="table table-bordered" id="customer-invoice-table">
                 <thead>
                     <tr>
+                        <th>Invoice Id</th>
                         <th>Invoice Date</th>
                         <th>Email Subject</th>
                         <th>Date Sent</th>
@@ -23,6 +24,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
                 </thead>
                 <tbody v-if="invoices.length > 0">
                     <tr v-for="invoice in invoices" :key="invoice.Id">
+                        <td>{{ invoice.Id }}</td>
                         <td>{{ invoice.InvoiceDate | moment }}</td>
                         <td>
                             <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: customerId}}">{{ invoice.EmailSubject }}</router-link>
@@ -40,7 +42,7 @@ var spaCustomerInvoices = Vue.component("CustomerInvoices", {
                 </tbody>
                 <tbody v-else>
                     <tr>
-                        <td colspan="7" class="text-center">No matching records</td>
+                        <td colspan="8" class="text-center">No matching records</td>
                     </tr>
                 </tbody>
             </table>

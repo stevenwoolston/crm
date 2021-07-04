@@ -25,7 +25,7 @@ var spaHome = Vue.component("Home", {
                     <router-link :to="{ name: 'Customer', params: { id: invoice.CustomerId, tabName: 'invoices' }}">{{ invoice.CustomerName }}</router-link>
                 </td>
                 <td>
-                    <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: invoice.CustomerId}}">{{ invoice.EmailSubject }}</router-link>
+                    <router-link :to="{name: 'Invoice', params: {id: invoice.Id, customerId: invoice.CustomerId}}">{{ invoice.Id }} - {{ invoice.EmailSubject }}</router-link>
                 </td>
                 <td>{{ invoice.InvoiceDate | moment }}</td>
                 <td>{{ invoice.InvoiceDueDate | moment }}</td>

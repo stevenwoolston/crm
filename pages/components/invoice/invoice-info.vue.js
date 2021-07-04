@@ -18,7 +18,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     <label for="InvoiceDueDate" class="col-sm-2 control-label">Due Date</label>
                     <div class="col-sm-4 col-md-3 col-lg-2">
                         <div class="input-group date">
-                            <DatePicker v-model="invoice.InvoiceDueDate"></DatePicker>
+                            <DatePicker v-model="invoice.InvoiceDueDate" @dateChanged="invoiceDueDateChanged"></DatePicker>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -29,7 +29,7 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
                     <label for="InvoiceScheduledDeliveryDate" class="col-sm-2 control-label">Delivery Schedule Date</label>
                     <div class="col-sm-4 col-md-3 col-lg-2">
                         <div class="input-group date">
-                            <DatePicker v-model="invoice.InvoiceScheduledDeliveryDate"></DatePicker>
+                            <DatePicker v-model="invoice.InvoiceScheduledDeliveryDate" @dateChanged="invoiceScheduledDeliveryDateChanged"></DatePicker>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -288,9 +288,10 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             })
                 .then(response => response.json())
                 .then((response) => {
-                    this.newInvoice.Id = response.data.Id;
-                    toastr.success(`Invoice copy was successful as #${this.newInvoice.Id}. Invoice refreshed.`);
-                    router.push({ name: "Customer", params: { id: this.newInvoice.CustomerId } });
+                    this.invoice.Id = response.data.Id;
+                    toastr.success(`Invoice copy was successful as #${this.invoice.Id}. Invoice refreshed.`);
+                    this.refreshInvoice(this.invoice);
+                    // router.push({ name: "Invoice", params: { invoiceId: this.newInvoice.Id, customerId: this.newInvoice.CustomerId } });
                 })
                 .catch(error => console.log(error))
         },
@@ -303,6 +304,12 @@ var spaInvoiceInfo = Vue.component("InvoiceInfo", {
             this.toggleFormGroup("InvoiceDueDate");
 
             toastr.success('Invoice scheduled delivery date and due dates have been updated too.');
+        },
+        invoiceScheduledDeliveryDateChanged(value) {
+            this.invoice.InvoiceScheduledDeliveryDate = value;
+        },
+        invoiceDueDateChanged(value) {
+            this.invoice.InvoiceDueDate = value;
         },
         toggleFormGroup(controlName) {
             $("label[for=" + controlName + "]").closest(".form-group").toggleClass("has-success");

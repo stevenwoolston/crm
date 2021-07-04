@@ -38,6 +38,7 @@ class Delivery {
 			    INNER JOIN invoice i ON i.Id = d.InvoiceId
 			    WHERE DateDelivered IS NULL
 			    AND i.InvoiceScheduledDeliveryDate IS NULL
+				AND i.IsCanceled = 0
             UNION 
             SELECT 
 			    d.Id, InvoiceId, DateDelivered, DeliveredTo, DeliveryComment
@@ -45,6 +46,7 @@ class Delivery {
 			    INNER JOIN invoice i ON i.Id = d.InvoiceId
 			    WHERE DateDelivered IS NULL
 			    AND i.InvoiceScheduledDeliveryDate = CURDATE()
+				AND i.IsCanceled = 0
             ) d 
             ORDER BY d.Id DESC";
 	
