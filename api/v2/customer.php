@@ -47,7 +47,9 @@ switch($request_method)
                     "URL" => $URL,
                     "InvoicingText" => $InvoicingText,
                     "IsSupportCustomer" => (bool)$IsSupportCustomer,
-                    "SupportEndDate" => $SupportEndDate
+                    "SupportEndDate" => $SupportEndDate,
+                    "CreatedDate" => $NoteCreatedDate,
+                    "Description" => $NoteDescription                
                 );
          
                 array_push($results_arr["data"], $results_item);

@@ -18,6 +18,8 @@ class Customer {
 	public $URL;
     public $IsSupportCustomer;
     public $SupportEndDate;
+	public $NoteCreatedDate;
+	public $NoteDescription;
  
     // constructor with $db as database connection
     public function __construct($db) {
@@ -28,12 +30,12 @@ class Customer {
 	function read() {
 	
 		// select all query
-		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, 
-			IsSupportCustomer, SupportEndDate
-			FROM
-				" . $this->table_name . " c
-			ORDER BY
-				c.name ASC";
+		$query = "SELECT c.Id, c.Name, c.IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, IsSupportCustomer, SupportEndDate,
+		cn.Id NoteId, cn.CreatedDate NoteCreatedDate, cn.Description NoteDescription, cn.Notes
+					FROM customer c
+					LEFT JOIN (SELECT customerId, MAX(Id) noteId FROM customernote GROUP BY customerId) as agg ON agg.customerId = c.Id
+					LEFT JOIN customernote cn on cn.Id = agg.noteId AND cn.CustomerId = c.Id
+					ORDER BY c.IsVisible DESC, c.IsSupportCustomer DESC, c.name ASC";
 	
 		// prepare query statement
 		$stmt = $this->conn->prepare($query);
@@ -46,14 +48,12 @@ class Customer {
 	//	read single customer
 	function read_one($id) {
 	
-		$query = "SELECT Id, Name, IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, 
-			IsSupportCustomer, SupportEndDate
-		FROM
-					" . $this->table_name . " c
-				WHERE
-					Id = " . $id . "
-				ORDER BY
-					c.name ASC";
+		$query = "SELECT c.Id, c.Name, c.IsVisible, Address, Suburb, State, Postcode, InvoicingText, URL, IsSupportCustomer, SupportEndDate,
+			cn.Id NoteId, cn.CreatedDate NoteCreatedDate, cn.Description NoteDescription, cn.Notes
+			FROM customer c
+			LEFT JOIN (SELECT customerId, MAX(Id) noteId FROM customernote GROUP BY customerId) as agg ON agg.customerId = c.Id
+			LEFT JOIN customernote cn on cn.Id = agg.noteId AND cn.CustomerId = c.Id
+			WHERE c.Id = " . $id;
 	
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
