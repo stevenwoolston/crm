@@ -165,7 +165,7 @@ var spaNoteInfo = Vue.component("NoteInfo", {
             })
             .then(response => response.json())
             .then((response) => {
-                this.customerInvoices = response.data.filter(invoice => !invoice.DateSent);
+                this.customerInvoices = response.data.filter(invoice => !invoice.DateSent && !invoice.DatePaid);
             })
             .catch(error => {
                 toastr.error('There was some problem getting the customer invoices. Check the console.');
