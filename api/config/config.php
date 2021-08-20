@@ -3,11 +3,11 @@ include_once '../inc/class.phpmailer.php';
 
 class Config {
  
-    private $email_host = "mail.woolston.com.au";
-    private $email_username = "accounts@woolston.com.au";
-    private $email_password = "H@nnahN0ah";
-    private $email_from = "accounts@woolston.com.au";
-    private $email_from_name = "Woolston Web Design Accounts";
+    private $email_host = "XXX";
+    private $email_username = "XXX";
+    private $email_password = "XXX";
+    private $email_from = "XXX";
+    private $email_from_name = "XXX";
 
     public $email_to_address;
     public $email_subject;
