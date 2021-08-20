@@ -2,10 +2,10 @@
 class Database {
  
     // specify your own database credentials
-    private $host = "s212.syd3.hostingplatform.net.au";
-    private $db_name = "woolsto1_crm";
-    private $username = "woolsto1_root";
-    private $password = "7mHNURiJKgnz";
+    private $host = "XXX";
+    private $db_name = "XXX";
+    private $username = "XXX";
+    private $password = "XXX";
 
     // private $host = "localhost";
     // private $db_name = "vuecrm";
